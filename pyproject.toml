@@ -1,4 +1,0 @@
-[tool.black]
-line-length = 140
-target-version = ['py310', 'py311', 'py312']
-skip_magic_trailing_comma = true
