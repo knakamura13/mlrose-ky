@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>3 - What is a Machine Learning Weight Optimization Problem? - 📈 mlrose-ky</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "3 - What is a Machine Learning Weight Optimization Problem?";
+        var mkdocs_page_input_path = "tutorial3.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> 📈 mlrose-ky
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">🏚️ Home</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="..#user-guide">User Guide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-1-getting-started">Tutorial 1 - Getting Started</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-2-travelling-saleperson-problems">Tutorial 2 - Travelling Saleperson Problems</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-3-ml-weight-optimization-problems">Tutorial 3 - ML Weight Optimization Problems</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../about/">？ About</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#project-background">Project Background</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#main-features">Main Features</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#licensing-authors-acknowledgements">Licensing, Authors, Acknowledgements</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="https://github.com/knakamura13/mlrose-ky">🔗 Github</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">↯ Randomized Optimizations</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../opt_probs/">🤔 Optimization Problems</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#discrete-optimisation-problem">Discrete Optimisation Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#continuous-optimisation-problem">Continuous Optimisation Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#travelling-salesperson-optimisation-problem">Travelling Salesperson Optimisation Problem</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../algorithms/">🛹 Algorithms</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#hill-climbing">Hill Climbing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#random-hill-climbing">Random Hill Climbing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_1">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#simulated-annealing">Simulated Annealing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_2">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#genetic-algorithms">Genetic Algorithms</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_3">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#mimic">MIMIC</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_4">References</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decay/">📅 Decay Schedules</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#geometric-decay">Geometric Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#formula">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-declaration">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#arithmetic-decay">Arithmetic Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#formula_1">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-declaration_1">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method_1">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example_1">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#exponential-decay">Exponential Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#formula_2">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-declaration_2">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method_2">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example_2">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#write-your-own-custom-schedule">Write your own custom schedule</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example_3">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method_3">Class method</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../fitness/">🏃🏻 Fitness Functions</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#one-max">One Max</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#flip-flops">Flip Flops</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_1">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_1">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_1">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_1">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#four-peaks">Four Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_2">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_2">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_2">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_2">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#six-peaks">Six Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_3">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_3">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_3">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_3">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references_1">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#continuous-peaks">Continuous Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_4">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_4">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_4">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_4">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#knapsack">Knapsack</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_5">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_5">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_5">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_5">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#travelling-salesman-tsp">Travelling Salesman (TSP)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_6">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_6">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_6">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_6">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#n-queens">N-Queens</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_7">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_7">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_7">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_7">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references_2">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#max-k-color">Max K Color</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_8">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_8">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_8">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_8">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#write-your-own-fitness-function">Write your own fitness function</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_9">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_9">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_9">Example</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">🧠 Neural Networks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../neural/">📉 Backpropagation using ROs</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#neural-network">Neural Network</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#linear-regression">Linear Regression</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#logistic-regression">Logistic Regression</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">🧑🏻‍💻 Tutorials</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial1/">1 - Getting Started</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#what-is-an-optimization-problem">What is an Optimization Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#why-use-randomized-optimization">Why use Randomized Optimization?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#solving-optimization-problems-with-mlrose-ky">Solving Optimization Problems with mlrose-ky</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#define-a-fitness-function-object">Define a Fitness Function Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#define-an-optimization-problem-object">Define an Optimization Problem Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#select-and-run-a-randomized-optimization-algorithm">Select and Run a Randomized Optimization Algorithm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#summary">Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#references">References</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial2/">2 - What is a Travelling Salesman Problem?</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#what-is-a-travelling-salesperson-problem">What is a Travelling Salesperson Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#solving-tsps-with-mlrose-ky">Solving TSPs with mlrose-ky</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#define-a-fitness-function-object">Define a Fitness Function Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#define-an-optimization-problem-object">Define an Optimization Problem Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#select-and-run-a-randomized-optimization-algorithm">Select and Run a Randomized Optimization Algorithm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#summary">Summary</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">3 - What is a Machine Learning Weight Optimization Problem?</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-machine-learning-weight-optimization-problem">What is a Machine Learning Weight Optimization Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solving-machine-learning-weight-optimization-problems-with-mlrose-ky">Solving Machine Learning Weight Optimization Problems with mlrose-ky</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#example-the-iris-dataset">Example: the Iris Dataset</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#data-pre-processing">Data Pre-Processing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#neural-networks">Neural Networks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#linear-and-logistic-regression-models">Linear and Logistic Regression Models</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../runners/">4 - How to use Runners for Optimization Problems?</a>
+    <ul>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">📈 mlrose-ky</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">🧑🏻‍💻 Tutorials</li>
+      <li class="breadcrumb-item active">3 - What is a Machine Learning Weight Optimization Problem?</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="tutorial-machine-learning-weight-optimization-problems">Tutorial - Machine Learning Weight Optimization Problems<a class="headerlink" href="#tutorial-machine-learning-weight-optimization-problems" title="Permanent link">#</a></h1>
+<h2 id="what-is-a-machine-learning-weight-optimization-problem">What is a Machine Learning Weight Optimization Problem?<a class="headerlink" href="#what-is-a-machine-learning-weight-optimization-problem" title="Permanent link">#</a></h2>
+<p>For a number of different machine learning models, the process of fitting the model parameters involves finding the parameter values that minimize a pre-specified loss function for a given training dataset.</p>
+<p>Examples of such models include neural networks, linear regression models and logistic regression models, and the optimal model weights for such models are typically found using methods such as gradient descent.</p>
+<p>However, the problem of fitting the parameters (or weights) of a machine learning model can also be viewed as a continuous-state optimization problem, where the loss function takes the role of the fitness function, and the goal is to minimize this function.</p>
+<p>By framing the problem this way, we can use any of the randomized optimization algorithms that are suited to continuous-state optimization problems to fit the model parameters. In this tutorial, we will work through an example of how this can be done with mlrose-ky.</p>
+<h2 id="solving-machine-learning-weight-optimization-problems-with-mlrose-ky">Solving Machine Learning Weight Optimization Problems with mlrose-ky<a class="headerlink" href="#solving-machine-learning-weight-optimization-problems-with-mlrose-ky" title="Permanent link">#</a></h2>
+<p>mlrose-ky contains built-in functionality for solving the weight optimization problem for three types of machine learning models: (standard) neural networks, linear regression models and logistic regression models. This is done using the <code>NeuralNetwork()</code>, <code>LinearRegression()</code> and <code>LogisticRegression()</code> classes respectively.</p>
+<p>Each of these classes includes a <code>fit</code> method, which implements the three steps for solving an optimization problem defined in the previous tutorials, for a given training dataset.</p>
+<p>However, when fitting a machine learning model, finding the optimal model weights is merely a means to an end. We want to find the optimal model weights so that we can use our fitted model to predict the labels of future observations as accurately as possible, not because we are actually interested in knowing the optimal weight values.</p>
+<p>As a result, the abovementioned classes also include a <code>predict</code> method, which, if called after the <code>fit</code> method, will predict the labels for a given test dataset using the fitted model.</p>
+<p>The steps involved in solving a machine learning weight optimization problem with mlrose-ky are typically:</p>
+<ol>
+<li>Initialize a machine learning weight optimization problem object.</li>
+<li>Find the optimal model weights for a given training dataset by calling the <code>fit</code> method of the object initialized in step 1.</li>
+<li>Predict the labels for a test dataset by calling the <code>predict</code> method of the object initialized in step 1.</li>
+</ol>
+<p>To fit the model weights, the user can choose between using either randomized hill climbing, simulated annealing, the genetic algorithm or gradient descent. In mlrose-ky, the gradient descent algorithm is only available for use in solving the machine learning weight optimization problem and has been included primarily for benchmarking purposes, since this is one of the most common algorithm used in fitting neural networks and regression models.</p>
+<p>We will now work through an example to illustrate how mlrose-ky can be used to fit a neural network and a regression model to a given dataset.</p>
+<h3 id="example-the-iris-dataset">Example: the Iris Dataset<a class="headerlink" href="#example-the-iris-dataset" title="Permanent link">#</a></h3>
+<p>The Iris dataset is a famous multivariate classification dataset first presented in a 1936 research paper by statistician and biologist Ronald Fisher. It contains 150 observations of three classes (species) of iris flowers (50 observations of each class), with each observation providing the sepal length, sepal width, petal length and petal width (i.e. the feature values), as well as the class label (i.e. the target value), of each flower under consideration.</p>
+<p>The Iris dataset is included with the Python sklearn package. The feature values and label of the first observation in the dataset are shown below, along with the maximum and minimum values of each of the features and the unique label values:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Load the Iris dataset</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Get feature values</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">[</span> <span class="mf">5.1</span>  <span class="mf">3.5</span>  <span class="mf">1.4</span>  <span class="mf">0.2</span><span class="p">]</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># Get feature names</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">[</span><span class="s1">&#39;sepal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;sepal width (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal length (cm)&#39;</span><span class="p">,</span> <span class="s1">&#39;petal width (cm)&#39;</span><span class="p">]</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># Get target value of first observation</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="mi">0</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># Get target name of first observation</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">target_names</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="n">setosa</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1"># Get minimum feature values</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="p">[</span> <span class="mf">4.3</span>  <span class="mf">2.</span>   <span class="mf">1.</span>   <span class="mf">0.1</span><span class="p">]</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="c1"># Get maximum feature values</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="p">[</span> <span class="mf">7.9</span>  <span class="mf">4.4</span>  <span class="mf">6.9</span>  <span class="mf">2.5</span><span class="p">]</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="c1"># Get unique target values</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">))</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+</span></code></pre></div>
+<p>From this we can see that all features in the Iris data set are numeric, albeit with different ranges, and that the class labels have been represented by integers.</p>
+<p>In the next few sections we will show how mlrose-ky can be used to fit a neural network and a logistic regression model to this dataset, to predict the species of an iris flower given its feature values.</p>
+<h2 id="data-pre-processing">Data Pre-Processing<a class="headerlink" href="#data-pre-processing" title="Permanent link">#</a></h2>
+<p>Before we can fit any sort of machine learning model to a dataset, it is necessary to manipulate our data into the form expected by mlrose-ky. Each of the three machine learning models supported by mlrose-ky expect to receive feature data in the form of a numpy array, with one row per observation and numeric features only (any categorical features must be one-hot encoded before passing to the machine learning models).</p>
+<p>The models also expect to receive the target values as either: a list of numeric values (for regression data); a list of 0-1 indicator values (for binary classification data); or as a numpy array of one-hot encoded labels, with one row per observation (for multi-class classification data).</p>
+<p>In the case of the Iris dataset, all of our features are numeric, so no one-hot encoding is required. However, it is necessary to one-hot encode the class labels.</p>
+<p>In keeping with standard machine learning practice, it is also necessary to split the data into training and test subsets, and since the range of the Iris data varies considerably from feature to feature, to standardize the values of our feature variables.</p>
+<p>These pre-processing steps are implemented below.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Split data into training and test sets</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> \
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                                                    <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Normalize feature data</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1"># One hot encode target values</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">one_hot</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">y_train_hot</span> <span class="o">=</span> <span class="n">one_hot</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">y_test_hot</span> <span class="o">=</span> <span class="n">one_hot</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span>
+</span></code></pre></div>
+<h2 id="neural-networks">Neural Networks<a class="headerlink" href="#neural-networks" title="Permanent link">#</a></h2>
+<p>Once the data has been preprocessed, fitting a neural network in mlrose-ky simply involves following the steps listed above.</p>
+<p>Suppose we wish to fit a neural network classifier to our Iris dataset with one hidden layer containing 2 nodes and a ReLU activation function (mlrose-ky supports the ReLU, identity, sigmoid and tanh activation functions).</p>
+<p>For this example, we will use the Randomized Hill Climbing algorithm to find the optimal weights, with a maximum of 1000 iterations of the algorithm and 100 attempts to find a better set of weights at each step. We will also include a bias term; use a step size (learning rate) of 0.0001; and limit our weights to being in the range -5 to 5 (to reduce the landscape over which the algorithm must search in order to find the optimal weights).</p>
+<p>This model is initialized and fitted to our preprocessed data below:<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Initialize neural network object and fit object</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">nn_model1</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">NeuralNetwork</span><span class="p">(</span><span class="n">hidden_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">activation</span> <span class="o">=</span> <span class="s1">&#39;relu&#39;</span><span class="p">,</span> \
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>                                 <span class="n">algorithm</span> <span class="o">=</span> <span class="s1">&#39;random_hill_climb&#39;</span><span class="p">,</span> <span class="n">max_iters</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> \
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>                                 <span class="n">bias</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_classifier</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> \
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>                                 <span class="n">early_stopping</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clip_max</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> \
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>                                 <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">nn_model1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train_hot</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p>Once the model is fitted, we can use it to predict the labels for our training and test datasets and use these prediction to assess the model’s training and test accuracy.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Predict labels for train set and assess accuracy</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">nn_model1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">y_train_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_hot</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_train_accuracy</span><span class="p">)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="mf">0.45</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># Predict labels for test set and assess accuracy</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">nn_model1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">y_test_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_hot</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_test_accuracy</span><span class="p">)</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="mf">0.533333333333</span>
+</span></code></pre></div>
+<p>In this case, our model achieves training accuracy of 45% and test accuracy of 53.3%. These accuracy levels are better than if the labels were selected at random, but still leave room for improvement.</p>
+<p>We can potentially improve on the accuracy of our model by tuning the parameters we set when initializing the neural network object. Suppose we decide to change the optimization algorithm to gradient descent, but leave all other model parameters unchanged.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Initialize neural network object and fit object</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">nn_model2</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">NeuralNetwork</span><span class="p">(</span><span class="n">hidden_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">activation</span> <span class="o">=</span> <span class="s1">&#39;relu&#39;</span><span class="p">,</span> \
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                                 <span class="n">algorithm</span> <span class="o">=</span> <span class="s1">&#39;gradient_descent&#39;</span><span class="p">,</span> <span class="n">max_iters</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> \
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                                 <span class="n">bias</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_classifier</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> \
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>                                 <span class="n">early_stopping</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clip_max</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> \
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>                                 <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">nn_model2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train_hot</span><span class="p">)</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># Predict labels for train set and assess accuracy</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">nn_model2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">y_train_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_hot</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_train_accuracy</span><span class="p">)</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="mf">0.625</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c1"># Predict labels for test set and assess accuracy</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">nn_model2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="n">y_test_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_hot</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_test_accuracy</span><span class="p">)</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="mf">0.566666666667</span>
+</span></code></pre></div>
+<p>This results in a 39% increase in training accuracy to 62.5%, but a much smaller increase in test accuracy to 56.7%.</p>
+<h2 id="linear-and-logistic-regression-models">Linear and Logistic Regression Models<a class="headerlink" href="#linear-and-logistic-regression-models" title="Permanent link">#</a></h2>
+<p>Linear and logistic regression models are special cases of neural networks. A linear regression is a regression neural network with no hidden layers and an identity activation fuction, while a logistic regression is a classification neural network with no hidden layers and a sigmoid activation function. As a result, we could fit either of these models to our data using the <code>NeuralNetwork()</code> class with parameters set appropriately.</p>
+<p>For example, suppose we wished to fit a logistic regression to our Iris data using the randomized hill climbing algorithm and all other parameters set as for the example in the previous section. We could do this by initializing a <code>NeuralNetwork()</code> object like so:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">lr_nn_model1</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">NeuralNetwork</span><span class="p">(</span><span class="n">hidden_nodes</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">activation</span> <span class="o">=</span> <span class="s1">&#39;sigmoid&#39;</span><span class="p">,</span> \
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>                                    <span class="n">algorithm</span> <span class="o">=</span> <span class="s1">&#39;random_hill_climb&#39;</span><span class="p">,</span> <span class="n">max_iters</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> \
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                                    <span class="n">bias</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_classifier</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> \
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>                                    <span class="n">early_stopping</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clip_max</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> \
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>                                    <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+<p>However, for convenience, mlrose-ky provides the <code>LinearRegression()</code> and <code>LogisticRegression()</code> wrapper classes, which simplify model initialization.</p>
+<p>In our Iris dataset example, we can, thus, initialize and fit our logistic regression model as follows:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Initialize logistic regression object and fit object</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">lr_model1</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">algorithm</span> <span class="o">=</span> <span class="s1">&#39;random_hill_climb&#39;</span><span class="p">,</span> <span class="n">max_iters</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> \
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>                                      <span class="n">bias</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> \
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>                                      <span class="n">early_stopping</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clip_max</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> \
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>                                      <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">lr_model1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train_hot</span><span class="p">)</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># Predict labels for train set and assess accuracy</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">lr_model1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">y_train_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_hot</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_train_accuracy</span><span class="p">)</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="mf">0.191666666667</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1"># Predict labels for test set and assess accuracy</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">lr_model1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="n">y_test_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_hot</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_test_accuracy</span><span class="p">)</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="mf">0.0666666666667</span>
+</span></code></pre></div>
+<p>This model achieves 19.2% training accuracy and 6.7% test accuracy, which is worse than if we predicted the labels by selecting values at random.</p>
+<p>Nevertheless, as in the previous section, we can potentially improve model accuracy by tuning the parameters set at initialization.</p>
+<p>Suppose we increase our learning rate to 0.01.<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Initialize logistic regression object and fit object</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">lr_model2</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">algorithm</span> <span class="o">=</span> <span class="s1">&#39;random_hill_climb&#39;</span><span class="p">,</span> <span class="n">max_iters</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> \
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>                                      <span class="n">bias</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> \
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>                                      <span class="n">early_stopping</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">clip_max</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> \
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>                                      <span class="n">random_state</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">lr_model2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train_hot</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Predict labels for train set and assess accuracy</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">lr_model2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">y_train_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_hot</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_train_accuracy</span><span class="p">)</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="mf">0.683333333333</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1"># Predict labels for test set and assess accuracy</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">lr_model2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="n">y_test_accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_hot</span><span class="p">,</span> <span class="n">y_test_pred</span><span class="p">)</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">y_test_accuracy</span><span class="p">)</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="mf">0.7</span>
+</span></code></pre></div></p>
+<p>This results in signficant improvements to both training and test accuracy, with training accuracy levels now reaching 68.3% and test accuracy levels reaching 70%.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">#</a></h2>
+<p>In this tutorial we demonstrated how mlrose-ky can be used to find the optimal weights of three types of machine learning models: neural networks, linear regression models and logistic regression models.</p>
+<p>Applying randomized optimization algorithms to the machine learning weight optimization problem is most certainly not the most common approach to solving this problem. However, it serves to demonstrate the versatility of the mlrose-ky package and of randomized optimization algorithms in general.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../tutorial2/" class="btn btn-neutral float-left" title="2 - What is a Travelling Salesman Problem?"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../runners/" class="btn btn-neutral float-right" title="4 - How to use Runners for Optimization Problems?">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../tutorial2/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../runners/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

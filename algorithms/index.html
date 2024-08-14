@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>🛹 Algorithms - 📈 mlrose-ky</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\ud83d\udef9 Algorithms";
+        var mkdocs_page_input_path = "algorithms.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> 📈 mlrose-ky
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">🏚️ Home</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="..#user-guide">User Guide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-1-getting-started">Tutorial 1 - Getting Started</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-2-travelling-saleperson-problems">Tutorial 2 - Travelling Saleperson Problems</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-3-ml-weight-optimization-problems">Tutorial 3 - ML Weight Optimization Problems</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../about/">？ About</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#project-background">Project Background</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#main-features">Main Features</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#licensing-authors-acknowledgements">Licensing, Authors, Acknowledgements</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="https://github.com/knakamura13/mlrose-ky">🔗 Github</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">↯ Randomized Optimizations</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../opt_probs/">🤔 Optimization Problems</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#discrete-optimisation-problem">Discrete Optimisation Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#continuous-optimisation-problem">Continuous Optimisation Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#travelling-salesperson-optimisation-problem">Travelling Salesperson Optimisation Problem</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">🛹 Algorithms</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#hill-climbing">Hill Climbing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#references">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#random-hill-climbing">Random Hill Climbing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#references_1">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#simulated-annealing">Simulated Annealing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#references_2">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#genetic-algorithms">Genetic Algorithms</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#references_3">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mimic">MIMIC</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#references_4">References</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../decay/">📅 Decay Schedules</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#geometric-decay">Geometric Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#formula">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-declaration">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#arithmetic-decay">Arithmetic Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#formula_1">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-declaration_1">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method_1">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example_1">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#exponential-decay">Exponential Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#formula_2">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-declaration_2">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method_2">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example_2">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../decay/#write-your-own-custom-schedule">Write your own custom schedule</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#example_3">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../decay/#class-method_3">Class method</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../fitness/">🏃🏻 Fitness Functions</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#one-max">One Max</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#flip-flops">Flip Flops</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_1">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_1">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_1">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_1">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#four-peaks">Four Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_2">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_2">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_2">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_2">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#six-peaks">Six Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_3">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_3">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_3">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_3">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references_1">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#continuous-peaks">Continuous Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_4">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_4">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_4">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_4">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#knapsack">Knapsack</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_5">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_5">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_5">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_5">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#travelling-salesman-tsp">Travelling Salesman (TSP)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_6">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_6">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_6">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_6">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#n-queens">N-Queens</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_7">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_7">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_7">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_7">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references_2">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#max-k-color">Max K Color</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_8">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_8">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_8">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_8">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#write-your-own-fitness-function">Write your own fitness function</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_9">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_9">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_9">Example</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">🧠 Neural Networks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../neural/">📉 Backpropagation using ROs</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#neural-network">Neural Network</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#linear-regression">Linear Regression</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#logistic-regression">Logistic Regression</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">🧑🏻‍💻 Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial1/">1 - Getting Started</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#what-is-an-optimization-problem">What is an Optimization Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#why-use-randomized-optimization">Why use Randomized Optimization?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#solving-optimization-problems-with-mlrose-ky">Solving Optimization Problems with mlrose-ky</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#define-a-fitness-function-object">Define a Fitness Function Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#define-an-optimization-problem-object">Define an Optimization Problem Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#select-and-run-a-randomized-optimization-algorithm">Select and Run a Randomized Optimization Algorithm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#summary">Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#references">References</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial2/">2 - What is a Travelling Salesman Problem?</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#what-is-a-travelling-salesperson-problem">What is a Travelling Salesperson Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#solving-tsps-with-mlrose-ky">Solving TSPs with mlrose-ky</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#define-a-fitness-function-object">Define a Fitness Function Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#define-an-optimization-problem-object">Define an Optimization Problem Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#select-and-run-a-randomized-optimization-algorithm">Select and Run a Randomized Optimization Algorithm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#summary">Summary</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial3/">3 - What is a Machine Learning Weight Optimization Problem?</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#what-is-a-machine-learning-weight-optimization-problem">What is a Machine Learning Weight Optimization Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#solving-machine-learning-weight-optimization-problems-with-mlrose-ky">Solving Machine Learning Weight Optimization Problems with mlrose-ky</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../tutorial3/#example-the-iris-dataset">Example: the Iris Dataset</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#data-pre-processing">Data Pre-Processing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#neural-networks">Neural Networks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#linear-and-logistic-regression-models">Linear and Logistic Regression Models</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#summary">Summary</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../runners/">4 - How to use Runners for Optimization Problems?</a>
+    <ul>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">📈 mlrose-ky</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">↯ Randomized Optimizations</li>
+      <li class="breadcrumb-item active">🛹 Algorithms</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="algorithms">Algorithms<a class="headerlink" href="#algorithms" title="Permanent link">#</a></h1>
+<p>Functions to implement the randomized optimization and search algorithms.</p>
+<div class="admonition note">
+<p class="admonition-title">Recommendation</p>
+<p>The below functions are implemented within mlrose-ky. However, it is highly recommended to use the <a href="/runners/">Runners</a> for assignment.</p>
+</div>
+<h2 id="hill-climbing">Hill Climbing<a class="headerlink" href="#hill-climbing" title="Permanent link">#</a></h2>
+<p>Use standard hill climbing to find the optimum for a given optimization problem.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">hill_climb</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">problem</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">max_iters</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">restarts</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">init_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">curve</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
+<li><strong>max_iters</strong> (<em>int, default: np.inf</em>) – Maximum number of iterations of the algorithm for each restart.</li>
+<li><strong>restarts</strong> (<em>int, default: 0</em>) – Number of random restarts.</li>
+<li><strong>init_state</strong> (<em>array, default: None</em>) – 1-D Numpy array containing starting state for algorithm. If <code>None</code>, then a random state is used.</li>
+<li><strong>curve</strong> (<em>bool, default: False</em>) – Boolean to keep fitness values for a curve. If <code>False</code>, then no curve is stored. If <code>True</code>, then a history of fitness values is provided as a third return value.</li>
+<li><strong>random_state</strong> (<em>int, default: None</em>) – If random_state is a positive integer, random_state is the seed used by np.random.seed(); otherwise, the random seed is not set.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong>best_state</strong> (<em>array</em>) – Numpy array containing state that optimizes the fitness function.</li>
+<li><strong>best_fitness</strong> (<em>float</em>) – Value of fitness function at best state.</li>
+<li><strong>fitness_curve</strong> (<em>array</em>) – Numpy array containing the fitness at every iteration. Only returned if input argument <code>curve</code> is <code>True</code>.</li>
+</ul>
+<h3 id="references">References<a class="headerlink" href="#references" title="Permanent link">#</a></h3>
+<p>Russell, S. and P. Norvig (2010). <em>Artificial Intelligence: A Modern Approach</em>, 3rd edition. Prentice Hall, New Jersey, USA.</p>
+<h2 id="random-hill-climbing">Random Hill Climbing<a class="headerlink" href="#random-hill-climbing" title="Permanent link">#</a></h2>
+<p>Use randomized hill climbing to find the optimum for a given optimization problem.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">random_hill_climb</span><span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">problem</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">max_attempts</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">max_iters</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">restarts</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">init_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">curve</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
+<li><strong>max_attempts</strong> (<em>int, default: 10</em>) – Maximum number of attempts to find a better neighbor at each step.</li>
+<li><strong>max_iters</strong> (<em>int, default: np.inf</em>) – Maximum number of iterations of the algorithm.</li>
+<li><strong>restarts</strong> (<em>int, default: 0</em>) – Number of random restarts.</li>
+<li><strong>init_state</strong> (<em>array, default: None</em>) – 1-D Numpy array containing starting state for algorithm. If <code>None</code>, then a random state is used.</li>
+<li><strong>curve</strong> (<em>bool, default: False</em>) – Boolean to keep fitness values for a curve. If <code>False</code>, then no curve is stored. If <code>True</code>, then a history of fitness values is provided as a third return value.</li>
+<li><strong>random_state</strong> (<em>int, default: None</em>) – If random_state is a positive integer, random_state is the seed used by np.random.seed(); otherwise, the random seed is not set.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><strong>best_state</strong> (<em>array</em>) – Numpy array containing state that optimizes the fitness function.</li>
+<li><strong>best_fitness</strong> (<em>float</em>) – Value of fitness function at best state.</li>
+<li><strong>fitness_curve</strong> (<em>array</em>) – Numpy array containing the fitness at every iteration. Only returned if input argument <code>curve</code> is <code>True</code>.</li>
+</ul>
+<h3 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">#</a></h3>
+<p>Brownlee, J (2011). <em>Clever Algorithms: Nature-Inspired Programming Recipes</em>. <a href="http://www.cleveralgorithms.com/">http://www.cleveralgorithms.com</a>.</p>
+<h2 id="simulated-annealing">Simulated Annealing<a class="headerlink" href="#simulated-annealing" title="Permanent link">#</a></h2>
+<p>Use simulated annealing to find the optimum for a given optimization problem.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">simulated_annealing</span><span class="p">(</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">problem</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">schedule</span><span class="o">=&lt;</span><span class="n">mlrose_ky</span><span class="o">.</span><span class="n">decay</span><span class="o">.</span><span class="n">GeomDecay</span> <span class="nb">object</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">max_attempts</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">max_iters</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">init_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">curve</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
+<li><strong>schedule</strong> (schedule object, default: <code>mlrose_ky.GeomDecay()</code>) – Schedule used to determine the value of the temperature parameter.</li>
+<li><strong>max_attempts</strong> (<em>int, default: 10</em>) – Maximum number of attempts to find a better neighbor at each step.</li>
+<li><strong>max_iters</strong> (<em>int, default: np.inf</em>) – Maximum number of iterations of the algorithm.</li>
+<li><strong>init_state</strong> (<em>array, default: None</em>) – 1-D Numpy array containing starting state for algorithm. If <code>None</code>, then a random state is used.</li>
+<li><strong>curve</strong> (<em>bool, default: False</em>) – Boolean to keep fitness values for a curve. If <code>False</code>, then no curve is stored. If <code>True</code>, then a history of fitness values is provided as a third return value.</li>
+<li><strong>random_state</strong> (<em>int, default: None</em>) – If random_state is a positive integer, random_state is the seed used by np.random.seed(); otherwise, the random seed is not set.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><strong>best_state</strong> (<em>array</em>) – Numpy array containing state that optimizes the fitness function.</li>
+<li><strong>best_fitness</strong> (<em>float</em>) – Value of fitness function at best state.</li>
+<li><strong>fitness_curve</strong> (<em>array</em>) – Numpy array containing the fitness at every iteration. Only returned if input argument <code>curve</code> is <code>True</code>.</li>
+</ul>
+<h3 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">#</a></h3>
+<p>Russell, S. and P. Norvig (2010). <em>Artificial Intelligence: A Modern Approach</em>, 3rd edition. Prentice Hall, New Jersey, USA.</p>
+<h2 id="genetic-algorithms">Genetic Algorithms<a class="headerlink" href="#genetic-algorithms" title="Permanent link">#</a></h2>
+<p>Use a standard genetic algorithm to find the optimum for a given optimization problem.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">genetic_alg</span><span class="p">(</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">problem</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">mutation_prob</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">max_attempts</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">max_iters</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">curve</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
+<li><strong>pop_size</strong> (<em>int, default: 200</em>) – Size of population to be used in genetic algorithm.</li>
+<li><strong>mutation_prob</strong> (<em>float, default: 0.1</em>) – Probability of a mutation at each element of the state vector during reproduction, expressed as a value between 0 and 1.</li>
+<li><strong>max_attempts</strong> (<em>int, default: 10</em>) – Maximum number of attempts to find a better state at each step.</li>
+<li><strong>max_iters</strong> (<em>int, default: np.inf</em>) – Maximum number of iterations of the algorithm.</li>
+<li><strong>curve</strong> (<em>bool, default: False</em>) – Boolean to keep fitness values for a curve. If <code>False</code>, then no curve is stored. If <code>True</code>, then a history of fitness values is provided as a third return value.</li>
+<li><strong>random_state</strong> (<em>int, default: None</em>) – If random_state is a positive integer, random_state is the seed used by np.random.seed(); otherwise, the random seed is not set.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><strong>best_state</strong> (<em>array</em>) – Numpy array containing state that optimizes the fitness function.</li>
+<li><strong>best_fitness</strong> (<em>float</em>) – Value of fitness function at best state.</li>
+<li><strong>fitness_curve</strong> (<em>array</em>) – Numpy array of arrays containing the fitness of the entire population at every iteration. Only returned if input argument <code>curve</code> is <code>True</code>.</li>
+</ul>
+<h3 id="references_3">References<a class="headerlink" href="#references_3" title="Permanent link">#</a></h3>
+<p>Russell, S. and P. Norvig (2010). <em>Artificial Intelligence: A Modern Approach</em>, 3rd edition. Prentice Hall, New Jersey, USA.</p>
+<h2 id="mimic">MIMIC<a class="headerlink" href="#mimic" title="Permanent link">#</a></h2>
+<p>Use MIMIC to find the optimum for a given optimization problem.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">mimic</span><span class="p">(</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">problem</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">pop_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">keep_pct</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">max_attempts</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">max_iters</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">),</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">curve</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">fast_mimic</span><span class="o">=</span><span class="kc">False</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Warning</p>
+<p>MIMIC cannot be used for solving continuous-state optimization problems.</p>
+</div>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code> or <code>TSPOpt()</code>.</li>
+<li><strong>pop_size</strong> (<em>int, default: 200</em>) – Size of population to be used in algorithm.</li>
+<li><strong>keep_pct</strong> (<em>float, default: 0.2</em>) – Proportion of samples to keep at each iteration of the algorithm, expressed as a value between 0 and 1.</li>
+<li><strong>max_attempts</strong> (<em>int, default: 10</em>) – Maximum number of attempts to find a better neighbor at each step.</li>
+<li><strong>max_iters</strong> (<em>int, default: np.inf</em>) – Maximum number of iterations of the algorithm.</li>
+<li><strong>curve</strong> (<em>bool, default: False</em>) – Boolean to keep fitness values for a curve. If <code>False</code>, then no curve is stored. If <code>True</code>, then a history of fitness values is provided as a third return value.</li>
+<li><strong>random_state</strong> (<em>int, default: None</em>) – If random_state is a positive integer, random_state is the seed used by np.random.seed(); otherwise, the random seed is not set.</li>
+<li><strong>fast_mimic</strong> (<em>bool, default: False</em>) – Activate fast mimic mode to compute the mutual information in vectorized form. Faster speed but requires more memory.</li>
+</ul>
+<p><strong>Returns</strong>:</p>
+<ul>
+<li><strong>best_state</strong> (<em>array</em>) – Numpy array containing state that optimizes the fitness function.</li>
+<li><strong>best_fitness</strong> (<em>float</em>) – Value of fitness function at best state.</li>
+<li><strong>fitness_curve</strong> (<em>array</em>) – Numpy array containing the fitness at every iteration. Only returned if input argument <code>curve</code> is <code>True</code>.</li>
+</ul>
+<h3 id="references_4">References<a class="headerlink" href="#references_4" title="Permanent link">#</a></h3>
+<p>De Bonet, J., C. Isbell, and P. Viola (1997). MIMIC: Finding Optima by Estimating Probability Densities. In <em>Advances in Neural Information Processing Systems</em> (NIPS) 9, pp. 424–430.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../opt_probs/" class="btn btn-neutral float-left" title="🤔 Optimization Problems"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../decay/" class="btn btn-neutral float-right" title="📅 Decay Schedules">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../opt_probs/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../decay/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

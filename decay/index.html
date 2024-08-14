@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>📅 Decay Schedules - 📈 mlrose-ky</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\ud83d\udcc5 Decay Schedules";
+        var mkdocs_page_input_path = "decay.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> 📈 mlrose-ky
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">🏚️ Home</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="..#user-guide">User Guide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-1-getting-started">Tutorial 1 - Getting Started</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-2-travelling-saleperson-problems">Tutorial 2 - Travelling Saleperson Problems</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-3-ml-weight-optimization-problems">Tutorial 3 - ML Weight Optimization Problems</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../about/">？ About</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#project-background">Project Background</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#main-features">Main Features</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../about/#licensing-authors-acknowledgements">Licensing, Authors, Acknowledgements</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="https://github.com/knakamura13/mlrose-ky">🔗 Github</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">↯ Randomized Optimizations</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../opt_probs/">🤔 Optimization Problems</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#discrete-optimisation-problem">Discrete Optimisation Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#continuous-optimisation-problem">Continuous Optimisation Problem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../opt_probs/#travelling-salesperson-optimisation-problem">Travelling Salesperson Optimisation Problem</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../algorithms/">🛹 Algorithms</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#hill-climbing">Hill Climbing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#random-hill-climbing">Random Hill Climbing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_1">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#simulated-annealing">Simulated Annealing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_2">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#genetic-algorithms">Genetic Algorithms</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_3">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../algorithms/#mimic">MIMIC</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../algorithms/#references_4">References</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">📅 Decay Schedules</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#geometric-decay">Geometric Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#formula">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-declaration">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-method">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#arithmetic-decay">Arithmetic Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#formula_1">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-declaration_1">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-method_1">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_1">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exponential-decay">Exponential Decay</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#formula_2">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-declaration_2">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-method_2">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_2">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#write-your-own-custom-schedule">Write your own custom schedule</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#example_3">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#class-method_3">Class method</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../fitness/">🏃🏻 Fitness Functions</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#one-max">One Max</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#flip-flops">Flip Flops</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_1">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_1">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_1">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_1">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#four-peaks">Four Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_2">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_2">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_2">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_2">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#six-peaks">Six Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_3">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_3">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_3">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_3">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references_1">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#continuous-peaks">Continuous Peaks</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_4">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_4">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_4">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_4">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#knapsack">Knapsack</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_5">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_5">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_5">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_5">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#travelling-salesman-tsp">Travelling Salesman (TSP)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_6">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_6">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_6">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_6">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#n-queens">N-Queens</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_7">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_7">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_7">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_7">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#references_2">References</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#max-k-color">Max K Color</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#formula_8">Formula</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_8">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_8">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_8">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../fitness/#write-your-own-fitness-function">Write your own fitness function</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-declaration_9">Class declaration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#class-method_9">Class method</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="../fitness/#example_9">Example</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">🧠 Neural Networks</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../neural/">📉 Backpropagation using ROs</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#neural-network">Neural Network</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#linear-regression">Linear Regression</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../neural/#logistic-regression">Logistic Regression</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">🧑🏻‍💻 Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial1/">1 - Getting Started</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#what-is-an-optimization-problem">What is an Optimization Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#why-use-randomized-optimization">Why use Randomized Optimization?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#solving-optimization-problems-with-mlrose-ky">Solving Optimization Problems with mlrose-ky</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#define-a-fitness-function-object">Define a Fitness Function Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#define-an-optimization-problem-object">Define an Optimization Problem Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#select-and-run-a-randomized-optimization-algorithm">Select and Run a Randomized Optimization Algorithm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#summary">Summary</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial1/#references">References</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial2/">2 - What is a Travelling Salesman Problem?</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#what-is-a-travelling-salesperson-problem">What is a Travelling Salesperson Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#solving-tsps-with-mlrose-ky">Solving TSPs with mlrose-ky</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#define-a-fitness-function-object">Define a Fitness Function Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#define-an-optimization-problem-object">Define an Optimization Problem Object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#select-and-run-a-randomized-optimization-algorithm">Select and Run a Randomized Optimization Algorithm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial2/#summary">Summary</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorial3/">3 - What is a Machine Learning Weight Optimization Problem?</a>
+    <ul>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#what-is-a-machine-learning-weight-optimization-problem">What is a Machine Learning Weight Optimization Problem?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#solving-machine-learning-weight-optimization-problems-with-mlrose-ky">Solving Machine Learning Weight Optimization Problems with mlrose-ky</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="../tutorial3/#example-the-iris-dataset">Example: the Iris Dataset</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#data-pre-processing">Data Pre-Processing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#neural-networks">Neural Networks</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#linear-and-logistic-regression-models">Linear and Logistic Regression Models</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="../tutorial3/#summary">Summary</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../runners/">4 - How to use Runners for Optimization Problems?</a>
+    <ul>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">📈 mlrose-ky</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">↯ Randomized Optimizations</li>
+      <li class="breadcrumb-item active">📅 Decay Schedules</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="decay-schedules">Decay Schedules<a class="headerlink" href="#decay-schedules" title="Permanent link">#</a></h1>
+<p>Classes for defining decay schedules for simulated annealing.</p>
+<h2 id="geometric-decay">Geometric Decay<a class="headerlink" href="#geometric-decay" title="Permanent link">#</a></h2>
+<p>Schedule for geometrically decaying the simulated annealing temperature parameter T according to the formula:</p>
+<h3 id="formula">Formula<a class="headerlink" href="#formula" title="Permanent link">#</a></h3>
+<div class="arithmatex">\[ T(t) = \max(T_0 \times r^t, T_{min}) \]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\( T_0 \)</span> is the initial temperature (at time <span class="arithmatex">\( t = 0 \)</span>);</li>
+<li><span class="arithmatex">\( r \)</span> is the rate of geometric decay; and</li>
+<li><span class="arithmatex">\( T_{min} \)</span> is the minimum temperature value.</li>
+</ul>
+<h3 id="class-declaration">Class declaration<a class="headerlink" href="#class-declaration" title="Permanent link">#</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">GeomDecay</span><span class="p">(</span><span class="n">init_temp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">decay</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">min_temp</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>init_temp</strong> (<em>float, default: 1.0</em>) – Initial value of temperature parameter T. Must be greater than 0.</li>
+<li><strong>decay</strong> (<em>float, default: 0.99</em>) – Temperature decay parameter, r. Must be between 0 and 1.</li>
+<li><strong>min_temp</strong> (<em>float, default: 0.001</em>) – Minimum value of temperature parameter. Must be greater than 0.</li>
+</ul>
+<h3 id="class-method">Class method<a class="headerlink" href="#class-method" title="Permanent link">#</a></h3>
+<p>Evaluate the temperature parameter at time t.<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Parameters</strong>: <strong>t</strong> (<em>int</em>) – Time at which the temperature paramter T is evaluated.</p>
+<p><strong>Returns</strong>: <strong>temp</strong> (<em>float</em>) – Temperature parameter at time t.</p>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">mlrose_ky</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">GeomDecay</span><span class="p">(</span><span class="n">init_temp</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">decay</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">min_temp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="mf">7.73780</span><span class="o">...</span>
+</span></code></pre></div>
+<h2 id="arithmetic-decay">Arithmetic Decay<a class="headerlink" href="#arithmetic-decay" title="Permanent link">#</a></h2>
+<p>Schedule for arithmetically decaying the simulated annealing temperature parameter T according to the formula:</p>
+<h3 id="formula_1">Formula<a class="headerlink" href="#formula_1" title="Permanent link">#</a></h3>
+<div class="arithmatex">\[ T(t) = \max(T_{0} - rt, T_{min}) \]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\( T_{0} \)</span> is the initial temperature (at time t = 0);</li>
+<li><span class="arithmatex">\( r \)</span> is the rate of arithmetic decay; and</li>
+<li><span class="arithmatex">\( T_{min} \)</span> is the minimum temperature value.</li>
+</ul>
+<h3 id="class-declaration_1">Class declaration<a class="headerlink" href="#class-declaration_1" title="Permanent link">#</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span> <span class="nc">ArithDecay</span><span class="p">(</span><span class="n">init_temp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">decay</span><span class="o">=</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="n">min_temp</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>init_temp</strong> (<em>float, default: 1.0</em>) – Initial value of temperature parameter T. Must be greater than 0.</li>
+<li><strong>decay</strong> (<em>float, default: 0.0001</em>) – Temperature decay parameter, r. Must be greater than 0.</li>
+<li><strong>min_temp</strong> (<em>float, default: 0.001</em>) – Minimum value of temperature parameter. Must be greater than 0.</li>
+</ul>
+<h3 id="class-method_1">Class method<a class="headerlink" href="#class-method_1" title="Permanent link">#</a></h3>
+<p>Evaluate the temperature parameter at time t.<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Parameters</strong>: <strong>t</strong> (<em>int</em>) – Time at which the temperature paramter T is evaluated.</p>
+<p><strong>Returns</strong>: <strong>temp</strong> (<em>float</em>) – Temperature parameter at time t.</p>
+<h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">#</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">mlrose_ky</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">ArithDecay</span><span class="p">(</span><span class="n">init_temp</span>\<span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">decay</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">min_temp</span>\<span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="mf">5.25</span>
+</span></code></pre></div>
+<h2 id="exponential-decay">Exponential Decay<a class="headerlink" href="#exponential-decay" title="Permanent link">#</a></h2>
+<p>Schedule for exponentially decaying the simulated annealing temperature parameter T according to the formula.</p>
+<h3 id="formula_2">Formula<a class="headerlink" href="#formula_2" title="Permanent link">#</a></h3>
+<div class="arithmatex">\[ T(t) = \max(T_{0} e^{-rt}, T_{min}) \]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\( T_{0} \)</span> is the initial temperature (at time t = 0);</li>
+<li><span class="arithmatex">\( r \)</span> is the rate of arithmetic decay; and</li>
+<li><span class="arithmatex">\( T_{min} \)</span> is the minimum temperature value.</li>
+</ul>
+<h3 id="class-declaration_2">Class declaration<a class="headerlink" href="#class-declaration_2" title="Permanent link">#</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span> <span class="nc">ExpDecay</span><span class="p">(</span><span class="n">init_temp</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">exp_const</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">min_temp</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>init_temp</strong> (<em>float, default: 1.0</em>) – Initial value of temperature parameter T. Must be greater than 0.</li>
+<li><strong>exp_const</strong> (<em>float, default: 0.005</em>) – Exponential constant parameter, r. Must be greater than 0.</li>
+<li><strong>min_temp</strong> (<em>float, default: 0.001</em>) – Minimum value of temperature parameter. Must be greater than 0.</li>
+</ul>
+<h3 id="class-method_2">Class method<a class="headerlink" href="#class-method_2" title="Permanent link">#</a></h3>
+<p>Evaluate the temperature parameter at time t.<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Parameters</strong>: <strong>t</strong> (<em>int</em>) – Time at which the temperature paramter T is evaluated.</p>
+<p><strong>Returns</strong>: <strong>temp</strong> (<em>float</em>) – Temperature parameter at time t.</p>
+<h3 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">#</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">mlrose_ky</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">ExpDecay</span><span class="p">(</span><span class="n">init_temp</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">exp_const</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">min_temp</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="mf">7.78800</span><span class="o">...</span>
+</span></code></pre></div>
+<h2 id="write-your-own-custom-schedule">Write your own custom schedule<a class="headerlink" href="#write-your-own-custom-schedule" title="Permanent link">#</a></h2>
+<p>Class for generating your own temperature schedule.<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">class</span> <span class="nc">CustomSchedule</span><span class="p">(</span><span class="n">schedule</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>schedule</strong> (<em>callable</em>) – Function for calculating the temperature at time t with the signature <code>schedule(t, **kwargs)</code>.</li>
+<li><strong>kwargs</strong> (<em>additional arguments</em>) – Additional parameters to be passed to schedule.</li>
+</ul>
+<h3 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">#</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">mlrose_ky</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">custom</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span> <span class="k">return</span> <span class="n">t</span> <span class="o">+</span> <span class="n">c</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">kwargs</span> \<span class="o">=</span> <span class="p">{</span><span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span> \<span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">CustomSchedule</span><span class="p">(</span><span class="n">custom</span><span class="p">,</span> \<span class="o">*</span>\<span class="o">*</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">schedule</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="mi">15</span>
+</span></code></pre></div>
+<h3 id="class-method_3">Class method<a class="headerlink" href="#class-method_3" title="Permanent link">#</a></h3>
+<p>Evaluate the temperature parameter at time t.<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Parameters</strong>: <strong>t</strong> (<em>int</em>) – Time at which the temperature paramter T is evaluated.</p>
+<p><strong>Returns</strong>: <strong>temp</strong> (<em>float</em>) – Temperature parameter at time t.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../algorithms/" class="btn btn-neutral float-left" title="🛹 Algorithms"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../fitness/" class="btn btn-neutral float-right" title="🏃🏻 Fitness Functions">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../algorithms/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../fitness/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../javascripts/mathjax.js"></script>
+      <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
