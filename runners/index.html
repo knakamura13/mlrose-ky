@@ -50,6 +50,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="..#tutorial-3-ml-weight-optimization-problems">Tutorial 3 - ML Weight Optimization Problems</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-4-using-runners">Tutorial 4 - Using Runners</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -396,8 +398,72 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="wip">WIP<a class="headerlink" href="#wip" title="Permanent link">#</a></h1>
-<p>Work in Progress.</p>
+                <h1 id="tutorial-how-to-use-runners">Tutorial - How to use Runners?<a class="headerlink" href="#tutorial-how-to-use-runners" title="Permanent link">#</a></h1>
+<div class="admonition info">
+<p class="admonition-title">Recommendation</p>
+<p>It is highly recommended that you use the <a href="https://github.com/knakamura13/mlrose-ky/tree/main/mlrose_ky/runners"><code>Runners class</code></a> for the second assignment on randomized optimizations.</p>
+</div>
+<h1 id="an-example-with-rhc-runner">An example with RHC Runner<a class="headerlink" href="#an-example-with-rhc-runner" title="Permanent link">#</a></h1>
+<p>The below example illustrates how to initialize an RHCRunner object.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">mlrose_ky</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># initialize the following variables</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">problem</span> <span class="o">=</span> <span class="c1"># An opt prob object from [[opt_probs]]</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">seed</span> <span class="o">=</span> <span class="c1"># a seed so experiments are reproducible</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">iteration_list</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">5000</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">restart_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span><span class="mi">75</span><span class="p">,</span><span class="mi">100</span><span class="p">]</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">rhc</span> <span class="o">=</span> <span class="n">mlrose_ky</span><span class="o">.</span><span class="n">RHCRunner</span><span class="p">(</span><span class="n">problem</span><span class="o">=</span><span class="n">problem</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                        <span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;exp_name&quot;</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                        <span class="n">seed</span><span class="o">=</span><span class="n">seed</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                        <span class="n">iteration_list</span> <span class="o">=</span> <span class="n">iteration_list</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                        <span class="n">max_attempts</span><span class="o">=</span><span class="n">max_attempts</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                        <span class="n">restart_list</span><span class="o">=</span><span class="n">restart_list</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                         <span class="p">)</span>
+</span></code></pre></div>
+<p>The <code>.run()</code> method can be called on the <code>rhc</code> to return 2 dataframes that contain the results.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">df_run_stats</span><span class="p">,</span> <span class="n">df_run_curves</span> <span class="o">=</span> <span class="n">rhc</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</span></code></pre></div>
+<p>The <code>df_run_stats</code> dataframe records the information based on  the parameters in the restart list, i.e. 25 restarts, 75 restarts and 100 restarts. For the other runners, the <code>df_run_stats</code> follows the iteration list instead, i.e. <code>df_run_stats</code> has information based on list mentioned in <code>iteration_list</code></p>
+<p>However, we use <code>df_run_curves</code> for plotting that has all the information, i.e. all restarts from 0 to 100.</p>
+<div class="admonition info">
+<p class="admonition-title">Recommendation</p>
+<p>Since the experiments take a lot of time to run, it is highly recommended that you save the  <code>df_run_curves</code> output using the <code>pandas.to_csv()</code> method.&gt;</p>
+</div>
+<p>This saved <code>df_run_curves</code> returns a nice dataframe that can be used with plotting functions (which is a WIP in <code>mlrose-ky</code>).</p>
+<p>The output has the following items:<br />
+- <code>Fitness</code> score<br />
+- <code>FEvals</code> (Fitness Evaluations)<br />
+- <code>Time</code> (in seconds)<br />
+- Other algorithm variables depending on Runner used, eg: <code>Population Size</code> and <code>Keep Percent</code> for MIMIC.</p>
+<details class="warning">
+<summary>Recommendation</summary>
+<p>Simulated Annealing does not track <code>decay</code> types so it is best to record different <code>decay</code> types into <code>df_run_curves</code> before saving the runner.</p>
+</details>
+<h1 id="use-runners-to-make-your-own-custom-wrapper">Use runners to make your own custom wrapper<a class="headerlink" href="#use-runners-to-make-your-own-custom-wrapper" title="Permanent link">#</a></h1>
+<p>The best way to use runners would be to wrap and call the runners in your own function. One example workflow is below.</p>
+<ol>
+<li>
+<p>Pass the following input to the function.</p>
+<ol>
+<li>Generate a problem using one of the <a href="https://github.com/knakamura13/mlrose-ky/tree/main/mlrose_ky/generators">problem generators</a>.</li>
+<li>Pass in the <code>seed</code>, <code>iteration_list</code>, <code>max_attempts</code>, and <code>restart_list</code></li>
+<li>Other parameters based on algorithm used, e.g. <code>temperature</code> and <code>decay</code> for Simulated Annealing, etc.</li>
+<li>Number of for loops to run the experiment on, i.e. to plot mean and average.</li>
+</ol>
+</li>
+<li>
+<p>Run the runners and record the output, record any other necessary information you feel could be useful for plotting into <code>df_run_curves</code>.</p>
+</li>
+<li>
+<p>Save <code>df_run_curves</code> as a <code>csv</code> file.</p>
+</li>
+<li>
+<p>Use information from <code>df_run_curves</code> to make the necessary plots.</p>
+</li>
+</ol>
+<p>Feel free to innovate based on your requirements, the workflow above is just a guideline.</p>
               
             </div>
           </div><footer>

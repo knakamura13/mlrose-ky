@@ -50,6 +50,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="..#tutorial-3-ml-weight-optimization-problems">Tutorial 3 - ML Weight Optimization Problems</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-4-using-runners">Tutorial 4 - Using Runners</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -405,10 +407,10 @@
 <h3 id="class-declaration">Class declaration<a class="headerlink" href="#class-declaration" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">OneMax</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <p>The One Max fitness function is suitable for use in either discrete or continuous-state optimization problems.</p>
-</div>
+</details>
 <h3 id="class-method">Class method<a class="headerlink" href="#class-method" title="Permanent link">#</a></h3>
 <p>Evaluate the fitness of a state vector.<br />
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
@@ -429,10 +431,10 @@
 <h3 id="class-declaration_1">Class declaration<a class="headerlink" href="#class-declaration_1" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span> <span class="nc">FlipFlop</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <p>The Flip Flop fitness function is suitable for use in discrete-state optimization problems <em>only</em>.</p>
-</div>
+</details>
 <h3 id="class-method_1">Class method<a class="headerlink" href="#class-method_1" title="Permanent link">#</a></h3>
 <p>Evaluate the fitness of a state vector.<br />
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">evaluate</span><span class="p">()</span>
@@ -462,10 +464,10 @@
 <h3 id="class-declaration_2">Class declaration<a class="headerlink" href="#class-declaration_2" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span> <span class="nc">FourPeaks</span><span class="p">(</span><span class="n">t_pct</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <p>The Four Peaks fitness function is suitable for use in bit-string (discrete-state with <code>max_val = 2</code>) optimization problems <em>only</em>.</p>
-</div>
+</details>
 <p><strong>Parameters:</strong>  </p>
 <ul>
 <li><code>t_pct</code> (<em>float</em>, <em>default: 0.1</em>) – Threshold parameter (<span class="arithmatex">\( T \)</span>) for Four Peaks fitness function, expressed as a percentage of the state space dimension, <span class="arithmatex">\( n \)</span> (i.e. <span class="arithmatex">\( T = t_{pct} \times n \)</span>).</li>
@@ -501,10 +503,10 @@
 <h3 id="class-declaration_3">Class declaration<a class="headerlink" href="#class-declaration_3" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">class</span> <span class="nc">SixPeaks</span><span class="p">(</span><span class="n">t_pct</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <p>The Six Peaks fitness function is suitable for use in bit-string (discrete-state with <code>max_val = 2</code>) optimization problems only.</p>
-</div>
+</details>
 <p><strong>Parameters:</strong><br />
 <code>t_pct</code> (<em>float</em>, <em>default: 0.1</em>) – Threshold parameter (<span class="arithmatex">\( T \)</span>) for Six Peaks fitness function, expressed as a percentage of the state space dimension, <span class="arithmatex">\( n \)</span> (i.e. <span class="arithmatex">\( T = t_{pct} \times n \)</span>).</p>
 <h3 id="class-method_3">Class method<a class="headerlink" href="#class-method_3" title="Permanent link">#</a></h3>
@@ -540,10 +542,10 @@
 <h3 id="class-declaration_4">Class declaration<a class="headerlink" href="#class-declaration_4" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">class</span> <span class="nc">ContinuousPeaks</span><span class="p">(</span><span class="n">t_pct</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <p>The Continuous Peaks fitness function is suitable for use in bit-string (discrete-state with <code>max_val = 2</code>) optimization problems <em>only</em>.</p>
-</div>
+</details>
 <p><strong>Parameters:</strong><br />
 <code>t_pct</code> (<em>float</em>, <em>default: 0.1</em>) – Threshold parameter (<span class="arithmatex">\( T \)</span>) for Continuous Peaks fitness function, expressed as a percentage of the state space dimension, <span class="arithmatex">\( n \)</span> (i.e. <span class="arithmatex">\( T = t_{pct} \times n \)</span>).</p>
 <h3 id="class-method_4">Class method<a class="headerlink" href="#class-method_4" title="Permanent link">#</a></h3>
@@ -572,16 +574,14 @@
 <h3 id="class-declaration_5">Class declaration<a class="headerlink" href="#class-declaration_5" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">class</span> <span class="nc">Knapsack</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">max_weight_pct</span><span class="o">=</span><span class="mf">0.35</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Info</p>
+<details class="warning">
+<summary>Info</summary>
 <p>The Knapsack fitness function is suitable for use in discrete-state optimization problems <em>only</em>.</p>
-</div>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><strong><code>weights</code></strong> (<em>list</em>) – List of weights for each of the <span class="arithmatex">\( n \)</span> items.</li>
-<li><strong><code>values</code></strong> (<em>list</em>) – List of values for each of the <span class="arithmatex">\( n \)</span> items.</li>
-<li><strong><code>max_weight_pct</code></strong> (<em>float</em>, <em>default: 0.35</em>) – Parameter used to set maximum capacity of knapsack (<span class="arithmatex">\( W \)</span>) as a percentage of the total of the weights list (<span class="arithmatex">\( W = \text{max_weight_pct} \times \text{total_weight} \)</span>).</li>
-</ul>
+</details>
+<p><strong>Parameters:</strong><br />
+- <strong><code>weights</code></strong> (<em>list</em>) – List of weights for each of the <span class="arithmatex">\( n \)</span> items.<br />
+- <strong><code>values</code></strong> (<em>list</em>) – List of values for each of the <span class="arithmatex">\( n \)</span> items.<br />
+- <strong><code>max_weight_pct</code></strong> (<em>float</em>, <em>default: 0.35</em>) – Parameter used to set maximum capacity of knapsack (<span class="arithmatex">\( W \)</span>) as a percentage of the total of the weights list (<span class="arithmatex">\( W = \text{max_weight_pct} \times \text{total_weight} \)</span>).</p>
 <h3 id="class-method_5">Class method<a class="headerlink" href="#class-method_5" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </span></code></pre></div>
@@ -607,18 +607,16 @@
 <h3 id="class-declaration_6">Class declaration<a class="headerlink" href="#class-declaration_6" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">class</span> <span class="nc">TravellingSales</span><span class="p">(</span><span class="n">coords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distances</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <ol>
 <li>The TravellingSales fitness function is suitable for use in travelling salesperson (tsp) optimization problems <em>only</em>.</li>
 <li>It is necessary to specify at least one of <code>coords</code> and <code>distances</code> in initializing a TravellingSales fitness function object.</li>
 </ol>
-</div>
-<p><strong>Parameters</strong>:</p>
-<ul>
-<li><code>coords</code> (<em>list of pairs, default: None</em>) – Ordered list of the (x, y) coordinates of all nodes (where element i gives the coordinates of node i). This assumes that travel between all pairs of nodes is possible. If this is not the case, then use <code>distances</code> instead.</li>
-<li><code>distances</code> (<em>list of triples, default: None</em>) – List giving the distances, d, between all pairs of nodes, u and v, for which travel is possible, with each list item in the form (u, v, d). Order of the nodes does not matter, so (u, v, d) and (v, u, d) are considered to be the same. If a pair is missing from the list, it is assumed that travel between the two nodes is not possible. This argument is ignored if coords is not <code>None</code>.</li>
-</ul>
+</details>
+<p><strong>Parameters</strong>:<br />
+*   <code>coords</code> (<em>list of pairs, default: None</em>) – Ordered list of the (x, y) coordinates of all nodes (where element i gives the coordinates of node i). This assumes that travel between all pairs of nodes is possible. If this is not the case, then use <code>distances</code> instead.<br />
+*   <code>distances</code> (<em>list of triples, default: None</em>) – List giving the distances, d, between all pairs of nodes, u and v, for which travel is possible, with each list item in the form (u, v, d). Order of the nodes does not matter, so (u, v, d) and (v, u, d) are considered to be the same. If a pair is missing from the list, it is assumed that travel between the two nodes is not possible. This argument is ignored if coords is not <code>None</code>.</p>
 <h3 id="class-method_6">Class method<a class="headerlink" href="#class-method_6" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </span></code></pre></div>
@@ -647,10 +645,10 @@
 <h3 id="class-declaration_7">Class declaration<a class="headerlink" href="#class-declaration_7" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">class</span> <span class="nc">Queens</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <p>The Queens fitness function is suitable for use in discrete-state optimization problem only.</p>
-</div>
+</details>
 <h3 id="class-method_7">Class method<a class="headerlink" href="#class-method_7" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">evaluate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 </span></code></pre></div>
@@ -675,10 +673,10 @@
 <h3 id="class-declaration_8">Class declaration<a class="headerlink" href="#class-declaration_8" title="Permanent link">#</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">class</span> <span class="nc">MaxKColor</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
 </span></code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Note</p>
+<details class="warning">
+<summary>Note</summary>
 <p>The MaxKColor fitness function is suitable for use in discrete-state optimization problems <em>only</em>.</p>
-</div>
+</details>
 <p><strong>Parameters</strong>:<br />
 <code>edges</code> (<em>list of pairs</em>) – List of all pairs of connected nodes. Order does not matter, so (a, b) and (b, a) are considered to be the same.</p>
 <h3 id="class-method_8">Class method<a class="headerlink" href="#class-method_8" title="Permanent link">#</a></h3>

@@ -50,6 +50,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="..#tutorial-3-ml-weight-optimization-problems">Tutorial 3 - ML Weight Optimization Problems</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="..#tutorial-4-using-runners">Tutorial 4 - Using Runners</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -411,9 +413,9 @@
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">init_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">curve</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">)</span> 
 </span></code></pre></div>
-<p><strong>Parameters:</strong></p>
+<p><strong>Parameters</strong> <a href="https://github.com/knakamura13/mlrose-ky/blob/123e66187276cdd7a188c48aff97360a6803d5f2/mlrose_ky/algorithms/hc.py#L12">[source]</a></p>
 <ul>
 <li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
 <li><strong>max_iters</strong> (<em>int, default: np.inf</em>) – Maximum number of iterations of the algorithm for each restart.</li>
@@ -442,7 +444,7 @@
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">)</span>
 </span></code></pre></div>
-<p><strong>Parameters</strong>:</p>
+<p><strong>Parameters</strong> <a href="https://github.com/knakamura13/mlrose-ky/blob/123e66187276cdd7a188c48aff97360a6803d5f2/mlrose_ky/algorithms/rhc.py#L12">[source]</a></p>
 <ul>
 <li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
 <li><strong>max_attempts</strong> (<em>int, default: 10</em>) – Maximum number of attempts to find a better neighbor at each step.</li>
@@ -472,7 +474,7 @@
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">)</span>
 </span></code></pre></div>
-<p><strong>Parameters</strong>:</p>
+<p><strong>Parameters</strong> <a href="https://github.com/knakamura13/mlrose-ky/blob/123e66187276cdd7a188c48aff97360a6803d5f2/mlrose_ky/algorithms/sa.py#L13">[source]</a></p>
 <ul>
 <li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
 <li><strong>schedule</strong> (schedule object, default: <code>mlrose_ky.GeomDecay()</code>) – Schedule used to determine the value of the temperature parameter.</li>
@@ -502,7 +504,7 @@
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
 </span></code></pre></div>
-<p><strong>Parameters</strong>:</p>
+<p><strong>Parameters</strong> <a href="https://github.com/knakamura13/mlrose-ky/blob/123e66187276cdd7a188c48aff97360a6803d5f2/mlrose_ky/algorithms/ga.py#L101">[source]</a></p>
 <ul>
 <li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code>, <code>ContinuousOpt()</code> or <code>TSPOpt()</code>.</li>
 <li><strong>pop_size</strong> (<em>int, default: 200</em>) – Size of population to be used in genetic algorithm.</li>
@@ -537,7 +539,7 @@
 <p class="admonition-title">Warning</p>
 <p>MIMIC cannot be used for solving continuous-state optimization problems.</p>
 </div>
-<p><strong>Parameters</strong>:</p>
+<p><strong>Parameters</strong> <a href="https://github.com/knakamura13/mlrose-ky/blob/123e66187276cdd7a188c48aff97360a6803d5f2/mlrose_ky/algorithms/mimic.py#L12">[source]</a></p>
 <ul>
 <li><strong>problem</strong> (<em>optimization object</em>) – Object containing fitness function optimization problem to be solved. For example, <code>DiscreteOpt()</code> or <code>TSPOpt()</code>.</li>
 <li><strong>pop_size</strong> (<em>int, default: 200</em>) – Size of population to be used in algorithm.</li>
