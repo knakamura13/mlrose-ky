@@ -60,6 +60,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#main-features">Main Features</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#project-improvements-and-updates">Project Improvements and Updates</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#licensing-authors-acknowledgements">Licensing, Authors, Acknowledgements</a>
@@ -394,11 +396,10 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h1>
-<p>mlrose is a Python package for applying some of the most common randomized optimization and search algorithms to a range of different optimization problems, over both discrete- and continuous-valued parameter spaces.</p>
+<p>mlrose-ky is a Python package for applying some of the most common randomized optimization and search algorithms to a range of different optimization problems, over both discrete- and continuous-valued parameter spaces.</p>
 <h2 id="project-background">Project Background<a class="headerlink" href="#project-background" title="Permanent link">#</a></h2>
-<p>mlrose was initially developed to support students of Georgia Tech’s OMSCS/OMSA offering of CS 7641: Machine Learning.</p>
-<p>It includes implementations of all randomized optimization algorithms taught in this course, as well as functionality to apply these algorithms to integer-string optimization problems, such as N-Queens and the Knapsack problem; continuous-valued optimization problems, such as the neural network weight problem; and tour optimization problems, such as the Travelling Salesperson problem. It also has the flexibility to solve user-defined optimization problems.</p>
-<p>At the time of development, there did not exist a single Python package that collected all of this functionality together in the one location.</p>
+<p>mlrose-ky is a fork of the <code>mlrose-hiive</code> repository, which itself was a fork of the original <code>mlrose</code> repository. The original mlrose package was developed to support students of Georgia Tech's OMSCS/OMSA offering of CS 7641: Machine Learning.</p>
+<p>This repository includes implementations of all randomized optimization algorithms taught in the course, as well as functionality to apply these algorithms to integer-string optimization problems, such as N-Queens and the Knapsack problem; continuous-valued optimization problems, such as the neural network weight problem; and tour optimization problems, such as the Travelling Salesperson problem. It also has the flexibility to solve user-defined optimization problems.</p>
 <h2 id="main-features">Main Features<a class="headerlink" href="#main-features" title="Permanent link">#</a></h2>
 <p><strong>Randomized Optimization Algorithms</strong><br />
 * Implementations of: hill climbing, randomized hill climbing, simulated annealing, genetic algorithm and (discrete) MIMIC;<br />
@@ -412,23 +413,71 @@
 <p><strong>Machine Learning Weight Optimization</strong><br />
 * Optimize the weights of neural networks, linear regression models and logistic regression models using randomized hill climbing, simulated annealing, the genetic algorithm or gradient descent;<br />
 * Supports classification and regression neural networks.</p>
+<h2 id="project-improvements-and-updates">Project Improvements and Updates<a class="headerlink" href="#project-improvements-and-updates" title="Permanent link">#</a></h2>
+<p>The <code>mlrose-ky</code> project is undergoing significant improvements to enhance code quality, documentation, and testing. Below is a list of tasks that have been completed or are in progress:</p>
+<ol>
+<li>
+<p><strong>Fix Python Warnings and Errors</strong>: All Python warnings and errors have been addressed, except for a few unavoidable ones like "duplicate code." ✅</p>
+</li>
+<li>
+<p><strong>Add Python 3.10 Type Hints</strong>: Type hints are being added to all function and method definitions, as well as method properties (e.g., <code>self.foo: str = 'bar'</code>), to improve code clarity and maintainability.</p>
+</li>
+<li>
+<p><strong>Enhance Documentation</strong>: NumPy-style docstrings are being added to all functions and methods, with at least a one-line docstring at the top of every file summarizing its contents. This will make the codebase more understandable and easier to use for others.</p>
+</li>
+<li>
+<p><strong>Increase Test Coverage</strong>: Tests are being added using Pytest, with a goal of achieving 100% code coverage to ensure the robustness of the codebase.</p>
+</li>
+<li>
+<p><strong>Resolve TODO/FIXME Comments</strong>: A thorough search is being conducted for any TODO, FIXME, or similar comments, and their respective issues are being resolved.</p>
+</li>
+<li>
+<p><strong>Optimize Code</strong>: Vanilla Python loops are being optimized where possible by vectorizing them with NumPy to enhance performance.</p>
+</li>
+<li>
+<p><strong>Improve Code Quality</strong>: Any other sub-optimal code, bugs, or code quality issues are being addressed to ensure a high standard of coding practices.</p>
+</li>
+<li>
+<p><strong>Clean Up Codebase</strong>: All commented-out code is being removed to keep the codebase clean and maintainable.</p>
+</li>
+</ol>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">#</a></h2>
 <p>mlrose-ky was written in Python 3 and requires NumPy, SciPy and Scikit-Learn (sklearn).</p>
 <p>The latest released version is available at the <a href="#">Python package index</a> and can be installed using pip:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip install mlrose-ky
 </span></code></pre></div>
+<p>Once it is installed, simply import it like so:<br />
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">mlrose_ky</span>
+</span></code></pre></div></p>
 <h2 id="licensing-authors-acknowledgements">Licensing, Authors, Acknowledgements<a class="headerlink" href="#licensing-authors-acknowledgements" title="Permanent link">#</a></h2>
-<p>mlrose was written by Genevieve Hayes and is distributed under the <a href="https://github.com/gkhayes/mlrose/blob/master/LICENSE">3-Clause BSD license</a>. The source code is maintained in a <a href="https://github.com/gkhayes/mlrose">GitHub repository</a>.</p>
-<p>You can cite mlrose in research publications and reports as follows:<br />
-* Hayes, G. (2019). <em>mlrose: Machine Learning, Randomized Optimization and SEarch package for Python</em>. <a href="https://github.com/gkhayes/mlrose">https://github.com/gkhayes/mlrose</a>. Accessed: <em>day month year</em>.</p>
+<p>mlrose-ky was forked from the <code>mlrose-hiive</code> repository, which was a fork of the original <code>mlrose</code> repository.</p>
+<p>The original <code>mlrose</code> was written by Genevieve Hayes and is distributed under the <a href="https://github.com/gkhayes/mlrose/blob/master/LICENSE">3-Clause BSD license</a>.</p>
+<p>You can cite mlrose-ky in research publications and reports as follows:</p>
+<ul>
+<li>Nakamura, K. (2024). <em><strong>mlrose-ky: Machine Learning, Randomized Optimization, and SEarch package for Python</strong></em>. <a href="https://github.com/your-repo-url">https://github.com/your-repo-url</a>. Accessed: <em>day month year</em>.</li>
+</ul>
+<p>Please also keep the original authors' citations:</p>
+<ul>
+<li>Rollings, A. (2020). <em><strong>mlrose: Machine Learning, Randomized Optimization and SEarch package for Python, hiive extended remix</strong></em>. <a href="https://github.com/hiive/mlrose">https://github.com/hiive/mlrose</a>. Accessed: <em>day month year</em>.</li>
+<li>Hayes, G. (2019). <em><strong>mlrose: Machine Learning, Randomized Optimization and SEarch package for Python</strong></em>. <a href="https://github.com/gkhayes/mlrose">https://github.com/gkhayes/mlrose</a>. Accessed: <em>day month year</em>.</li>
+</ul>
+<p>Thanks to David S. Park for the MIMIC enhancements (from <a href="https://github.com/parkds/mlrose">https://github.com/parkds/mlrose</a>).</p>
 <p>BibTeX entry:<br />
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>@misc{Hayes19,
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a> author = {Hayes, G},
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> title  = {{mlrose: Machine Learning, Randomized Optimization and SEarch package for Python}},
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a> year   = 2019,
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a> howpublished = {\url{https://github.com/gkhayes/mlrose}},
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a> note   = {Accessed: day month year}
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>@misc{Nakamura24,
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a> author = {Nakamura, K.},
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a> title  = {{mlrose-ky: Machine Learning, Randomized Optimization and SEarch package for Python}},
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a> year   = 2024,
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a> howpublished = {\url{https://github.com/your-repo-url}},
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a> note   = {Accessed: day month year}
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>}
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>@misc{Hayes19,
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a> author = {Hayes, G},
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a> title  = {{mlrose: Machine Learning, Randomized Optimization and SEarch package for Python}},
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a> year   = 2019,
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a> howpublished = {\url{https://github.com/gkhayes/mlrose}},
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a> note   = {Accessed: day month year}
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>}
 </span></code></pre></div></p>
               
             </div>
