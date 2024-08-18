@@ -371,6 +371,10 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">4 - How to use Runners for Optimization Problems?</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#an-example-with-rhc-runner">An example with RHC Runner</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#use-runners-to-make-your-own-custom-wrapper">Use runners to make your own custom wrapper</a>
+    </li>
     </ul>
                   </li>
               </ul>
@@ -403,7 +407,7 @@
 <p class="admonition-title">Recommendation</p>
 <p>It is highly recommended that you use the <a href="https://github.com/knakamura13/mlrose-ky/tree/main/mlrose_ky/runners"><code>Runners class</code></a> for the second assignment on randomized optimizations.</p>
 </div>
-<h1 id="an-example-with-rhc-runner">An example with RHC Runner<a class="headerlink" href="#an-example-with-rhc-runner" title="Permanent link">#</a></h1>
+<h2 id="an-example-with-rhc-runner">An example with RHC Runner<a class="headerlink" href="#an-example-with-rhc-runner" title="Permanent link">#</a></h2>
 <p>The below example illustrates how to initialize an RHCRunner object.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">mlrose_ky</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -441,7 +445,7 @@
 <summary>Recommendation</summary>
 <p>Simulated Annealing does not track <code>decay</code> types so it is best to record different <code>decay</code> types into <code>df_run_curves</code> before saving the runner.</p>
 </details>
-<h1 id="use-runners-to-make-your-own-custom-wrapper">Use runners to make your own custom wrapper<a class="headerlink" href="#use-runners-to-make-your-own-custom-wrapper" title="Permanent link">#</a></h1>
+<h2 id="use-runners-to-make-your-own-custom-wrapper">Use runners to make your own custom wrapper<a class="headerlink" href="#use-runners-to-make-your-own-custom-wrapper" title="Permanent link">#</a></h2>
 <p>The best way to use runners would be to wrap and call the runners in your own function. One example workflow is below.</p>
 <ol>
 <li>
