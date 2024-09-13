@@ -12,7 +12,7 @@ from mlrose_ky import (
     SixPeaks,
     ContinuousPeaks,
     Knapsack,
-    TravellingSalesperson,
+    TravellingSales,
     Queens,
     MaxKColor,
     CustomFitness,
@@ -141,21 +141,21 @@ def test_travelling_sales_coords():
     """Test TravellingSales fitness function for case where city nodes coords are specified."""
     coords = [(0, 0), (3, 0), (3, 2), (2, 4), (1, 3)]
     state = np.array([0, 1, 4, 3, 2])
-    assert round(TravellingSalesperson(coords=coords).evaluate(state), 4) == 13.8614
+    assert round(TravellingSales(coords=coords).evaluate(state), 4) == 13.8614
 
 
 def test_travelling_sales_dists():
     """Test TravellingSales fitness function for case where distances between node pairs are specified."""
     dists = [(0, 1, 3), (0, 2, 5), (0, 3, 1), (0, 4, 7), (1, 3, 6), (4, 1, 9), (2, 3, 8), (2, 4, 2), (3, 2, 8), (3, 4, 4)]
     state = np.array([0, 1, 4, 3, 2])
-    assert TravellingSalesperson(distances=dists).evaluate(state) == 29
+    assert TravellingSales(distances=dists).evaluate(state) == 29
 
 
 def test_travelling_sales_invalid():
     """Test TravellingSales fitness function for invalid tour"""
     dists = [(0, 1, 3), (0, 2, 5), (0, 3, 1), (0, 4, 7), (1, 3, 6), (4, 1, 9), (2, 3, 8), (2, 4, 2), (3, 2, 8), (3, 4, 4)]
     state = np.array([0, 1, 2, 3, 4])
-    assert TravellingSalesperson(distances=dists).evaluate(state) == np.inf
+    assert TravellingSales(distances=dists).evaluate(state) == np.inf
 
 
 def test_queens():

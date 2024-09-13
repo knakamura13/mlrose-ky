@@ -9,4 +9,4 @@ from .max_k_color import MaxKColor
 from .one_max import OneMax
 from .queens import Queens
 from .six_peaks import SixPeaks
-from .travelling_salesperson import TravellingSalesperson
+from .travelling_salesperson import TravellingSales

@@ -38,7 +38,7 @@ from .fitness import (
     SixPeaks,
     ContinuousPeaks,
     Knapsack,
-    TravellingSalesperson,
+    TravellingSales,
     Queens,
     MaxKColor,
     CustomFitness,
@@ -69,4 +69,4 @@ from .runners import GARunner, MIMICRunner, RHCRunner, SARunner, NNGSRunner, SKM
 from .generators import MaxKColorGenerator, QueensGenerator, FlipFlopGenerator, TSPGenerator, KnapsackGenerator, ContinuousPeaksGenerator
 
 # noinspection PyUnresolvedReferences
-from .samples import SyntheticDataGenerator, plot_synthetic_dataset
+from .samples import SyntheticData, plot_synthetic_dataset

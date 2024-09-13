@@ -3,4 +3,4 @@
 # Authors: Andrew Rollings (modified by Kyle Nakamura)
 # License: BSD 3-clause
 
-from .synthetic_data import SyntheticDataGenerator, plot_synthetic_dataset
+from .synthetic_data import SyntheticData, plot_synthetic_dataset

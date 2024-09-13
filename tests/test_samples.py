@@ -9,13 +9,13 @@ import pytest
 from sklearn.linear_model import LogisticRegression
 
 from tests.globals import SEED
-from mlrose_ky.samples import SyntheticDataGenerator, plot_synthetic_dataset
+from mlrose_ky.samples import SyntheticData, plot_synthetic_dataset
 
 
 # noinspection PyMissingOrEmptyDocstring
 @pytest.fixture
 def generator():
-    return SyntheticDataGenerator(seed=SEED)
+    return SyntheticData(seed=SEED)
 
 
 class TestSyntheticDataGenerator:

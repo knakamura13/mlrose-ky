@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 
 
-class SyntheticDataGenerator:
+class SyntheticData:
     """
     Class for generating synthetic datasets.
 

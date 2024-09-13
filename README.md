@@ -192,14 +192,21 @@ BibTeX entry:
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/gitongah">
+                    <img src="https://avatars.githubusercontent.com/u/39062444?v=4" width="100;" alt="gitongah"/>
+                    <br />
+                    <sub><b>Edwin Mbaabu</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
                 <a href="https://github.com/Agrover112">
                     <img src="https://avatars.githubusercontent.com/u/42321810?v=4" width="100;" alt="Agrover112"/>
                     <br />
                     <sub><b>Agrover112</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/domfrecent">
                     <img src="https://avatars.githubusercontent.com/u/12631209?v=4" width="100;" alt="domfrecent"/>
@@ -226,13 +233,6 @@ BibTeX entry:
                     <img src="https://avatars.githubusercontent.com/u/5116899?v=4" width="100;" alt="cooknl"/>
                     <br />
                     <sub><b>CAPN</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/gitongah">
-                    <img src="https://avatars.githubusercontent.com/u/39062444?v=4" width="100;" alt="gitongah"/>
-                    <br />
-                    <sub><b>Edwin Mbaabu</b></sub>
                 </a>
             </td>
             <td align="center">

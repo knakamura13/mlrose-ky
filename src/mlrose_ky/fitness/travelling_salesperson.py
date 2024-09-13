@@ -8,7 +8,7 @@ from typing import Callable
 import numpy as np
 
 
-class TravellingSalesperson:
+class TravellingSales:
     """
     Fitness function for the Travelling Salesperson optimization problem.
 
@@ -34,12 +34,12 @@ class TravellingSalesperson:
     --------
     >>> coords = [(0, 0), (3, 0), (3, 2), (2, 4), (1, 3)]
     >>> dists = [(0, 1, 3), (0, 2, 5), (0, 3, 1), (0, 4, 7), (1, 3, 6), (4, 1, 9), (2, 3, 8), (2, 4, 2), (3, 2, 8), (3, 4, 4)]
-    >>> fitness_coords = TravellingSalesperson(coords=coords)
+    >>> fitness_coords = TravellingSales(coords=coords)
     >>> state = np.array([0, 1, 4, 3, 2])
     >>> fitness_coords.evaluate(state)
     13.861384090800865
 
-    >>> fitness_dists = TravellingSalesperson(distances=dists)
+    >>> fitness_dists = TravellingSales(distances=dists)
     >>> fitness_dists.evaluate(state)
     29.0
 

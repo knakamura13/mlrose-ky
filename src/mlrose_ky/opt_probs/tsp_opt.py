@@ -9,7 +9,7 @@ import numpy as np
 
 from mlrose_ky.algorithms.crossovers import TSPCrossover
 from mlrose_ky.algorithms.mutators import SwapMutator
-from mlrose_ky.fitness import TravellingSalesperson
+from mlrose_ky.fitness import TravellingSales
 from mlrose_ky.opt_probs.discrete_opt import DiscreteOpt
 
 
@@ -54,7 +54,7 @@ class TSPOpt(DiscreteOpt):
 
         # If fitness_fn is not provided, create a TravellingSalesperson fitness function
         if fitness_fn is None:
-            fitness_fn = TravellingSalesperson(coords=coords, distances=distances)
+            fitness_fn = TravellingSales(coords=coords, distances=distances)
 
         self.distances: list[tuple[int, int, float]] | None = distances
         self.coords: list[tuple[float, float]] | None = coords
