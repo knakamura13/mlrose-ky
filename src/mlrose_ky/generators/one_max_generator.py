@@ -12,13 +12,13 @@ class OneMaxGenerator:
     """A class to generate One Max optimization problems."""
 
     @staticmethod
-    def generate(seed: int, size: int = 20) -> DiscreteOpt:
+    def generate(seed: int = 42, size: int = 20) -> DiscreteOpt:
         """
         Generate a One Max optimization problem instance.
 
         Parameters
         ----------
-        seed : int
+        seed : int, optional, default=42
             Seed for the random number generator.
         size : int, optional, default=20
             The size of the optimization problem (number of bits).
@@ -40,7 +40,4 @@ class OneMaxGenerator:
 
         np.random.seed(seed)
 
-        fitness = OneMax()
-        problem = DiscreteOpt(length=size, fitness_fn=fitness)
-
-        return problem
+        return DiscreteOpt(length=size, fitness_fn=OneMax())

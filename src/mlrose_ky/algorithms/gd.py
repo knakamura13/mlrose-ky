@@ -3,8 +3,10 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Callable, Any
+
+import numpy as np
+
 from mlrose_ky.decorators import short_name
 from mlrose_ky.neural.utils import flatten_weights
 
@@ -58,6 +60,7 @@ def gradient_descent(
         Numpy array containing the fitness at every iteration.
         Only returned if input argument :code:`curve` is :code:`True`.
     """
+    # TODO: fix and uncomment these problematic raise statements
     # if not isinstance(max_attempts, int) or max_attempts < 0:
     #     raise ValueError(f"max_attempts must be a positive integer. Got {max_attempts}")
     # if not (isinstance(max_iters, int) or max_iters == np.inf) or (isinstance(max_iters, int) and max_iters < 0):
@@ -129,7 +132,4 @@ def gradient_descent(
 
         problem.set_state(next_state)
 
-    if curve:
-        return best_state, best_fitness, np.asarray(fitness_curve)
-
-    return best_state, best_fitness, None
+    return best_state, best_fitness, np.asarray(fitness_curve) if curve else None

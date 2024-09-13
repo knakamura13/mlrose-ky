@@ -3,13 +3,14 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Any
+
+import numpy as np
 
 from mlrose_ky.algorithms.mutators._mutator_base import _MutatorBase
 
 
-class SingleShiftMutator(_MutatorBase):
+class ShiftOneMutator(_MutatorBase):
     """
     A mutator class that implements the 'Shift One' mutation strategy in a genetic algorithm.
 
@@ -18,20 +19,21 @@ class SingleShiftMutator(_MutatorBase):
 
     Attributes
     ----------
-    optimization_problem : Any
+    _opt_prob : Any
         The optimization problem instance associated with the mutation operations.
-    max_gene_value : int
+    _max_val : int
         The maximum allowable value for any gene in the chromosome, used to enforce wrap-around.
 
     Parameters
     ----------
-    optimization_problem : Any
+    opt_prob : Any
         An instance of an optimization problem that the mutator will operate on.
     """
 
-    def __init__(self, optimization_problem: Any) -> None:
-        super().__init__(optimization_problem)
-        self.max_gene_value = optimization_problem.max_val
+    def __init__(self, opt_prob: Any):
+        super().__init__(opt_prob)
+
+        self._max_val: int = opt_prob.max_val
 
     def mutate(self, child: np.ndarray, mutation_probability: float) -> np.ndarray:
         """
@@ -54,7 +56,7 @@ class SingleShiftMutator(_MutatorBase):
         if np.random.rand() < mutation_probability:
             mutation_index = np.random.randint(len(child))
             shift_direction = 1 if np.random.randint(2) == 0 else -1
-            new_value = (child[mutation_index] + shift_direction) % self.max_gene_value
+            new_value = (child[mutation_index] + shift_direction) % self._max_val
             child[mutation_index] = new_value
 
         return child

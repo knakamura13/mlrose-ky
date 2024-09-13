@@ -3,8 +3,9 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Callable
+
+import numpy as np
 
 
 class TravellingSalesperson:
@@ -31,16 +32,14 @@ class TravellingSalesperson:
 
     Examples
     --------
-    >>> import mlrose_ky
-    >>> import numpy as np
     >>> coords = [(0, 0), (3, 0), (3, 2), (2, 4), (1, 3)]
     >>> dists = [(0, 1, 3), (0, 2, 5), (0, 3, 1), (0, 4, 7), (1, 3, 6), (4, 1, 9), (2, 3, 8), (2, 4, 2), (3, 2, 8), (3, 4, 4)]
-    >>> fitness_coords = mlrose_ky.TravellingSalesperson(coords=coords)
+    >>> fitness_coords = TravellingSalesperson(coords=coords)
     >>> state = np.array([0, 1, 4, 3, 2])
     >>> fitness_coords.evaluate(state)
     13.861384090800865
 
-    >>> fitness_dists = mlrose_ky.TravellingSalesperson(distances=dists)
+    >>> fitness_dists = TravellingSalesperson(distances=dists)
     >>> fitness_dists.evaluate(state)
     29.0
 
@@ -52,19 +51,18 @@ class TravellingSalesperson:
        fitness function object.
     """
 
-    def __init__(self, coords: list[tuple] = None, distances: list[tuple] = None) -> None:
+    def __init__(self, coords: list[tuple] = None, distances: list[tuple] = None):
         # Ensure that at least one of coords or distances is provided
         if coords is None and distances is None:
             raise ValueError("At least one of coords and distances must be specified.")
 
-        # Initialize class variables
         self.prob_type: str = "tsp"
         self.coords: list = coords
         self.distances: list = distances
         self.is_coords: bool = coords is not None
 
         # Determine which fitness calculation method to use
-        self.calculate_fitness: Callable = self._calculate_fitness_by_coords if self.is_coords else self._calculate_fitness_by_distance
+        self.calculate_fitness: Callable = self.__calculate_fitness_by_coords if self.is_coords else self.__calculate_fitness_by_distance
 
         if self.is_coords:
             # Precompute the coordinates array for faster access
@@ -118,7 +116,7 @@ class TravellingSalesperson:
         # Calculate and return the fitness of the state
         return float(self.calculate_fitness(state))
 
-    def _calculate_fitness_by_coords(self, state: np.ndarray) -> float:
+    def __calculate_fitness_by_coords(self, state: np.ndarray) -> float:
         """
         Calculate fitness based on coordinates.
 
@@ -136,12 +134,12 @@ class TravellingSalesperson:
         nodes = self.coords_array[state]
 
         # Calculate total journey distance using Euclidean distance
-        journey = np.linalg.norm(nodes[1:] - nodes[:-1], axis=1).sum()
-        journey += np.linalg.norm(nodes[0] - nodes[-1])
+        fitness = np.linalg.norm(nodes[1:] - nodes[:-1], axis=1).sum()
+        fitness += np.linalg.norm(nodes[0] - nodes[-1])
 
-        return journey
+        return float(fitness)
 
-    def _calculate_fitness_by_distance(self, state: np.ndarray) -> float:
+    def __calculate_fitness_by_distance(self, state: np.ndarray) -> float:
         """
         Calculate fitness based on distances.
 
@@ -155,7 +153,7 @@ class TravellingSalesperson:
         fitness : float
             Calculated fitness value. Returns np.inf if any segment of the tour is not possible.
         """
-        total_distance = 0.0
+        fitness = 0.0
         num_nodes = len(state)
 
         # Iterate over each node in the state
@@ -168,11 +166,11 @@ class TravellingSalesperson:
             if np.isinf(distance):
                 return np.inf
 
-            total_distance += distance
+            fitness += distance
 
-        return total_distance
+        return float(fitness)
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """
         Return the problem type.
 

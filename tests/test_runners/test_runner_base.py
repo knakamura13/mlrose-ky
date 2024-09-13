@@ -9,14 +9,6 @@ from unittest.mock import patch
 
 from tests.globals import SEED
 
-try:
-    import mlrose_ky
-except ImportError:
-    import sys
-
-    sys.path.append("..")
-    import mlrose_ky
-
 # noinspection PyProtectedMember
 from mlrose_ky.runners._runner_base import _RunnerBase
 

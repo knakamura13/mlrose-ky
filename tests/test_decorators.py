@@ -3,13 +3,6 @@
 # Author: Kyle Nakamura
 # License: BSD 3-clause
 
-try:
-    import ga_framework
-except ImportError:
-    import sys
-
-    sys.path.append("..")
-
 from mlrose_ky.decorators import short_name, get_short_name
 
 

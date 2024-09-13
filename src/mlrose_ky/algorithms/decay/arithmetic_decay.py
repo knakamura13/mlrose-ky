@@ -4,7 +4,7 @@
 # License: BSD 3-clause
 
 
-class ArithmeticDecay:
+class ArithDecay:
     """
     Schedule for arithmetically decaying the temperature parameter T in a
     simulated annealing process, calculated using the formula:
@@ -18,59 +18,51 @@ class ArithmeticDecay:
 
     Parameters
     ----------
-    initial_temperature : float
+    init_temp : float
         Initial value of the temperature parameter T. Must be greater than 0.
-    decay_rate : float
+    decay : float
         Temperature decay parameter. Must be a positive value and less than or equal to 1.
-    minimum_temperature : float
-        Minimum allowable value of the temperature parameter. Must be positive and less than `initial_temperature`.
+    min_temp : float
+        Minimum allowable value of the temperature parameter. Must be positive and less than `init_temp`.
 
     Attributes
     ----------
-    initial_temperature : float
+    init_temp : float
         Stores the initial temperature.
-    decay_rate : float
+    decay : float
         Stores the rate of temperature decay.
-    minimum_temperature : float
+    min_temp : float
         Stores the minimum temperature.
 
     Examples
     --------
-    >>> schedule = ArithmeticDecay(initial_temperature=10, decay_rate=0.95, minimum_temperature=1)
+    >>> schedule = ArithDecay(init_temp=10, decay=0.95, min_temp=1)
     >>> schedule.evaluate(5)
     5.25
     """
 
-    def __init__(self, initial_temperature: float = 1.0, decay_rate: float = 0.0001, minimum_temperature: float = 0.001) -> None:
-        self.initial_temperature: float = initial_temperature
-        self.decay_rate: float = decay_rate
-        self.minimum_temperature: float = minimum_temperature
+    def __init__(self, init_temp: float = 1.0, decay: float = 0.0001, min_temp: float = 0.001):
+        self.init_temp: float = init_temp
+        self.decay: float = decay
+        self.min_temp: float = min_temp
 
-        if self.initial_temperature <= 0:
+        if self.init_temp <= 0:
             raise ValueError("Initial temperature must be greater than 0.")
-        if not (0 < self.decay_rate <= 1):
+        if not (0 < self.decay <= 1):
             raise ValueError("Decay rate must be greater than 0 and less than or equal to 1.")
-        if not (0 < self.minimum_temperature < self.initial_temperature):
+        if not (0 < self.min_temp < self.init_temp):
             raise ValueError("Minimum temperature must be greater than 0 and less than initial temperature.")
 
     def __str__(self) -> str:
-        return (
-            f"ArithmeticDecay(initial_temperature={self.initial_temperature}, "
-            f"decay_rate={self.decay_rate}, "
-            f"minimum_temperature={self.minimum_temperature})"
-        )
+        return f"ArithDecay(init_temp={self.init_temp}, decay={self.decay}, min_temp={self.min_temp})"
 
     def __repr__(self) -> str:
         return self.__str__()
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, ArithmeticDecay):
+        if not isinstance(other, ArithDecay):
             return False
-        return (
-            self.initial_temperature == other.initial_temperature
-            and self.decay_rate == other.decay_rate
-            and self.minimum_temperature == other.minimum_temperature
-        )
+        return self.init_temp == other.init_temp and self.decay == other.decay and self.min_temp == other.min_temp
 
     def evaluate(self, time: int) -> float:
         """
@@ -86,8 +78,7 @@ class ArithmeticDecay:
         float
             The temperature parameter at the given time, respecting the minimum temperature.
         """
-        temperature = max(self.initial_temperature - (self.decay_rate * time), self.minimum_temperature)
-        return temperature
+        return max(self.init_temp - (self.decay * time), self.min_temp)
 
     def get_info(self, time: int = None, prefix: str = "") -> dict:
         """
@@ -110,9 +101,9 @@ class ArithmeticDecay:
 
         info = {
             f"{info_prefix}type": "arithmetic",
-            f"{info_prefix}initial_temperature": self.initial_temperature,
-            f"{info_prefix}decay_rate": self.decay_rate,
-            f"{info_prefix}minimum_temperature": self.minimum_temperature,
+            f"{info_prefix}init_temp": self.init_temp,
+            f"{info_prefix}decay": self.decay,
+            f"{info_prefix}min_temp": self.min_temp,
         }
 
         if time is not None:

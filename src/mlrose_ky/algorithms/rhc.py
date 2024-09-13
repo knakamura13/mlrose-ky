@@ -3,8 +3,10 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Callable, Any
+
+import numpy as np
+
 from mlrose_ky.decorators import short_name
 
 
@@ -67,6 +69,7 @@ def random_hill_climb(
     Brownlee, J (2011). *Clever Algorithms: Nature-Inspired Programming Recipes*.
     `<http://www.cleveralgorithms.com>`_.
     """
+    # TODO: fix and uncomment these problematic raise statements
     # if not isinstance(max_attempts, int) or max_attempts < 0:
     #     raise ValueError(f"max_attempts must be a positive integer. Got {max_attempts}")
     # if not (isinstance(max_iters, int) or max_iters == np.inf) or max_iters < 0:
@@ -166,7 +169,4 @@ def random_hill_climb(
 
     best_fitness *= problem.get_maximize()
 
-    if curve:
-        return best_state, best_fitness, np.asarray(best_fitness_curve)
-
-    return best_state, best_fitness, None
+    return best_state, best_fitness, np.asarray(best_fitness_curve) if curve else None

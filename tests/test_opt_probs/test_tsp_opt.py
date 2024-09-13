@@ -5,14 +5,6 @@
 
 import numpy as np
 
-try:
-    import mlrose_ky
-except ImportError:
-    import sys
-
-    sys.path.append("../..")
-    import mlrose_ky
-
 from mlrose_ky.opt_probs import TSPOpt
 
 

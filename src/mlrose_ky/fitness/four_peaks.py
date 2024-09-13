@@ -25,16 +25,16 @@ class FourPeaks(_DiscretePeaksBase):
 
     Parameters
     ----------
-    threshold_percentage : float, optional, default=0.1
+    t_pct : float, optional, default=0.1
         Threshold parameter (T) for Four Peaks fitness function, expressed as
         a percentage of the state space dimension, n (i.e.
         `T = threshold_pct \\times n`).
 
     Examples
     --------
-    >>> fitness = FourPeaks(threshold_percentage=0.15)
-    >>> state_vector = np.array([1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0])
-    >>> fitness.evaluate(state_vector)
+    >>> fitness = FourPeaks(t_pct=0.15)
+    >>> state = np.array([1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0])
+    >>> fitness.evaluate(state)
     16.0
 
     References
@@ -49,27 +49,27 @@ class FourPeaks(_DiscretePeaksBase):
     (discrete-state with `max_val = 2`) optimization problems *only*.
     """
 
-    def __init__(self, threshold_percentage: float = 0.1):
+    def __init__(self, t_pct: float = 0.1):
         """
         Initialize the Four Peaks fitness function.
 
         Parameters
         ----------
-        threshold_percentage : float, optional, default=0.1
+        t_pct : float, optional, default=0.1
             Threshold parameter (T) for Four Peaks fitness function.
         """
-        self.threshold_percentage: float = threshold_percentage
-        self.problem_type: str = "discrete"
+        self.t_pct: float = t_pct
+        self.prob_type: str = "discrete"
 
-        if not (0 <= self.threshold_percentage <= 1):
-            raise ValueError(f"threshold_pct must be between 0 and 1, got {self.threshold_percentage}.")
+        if not (0 <= self.t_pct <= 1):
+            raise ValueError(f"threshold_pct must be between 0 and 1, got {self.t_pct}.")
 
-    def evaluate(self, state_vector: np.ndarray) -> float:
+    def evaluate(self, state: np.ndarray) -> float:
         """Evaluate the fitness of a state vector.
 
         Parameters
         ----------
-        state_vector : np.ndarray
+        state : np.ndarray
             State array for evaluation.
 
         Returns
@@ -80,26 +80,25 @@ class FourPeaks(_DiscretePeaksBase):
         Raises
         ------
         TypeError
-            If `state_vector` is not an instance of `np.ndarray`.
+            If `state` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_vector, np.ndarray):
-            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state_vector).__name__} instead.")
+        if not isinstance(state, np.ndarray):
+            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state).__name__} instead.")
 
-        vector_length = len(state_vector)
-        threshold = np.ceil(self.threshold_percentage * vector_length)
+        vector_length = len(state)
+        threshold = np.ceil(self.t_pct * vector_length)
 
         # Calculate leading and trailing values
-        trailing_zeros = self.count_trailing_values(0, state_vector)
-        leading_ones = self.count_leading_values(1, state_vector)
+        trailing_zeros = self.tail(0, state)
+        leading_ones = self.head(1, state)
 
         # Calculate R(x, T)
         reward = vector_length if trailing_zeros > threshold and leading_ones > threshold else 0
 
         # Evaluate function
-        fitness = float(max(trailing_zeros, leading_ones) + reward)
-        return fitness
+        return float(max(trailing_zeros, leading_ones) + reward)
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
@@ -107,4 +106,4 @@ class FourPeaks(_DiscretePeaksBase):
         str
             Specifies problem type as 'discrete'.
         """
-        return self.problem_type
+        return self.prob_type

@@ -14,57 +14,57 @@ class _DiscretePeaksBase:
     """
 
     @staticmethod
-    def count_leading_values(value: int, vector: np.ndarray) -> int:
-        """Determine the number of leading occurrences of `value` in `vector`.
+    def head(_b: int, _x: np.ndarray) -> int:
+        """Determine the number of leading occurrences of `_b` in vector `_x`.
 
         Parameters
         ----------
-        value : int
+        _b : int
             The integer value to count at the beginning of the vector.
-        vector : np.ndarray
+        _x : np.ndarray
             A vector of integers.
 
         Returns
         -------
         int
-            Number of leading occurrences of `value` in `vector`.
+            Number of leading occurrences of `_b` in `_x`.
 
         Raises
         ------
         TypeError
-            If `vector` is not an instance of `np.ndarray`.
+            If `_x` is not an instance of `np.ndarray`.
         """
-        if not isinstance(vector, np.ndarray):
-            raise TypeError(f"Expected vector to be np.ndarray, got {type(vector).__name__} instead.")
+        if not isinstance(_x, np.ndarray):
+            raise TypeError(f"Expected vector to be np.ndarray, got {type(_x).__name__} instead.")
 
         # Use NumPy's cumulative sum to find leading values
-        leading_mask = np.cumsum(vector != value) == 0
+        leading_mask = np.cumsum(_x != _b) == 0
         return np.sum(leading_mask)
 
     @staticmethod
-    def count_trailing_values(value: int, vector: np.ndarray) -> int:
-        """Determine the number of trailing occurrences of `value` in `vector`.
+    def tail(_b: int, _x: np.ndarray) -> int:
+        """Determine the number of trailing occurrences of `_b` in vector `_x`.
 
         Parameters
         ----------
-        value : int
+        _b : int
             The integer value to count at the end of the vector.
-        vector : np.ndarray
+        _x : np.ndarray
             A vector of integers.
 
         Returns
         -------
         int
-            Number of trailing occurrences of `value` in `vector`.
+            Number of trailing occurrences of `_b` in `_x`.
 
         Raises
         ------
         TypeError
-            If `vector` is not an instance of `np.ndarray`.
+            If `_x` is not an instance of `np.ndarray`.
         """
-        if not isinstance(vector, np.ndarray):
-            raise TypeError(f"Expected vector to be np.ndarray, got {type(vector).__name__} instead.")
+        if not isinstance(_x, np.ndarray):
+            raise TypeError(f"Expected vector to be np.ndarray, got {type(_x).__name__} instead.")
 
         # Use NumPy's cumulative sum to find trailing values
-        trailing_mask = np.cumsum(vector[::-1] != value) == 0
+        trailing_mask = np.cumsum(_x[::-1] != _b) == 0
         return np.sum(trailing_mask)

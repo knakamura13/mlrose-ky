@@ -1,35 +1,35 @@
-"""Neural network activation functions."""
+"""Neural network 'Leaky ReLu' activation function."""
 
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # Contributor : Ankit Grover
 # License: BSD 3-clause
-from mlrose_ky.decorators import short_name
+
+import warnings
 
 import numpy as np
 
-import warnings
+from mlrose_ky.decorators import short_name
 
 warnings.filterwarnings("ignore")
 
 
 @short_name("leaky_relu")
-def leaky_relu(x, alpha=0.3, deriv=False):
-    """Leaky ReLU activation function
+def leaky_relu(x: np.ndarray, alpha: float = 0.3, deriv: bool = False) -> np.ndarray:
+    """Leaky ReLU activation function.
 
     Parameters
     ----------
     x: np.ndarray
         Array containing input data.
-    alpha: int , default : 0.3
-        Alpha value to be set for applying small negative gradient
-    deriv: bool, default: False
-        Whether to return the function or its derivative.
-        Set True for derivative.
+    alpha: int, optional, default=0.3
+        Value to be set for applying small negative gradient.
+    deriv: bool, option, default=False
+        Whether to return the function (when False) or its derivative (when True).
 
     Returns
     -------
     fx: np.ndarray
-        Value of activation function at x
+        Value of activation function at x.
     """
     fx = np.copy(x)
     fx = np.where(fx < 0, fx * alpha, fx)

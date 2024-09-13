@@ -6,10 +6,11 @@ GridSearchCV for cross-validated search over parameter grids.
 """
 
 import inspect
+from typing import Callable, Any
+
 import numpy as np
 import sklearn.metrics as skmt
 import sklearn.model_selection as skms
-from typing import Callable, Any
 
 
 class GridSearchMixin:
@@ -18,15 +19,15 @@ class GridSearchMixin:
 
     Attributes
     ----------
-    scorer_method : Callable
+    _scorer_method : Callable
         The scoring method used for evaluating model performance during grid search.
-    params : inspect.Signature
+    _params : inspect.Signature
         The signature of the scoring method, used for validation and handling of additional arguments.
-    get_y_argmax : bool
+    _get_y_argmax : bool
         Flag indicating whether to apply argmax to predictions and ground truths before scoring.
     """
 
-    def __init__(self, scorer_method: Callable = None) -> None:
+    def __init__(self, scorer_method: Callable = None):
         """
         Initializes the GridSearchMixin with a specified scoring method.
 
@@ -35,9 +36,9 @@ class GridSearchMixin:
         scorer_method : Callable, optional
             A custom scoring method for evaluating the model. Defaults to balanced accuracy.
         """
-        self.scorer_method: Callable = skmt.balanced_accuracy_score if scorer_method is None else scorer_method
-        self.params: inspect.Signature = inspect.signature(self.scorer_method)
-        self.get_y_argmax: bool = False
+        self._scorer_method: Callable = skmt.balanced_accuracy_score if scorer_method is None else scorer_method
+        self._params: inspect.Signature = inspect.signature(self._scorer_method)
+        self._get_y_argmax: bool = False
 
     def perform_grid_search(
         self, classifier: Any, x_train: np.ndarray, y_train: np.ndarray, cv: int, parameters: dict, n_jobs: int = 1, verbose: bool = False
@@ -99,7 +100,7 @@ class GridSearchMixin:
         float
             The score calculated by the scoring method.
         """
-        return self._grid_search_score_intercept(**kwargs)
+        return float(self._grid_search_score_intercept(**kwargs))
 
     def _grid_search_score_intercept(self, y_pred: np.ndarray, y_true: np.ndarray, **kwargs: Any) -> float:
         """
@@ -119,20 +120,20 @@ class GridSearchMixin:
         float
             The calculated score based on the predictions and true values.
         """
-        cleaned_kwargs = {k: v for k, v in kwargs.items() if k in self.params.parameters}
+        cleaned_kwargs = {k: v for k, v in kwargs.items() if k in self._params.parameters}
 
         # Handle potential multi-class/multi-label cases
-        if not self.get_y_argmax and y_pred.ndim > 1 and y_true.ndim > 1:
+        if not self._get_y_argmax and y_pred.ndim > 1 and y_true.ndim > 1:
             try:
-                return self.scorer_method(y_pred=y_pred, y_true=y_true, **cleaned_kwargs)
+                return float(self._scorer_method(y_pred=y_pred, y_true=y_true, **cleaned_kwargs))
             except TypeError:
-                self.get_y_argmax = True
+                self._get_y_argmax = True
 
-        if self.get_y_argmax:
+        if self._get_y_argmax:
             y_pred = y_pred.argmax(axis=1)
             y_true = y_true.argmax(axis=1)
 
         try:
-            return self.scorer_method(y_pred=y_pred, y_true=y_true, **cleaned_kwargs)
+            return float(self._scorer_method(y_pred=y_pred, y_true=y_true, **cleaned_kwargs))
         except TypeError as e:
-            raise ValueError(f"Error during scoring with method {self.scorer_method.__name__}: {e}") from e
+            raise ValueError(f"Error during scoring with method {self._scorer_method.__name__}: {e}") from e

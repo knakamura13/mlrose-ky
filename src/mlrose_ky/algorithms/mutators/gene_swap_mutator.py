@@ -3,13 +3,14 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Any
+
+import numpy as np
 
 from mlrose_ky.algorithms.mutators._mutator_base import _MutatorBase
 
 
-class GeneSwapMutator(_MutatorBase):
+class SwapMutator(_MutatorBase):
     """
     A mutator class that implements the 'Gene Swap' mutation strategy in genetic algorithms.
 
@@ -18,17 +19,17 @@ class GeneSwapMutator(_MutatorBase):
 
     Attributes
     ----------
-    optimization_problem : Any
+    _opt_prob : Any
         The optimization problem instance associated with the mutation operations.
 
     Parameters
     ----------
-    optimization_problem : OptimizationProblem
+    opt_prob : OptimizationProblem
         An instance of an optimization problem that the mutator will operate on.
     """
 
-    def __init__(self, optimization_problem: Any) -> None:
-        super().__init__(optimization_problem)
+    def __init__(self, opt_prob: Any):
+        super().__init__(opt_prob)
 
     def mutate(self, child: np.ndarray, mutation_probability: float) -> np.ndarray:
         """

@@ -5,13 +5,6 @@
 
 import numpy as np
 
-try:
-    import mlrose_ky
-except ImportError:
-    import sys
-
-    sys.path.append("..")
-
 from mlrose_ky import (
     OneMax,
     FlipFlop,
@@ -44,85 +37,85 @@ def test_flipflop():
 def test_head():
     """Test head function"""
     state = np.array([1, 1, 1, 1, 0, 1, 0, 2, 1, 1, 1, 1, 1, 4, 6, 1, 1])
-    assert _DiscretePeaksBase.count_leading_values(1, state) == 4
+    assert _DiscretePeaksBase.head(1, state) == 4
 
 
 def test_tail():
     """Test tail function"""
     state = np.array([1, 1, 1, 1, 0, 1, 0, 2, 1, 1, 1, 1, 1, 4, 6, 1, 1])
-    assert _DiscretePeaksBase.count_trailing_values(1, state) == 2
+    assert _DiscretePeaksBase.tail(1, state) == 2
 
 
 def test_max_run_middle():
     """Test max_run function for case where run is in the middle of the state"""
     state = np.array([1, 1, 1, 1, 0, 1, 0, 2, 1, 1, 1, 1, 1, 4, 6, 1, 1])
-    assert ContinuousPeaks._max_run(1, state) == 5
+    assert ContinuousPeaks.max_run(1, state) == 5
 
 
 def test_max_run_start():
     """Test max_run function for case where run is at the start of the state"""
     state = np.array([1, 1, 1, 1, 1, 1, 0, 2, 1, 1, 1, 1, 1, 4, 6, 1, 1])
-    assert ContinuousPeaks._max_run(1, state) == 6
+    assert ContinuousPeaks.max_run(1, state) == 6
 
 
 def test_max_run_end():
     """Test max_run function for case where run is at the end of the state"""
     state = np.array([1, 1, 1, 1, 0, 1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1])
-    assert ContinuousPeaks._max_run(1, state) == 9
+    assert ContinuousPeaks.max_run(1, state) == 9
 
 
 def test_fourpeaks_r0():
     """Test FourPeaks fitness function for the case where R=0 and max>0"""
     state = np.array([1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0])
-    assert FourPeaks(threshold_percentage=0.30).evaluate(state) == 4
+    assert FourPeaks(t_pct=0.30).evaluate(state) == 4
 
 
 def test_fourpeaks_r_gt0():
     """Test FourPeaks fitness function for the case where R>0 and max>0"""
     state = np.array([1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0])
-    assert FourPeaks(threshold_percentage=0.15).evaluate(state) == 16
+    assert FourPeaks(t_pct=0.15).evaluate(state) == 16
 
 
 def test_fourpeaks_r0_max0():
     """Test FourPeaks fitness function for the case where R=0 and max=0"""
     state = np.array([0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1])
-    assert FourPeaks(threshold_percentage=0.30).evaluate(state) == 0
+    assert FourPeaks(t_pct=0.30).evaluate(state) == 0
 
 
 def test_sixpeaks_r0():
     """Test SixPeaks fitness function for the case where R=0 and max>0"""
     state = np.array([1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0])
-    assert SixPeaks(threshold_percentage=0.30).evaluate(state) == 4
+    assert SixPeaks(t_pct=0.30).evaluate(state) == 4
 
 
 def test_sixpeaks_r_gt0():
     """Test SixPeaks fitness function for the case where R>0 and max>0"""
     state = np.array([1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0])
-    assert SixPeaks(threshold_percentage=0.15).evaluate(state) == 16
+    assert SixPeaks(t_pct=0.15).evaluate(state) == 16
 
 
 def test_sixpeaks_r0_max0():
     """Test SixPeaks fitness function for the case where R=0 and max=0"""
     state = np.array([0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1])
-    assert SixPeaks(threshold_percentage=0.30).evaluate(state) == 0
+    assert SixPeaks(t_pct=0.30).evaluate(state) == 0
 
 
 def test_sixpeaks_r_gt0_max0():
     """Test SixPeaks fitness function for the case where R>0 and max=0"""
     state = np.array([0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1])
-    assert SixPeaks(threshold_percentage=0.15).evaluate(state) == 12
+    assert SixPeaks(t_pct=0.15).evaluate(state) == 12
 
 
 def test_continuouspeaks_r0():
     """Test ContinuousPeaks fitness function for case when R = 0."""
     state = np.array([0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1])
-    assert ContinuousPeaks(threshold_percentage=0.30).evaluate(state) == 5
+    assert ContinuousPeaks(t_pct=0.30).evaluate(state) == 5
 
 
 def test_continuouspeaks_r_gt():
     """Test ContinuousPeaks fitness function for case when R > 0."""
     state = np.array([0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1])
-    assert ContinuousPeaks(threshold_percentage=0.15).evaluate(state) == 17
+    assert ContinuousPeaks(t_pct=0.15).evaluate(state) == 17
 
 
 def test_knapsack_weight_lt_max():

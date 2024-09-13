@@ -27,15 +27,15 @@ class FlipFlop:
 
     def __init__(self):
         """Initialize the Flip Flop fitness function."""
-        self.problem_type: str = "discrete"
+        self.prob_type: str = "discrete"
 
     @staticmethod
-    def evaluate(state_vector: np.ndarray) -> float:
+    def evaluate(state: np.ndarray) -> float:
         """Evaluate the fitness of a state vector.
 
         Parameters
         ----------
-        state_vector : np.ndarray
+        state : np.ndarray
             State array for evaluation.
 
         Returns
@@ -48,20 +48,19 @@ class FlipFlop:
         TypeError
             If `state_vector` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_vector, np.ndarray):
-            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state_vector).__name__} instead.")
+        if not isinstance(state, np.ndarray):
+            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state).__name__} instead.")
 
-        differences = np.diff(state_vector) != 0
-        fitness = float(np.sum(differences))
-        return fitness
+        differences = np.diff(state) != 0
+        return float(np.sum(differences))
 
     @staticmethod
-    def evaluate_many(state_matrix: np.ndarray) -> np.ndarray:
+    def evaluate_many(states: np.ndarray) -> np.ndarray:
         """Evaluate the fitness of an ndarray of state vectors.
 
         Parameters
         ----------
-        state_matrix : np.ndarray
+        states : np.ndarray
             States array for evaluation.
 
         Returns
@@ -72,16 +71,15 @@ class FlipFlop:
         Raises
         ------
         TypeError
-            If `state_matrix` is not an instance of `np.ndarray`.
+            If `states` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_matrix, np.ndarray):
-            raise TypeError(f"Expected state_matrix to be np.ndarray, got {type(state_matrix).__name__} instead.")
+        if not isinstance(states, np.ndarray):
+            raise TypeError(f"Expected state_matrix to be np.ndarray, got {type(states).__name__} instead.")
 
-        differences = np.diff(state_matrix, axis=1) != 0
-        fitness_values = np.sum(differences, axis=1)
-        return fitness_values
+        differences = np.diff(states, axis=1) != 0
+        return np.array(np.sum(differences, axis=1))
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
@@ -89,4 +87,4 @@ class FlipFlop:
         str
             Specifies problem type as 'discrete'.
         """
-        return self.problem_type
+        return self.prob_type

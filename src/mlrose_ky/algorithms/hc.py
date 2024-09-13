@@ -3,8 +3,10 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Callable, Any
+
+import numpy as np
+
 from mlrose_ky.decorators import short_name
 
 
@@ -63,6 +65,7 @@ def hill_climb(
     Russell, S. and P. Norvig (2010). *Artificial Intelligence: A Modern Approach*, 3rd edition.
     Prentice Hall, New Jersey, USA.
     """
+    # TODO: fix and uncomment these problematic raise statements
     # if not (isinstance(max_iters, int) or max_iters == np.inf or max_iters.is_integer()) or max_iters < 0:
     #     raise ValueError(f"max_iters must be a positive integer. Got {max_iters}")
     # if not (isinstance(restarts, int) or restarts.is_integer()) or restarts < 0:
@@ -146,7 +149,4 @@ def hill_climb(
 
     best_fitness = problem.get_maximize() * best_fitness
 
-    if curve:
-        return best_state, best_fitness, np.asarray(best_fitness_curve)
-
-    return best_state, best_fitness, None
+    return best_state, best_fitness, np.asarray(best_fitness_curve) if curve else None

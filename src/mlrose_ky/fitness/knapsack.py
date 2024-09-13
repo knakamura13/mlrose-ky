@@ -61,30 +61,30 @@ class Knapsack:
         max_item_count: int = 1,
         multiply_by_max_item_count: bool = False,
     ):
-        self.problem_type: str = "discrete"
+        self.prob_type: str = "discrete"
         self.weights: list[float] = weights
         self.values: list[float] = values
 
         count_multiplier = max_item_count if multiply_by_max_item_count else 1.0
-        self.max_weight = np.ceil(np.sum(self.weights) * max_weight_pct * count_multiplier)
+        self._w = np.ceil(np.sum(self.weights) * max_weight_pct * count_multiplier)
 
         if len(self.weights) != len(self.values):
             raise ValueError("The weights and values lists must be the same size.")
-        if min(self.weights) <= 0:
+        if len(self.weights) and min(self.weights) <= 0:
             raise ValueError("All weights must be greater than 0.")
-        if min(self.values) <= 0:
+        if len(self.values) and min(self.values) <= 0:
             raise ValueError("All values must be greater than 0.")
         if max_item_count <= 0:
             raise ValueError("max_item_count must be greater than 0.")
-        if max_weight_pct <= 0:
-            raise ValueError("max_weight_pct must be greater than 0.")
+        if max_weight_pct <= 0 or max_weight_pct > 1.0:
+            raise ValueError("max_weight_pct must be between 0 and 1.")
 
-    def evaluate(self, state_vector: np.ndarray) -> float:
+    def evaluate(self, state: np.ndarray) -> float:
         """Evaluate the fitness of a state vector.
 
         Parameters
         ----------
-        state_vector : np.ndarray
+        state : np.ndarray
             State array for evaluation. Must be the same length as the weights
             and values arrays.
 
@@ -96,24 +96,24 @@ class Knapsack:
         Raises
         ------
         ValueError
-            If `state_vector` is not the same size as the weights and values arrays.
+            If `state` is not the same size as the weights and values arrays.
         TypeError
-            If `state_vector` is not an instance of `np.ndarray`.
+            If `state` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_vector, np.ndarray):
-            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state_vector).__name__} instead.")
-        if len(state_vector) != len(self.weights):
+        if not isinstance(state, np.ndarray):
+            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state).__name__} instead.")
+        if len(state) != len(self.weights):
             raise ValueError("The state_vector must be the same size as the weights and values arrays.")
 
-        total_weight = np.sum(state_vector * self.weights)
-        total_value = np.sum(state_vector * self.values)
+        total_weight = np.sum(state * self.weights)
+        total_value = np.sum(state * self.values)
 
-        if total_weight <= self.max_weight:
+        if total_weight <= self._w:
             return float(total_value)
 
         return 0.0
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
@@ -121,4 +121,4 @@ class Knapsack:
         str
             Specifies problem type as 'discrete'.
         """
-        return self.problem_type
+        return self.prob_type

@@ -3,8 +3,10 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Callable, Any
+
+import numpy as np
+
 from mlrose_ky.decorators import short_name
 
 
@@ -74,7 +76,8 @@ def mimic(
     De Bonet, J., C. Isbell, and P. Viola (1997). MIMIC: Finding Optima by Estimating Probability Densities.
     In *Advances in Neural Information Processing Systems* (NIPS) 9, pp. 424–430.
     """
-    # if problem.get_problem_type() == "continuous":
+    # TODO: fix and uncomment these problematic raise statements
+    # if problem.get_prob_type() == "continuous":
     #     raise ValueError("problem type must be discrete or tsp.")
     # if not isinstance(pop_size, int) or pop_size < 0:
     #     raise ValueError(f"pop_size must be a positive integer. Got {pop_size}")
@@ -84,6 +87,7 @@ def mimic(
     #     raise ValueError(f"max_attempts must be a positive integer. Got {max_attempts}")
     # if not (isinstance(max_iters, int) or max_iters == np.inf) or max_iters < 0:
     #     raise ValueError(f"max_iters must be a positive integer or np.inf. Got {max_iters}")
+
     if noise < 0 or noise > 0.1:
         raise ValueError(f"noise must be between 0 and 0.1. Got {noise}")
     else:
@@ -160,7 +164,4 @@ def mimic(
     best_fitness = problem.get_maximize() * problem.get_fitness()
     best_state = problem.get_state().astype(int)
 
-    if curve:
-        return best_state, best_fitness, np.asarray(fitness_curve)
-
-    return best_state, best_fitness, None
+    return best_state, best_fitness, np.asarray(fitness_curve) if curve else None

@@ -3,95 +3,127 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
+from typing import Any
+
 import numpy as np
-from sklearn.metrics import mutual_info_score
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import minimum_spanning_tree, depth_first_tree
+from sklearn.metrics import mutual_info_score
 
-from mlrose_ky.algorithms.crossovers import UniformCrossover
-from mlrose_ky.algorithms.mutators import GeneSwapMutator
-from mlrose_ky.opt_probs.opt_prob import OptProb
+from mlrose_ky.algorithms.crossovers import UniformCrossover, TSPCrossover
+from mlrose_ky.algorithms.mutators import SwapMutator
+from mlrose_ky.opt_probs.opt_prob import _OptProb
 
 
-class DiscreteOpt(OptProb):
+class DiscreteOpt(_OptProb):
     """Class for defining discrete-state optimization problems.
 
     Parameters
     ----------
-    length: int
-        Number of elements in state vector.
+    length : int
+        Number of elements in the state vector.
 
-    fitness_fn: fitness function object
-        Object to implement fitness function for optimization.
+    fitness_fn : Any
+        Object to implement the fitness function for optimization.
 
-    maximize: bool, default: True
+    maximize : bool, default=True
         Whether to maximize the fitness function.
         Set :code:`False` for minimization problem.
 
-    max_val: int, default: 2
-        Number of unique values that each element in the state vector
-        can take. Assumes values are integers in the range 0 to
-        (max_val - 1), inclusive.
+    max_val : int, default=2
+        Number of unique values that each element in the state vector can take.
+        Assumes values are integers in the range 0 to (max_val - 1), inclusive.
+
+    crossover : UniformCrossover | TSPCrossover, default=None
+        Crossover operation used for reproduction. If None, defaults to `UniformCrossover`.
+
+    mutator : SwapMutator, default=None
+        Mutation operation used for reproduction. If None, defaults to `SwapMutator`.
+
+    Attributes
+    ----------
+    keep_sample : np.ndarray
+        Array of samples from the top percentile of the population.
+    node_probs : np.ndarray
+        Probability density estimates for each node.
+    parent_nodes : np.ndarray
+        Parent nodes based on the minimum spanning tree.
+    sample_order : list[int]
+        Order of generating sample vector elements.
+    prob_type : str
+        Problem type; always 'discrete' for this class.
+    noise : float
+        Noise factor for probability density estimation.
+    _crossover : UniformCrossover
+        Crossover operation for reproduction.
+    _mutator : SwapMutator
+        Mutation operation for reproduction.
+    _mut_mask : np.ndarray, default=None
+        Mask for mutual information computation in fast mode.
+    _mut_inf : np.ndarray, default=None
+        Mutual information matrix.
     """
 
-    def __init__(self, length, fitness_fn, maximize=True, max_val=2, crossover=None, mutator=None):
+    def __init__(
+        self,
+        length: int,
+        fitness_fn: Any,
+        maximize: bool = True,
+        max_val: int = 2,
+        crossover: UniformCrossover | TSPCrossover = None,
+        mutator: "SwapMutator" = None,
+    ):
         self._get_mutual_info_impl = self._get_mutual_info_slow
 
-        OptProb.__init__(self, length, fitness_fn, maximize)
+        super().__init__(length, fitness_fn, maximize)
 
-        if self.fitness_fn.get_problem_type() == "continuous":
+        if self.fitness_fn.get_prob_type() == "continuous":
             raise ValueError(
-                """fitness_fn must have problem type 'discrete',"""
-                + """ 'either' or 'tsp'. Define problem as"""
-                + """ ContinuousOpt problem or use alternative"""
-                + """ fitness function."""
+                "fitness_fn must have problem type 'discrete', 'either', or 'tsp'."
+                " Define problem as ContinuousOpt or use an appropriate fitness function."
             )
 
-        if max_val < 0:
+        if not max_val or max_val < 0:
             raise ValueError(f"max_val must be a positive integer. Got {max_val}")
         elif not isinstance(max_val, int):
             if max_val.is_integer():
-                self.max_val = int(max_val)
+                self.max_val: int = int(max_val)
             else:
                 raise ValueError(f"max_val must be a positive integer. Got {max_val}")
         else:
-            self.max_val = max_val
+            self.max_val: int = max_val
 
-        self.keep_sample = np.array([])
-        self.node_probs = np.zeros([self.length, self.max_val, self.max_val])
-        self.parent_nodes = np.array([])
-        self.sample_order = []
-        self.prob_type = "discrete"
-        self.noise = 0
+        self.keep_sample: np.ndarray = np.array([])
+        self.node_probs: np.ndarray = np.zeros([self.length, self.max_val, self.max_val])
+        self.parent_nodes: np.ndarray = np.array([])
+        self.sample_order: list[int] = []
+        self.prob_type: str = "discrete"
+        self.noise: float = 0
 
-        self._crossover = UniformCrossover(self) if crossover is None else crossover
-        self._mutator = GeneSwapMutator(self) if mutator is None else mutator
+        self._crossover: UniformCrossover | TSPCrossover = UniformCrossover(self) if crossover is None else crossover
+        self._mutator: SwapMutator = SwapMutator(self) if mutator is None else mutator
 
-        self._mut_mask = None
-        self._mut_inf = None
+        self._mut_mask: np.ndarray | None = None
+        self._mut_inf: np.ndarray | None = None
 
     def eval_node_probs(self):
         """Update probability density estimates."""
-        # Create mutual info matrix
         mutual_info = self._get_mutual_info_impl()
 
         # Find minimum spanning tree of mutual info matrix
         csr_mx = csr_matrix(mutual_info)
-
         # noinspection PyTypeChecker
         mst = minimum_spanning_tree(csr_mx)
 
-        # Convert minimum spanning tree to depth first tree with node 0 as root
+        # Convert MST to depth first tree with node 0 as root
         dft = depth_first_tree(csr_matrix(mst.toarray()), 0, directed=False)
         dft = np.round(dft.toarray(), 10)
 
         # Determine parent of each node
         parent = np.argmin(dft[:, 1:], axis=0)
 
-        # Get probs
         probs = np.zeros([self.length, self.max_val, self.max_val])
-
-        probs[0, :] = np.histogram(self.keep_sample[:, 0], np.arange(self.max_val + 1), density=True)[0]
+        probs[0] = np.histogram(self.keep_sample[:, 0], np.arange(self.max_val + 1), density=True)[0]
 
         for i in range(1, self.length):
             for j in range(self.max_val):
@@ -101,32 +133,28 @@ class DiscreteOpt(OptProb):
                     probs[i, j] = 1 / self.max_val
                 else:
                     temp_probs = np.histogram(subset[:, i], np.arange(self.max_val + 1), density=True)[0]
-
-                    # Check if noise argument is not default (in epsilon)
                     if self.noise > 0:
-                        # Add noise, from the mimic argument "noise"
                         temp_probs += self.noise
-                        # All probability adds up to one
                         temp_probs = np.divide(temp_probs, np.sum(temp_probs))
-                        # Handle floating point error to ensure probability adds up to 1
                         if sum(temp_probs) != 1.0:
                             temp_probs = np.divide(temp_probs, np.sum(temp_probs))
-                    # Set probability
                     probs[i, j] = temp_probs
 
-        # Update probs and parent
         self.node_probs = probs
         self.parent_nodes = parent
 
-    def set_mimic_fast_mode(self, fast_mode):
+    def set_mimic_fast_mode(self, fast_mode: bool):
+        """Enable or disable MIMIC fast mode."""
         if fast_mode:
             mut_mask = np.zeros([self.length, self.length], dtype=bool)
+
             for i in range(0, self.length):
                 for j in range(i, self.length):
                     mut_mask[i, j] = True
+
             mut_mask = mut_mask.reshape((self.length * self.length))
             self._mut_mask = mut_mask
-            # Set ignore error to ignore dividing by zero
+
             np.seterr(divide="ignore", invalid="ignore")
             self._get_mutual_info_impl = self._get_mutual_info_fast
             self._mut_inf = np.zeros([self.length * self.length])
@@ -135,37 +163,27 @@ class DiscreteOpt(OptProb):
             self._get_mutual_info_impl = self._get_mutual_info_slow
             self._mut_inf = None
 
-    def _get_mutual_info_slow(self):
+    def _get_mutual_info_slow(self) -> np.ndarray:
         mutual_info = np.zeros([self.length, self.length])
+
         for i in range(self.length - 1):
             for j in range(i + 1, self.length):
                 mutual_info[i, j] = -1 * mutual_info_score(self.keep_sample[:, i], self.keep_sample[:, j])
+
         return mutual_info
 
-    # adapted from https://github.com/parkds/mlrose/blob/f7154a1d3e3fdcd934bb3c683b943264d2870fd1/mlrose/algorithms.py
-    # (thanks to David Sejin Park)
-    def _get_mutual_info_fast(self):
+    def _get_mutual_info_fast(self) -> np.ndarray:
         if self._mut_inf is None:
-            # restore sanity
             self._get_mutual_info_impl = self._get_mutual_info_slow
             return self._get_mutual_info_impl()
 
-        # get length of the sample which survived from mimic iteration
         len_sample_kept = self.keep_sample.shape[0]
-        # get the length of the bit sequence / problem size
         len_prob = self.keep_sample.shape[1]
 
-        # Expand the matrices to so each row corresponds to a row by row combination of the list of samples
         b = np.repeat(self.keep_sample, self.length).reshape(len_sample_kept, len_prob * len_prob)
         d = np.hstack(([self.keep_sample] * len_prob))
 
-        # Compute the mutual information matrix in bulk, by iterating through the list of
-        # possible feature values ((max_val-1)^2).
-        # For example, a binary string would go through 00 01 10 11, for a total of 4 iterations.
-
-        # First initialize the mutual info matrix.
         self._mut_inf.fill(0)
-        # Pre-compute the U and V which gets computed multiple times in the inner loop.
         U = {}
         V = {}
         U_sum = {}
@@ -176,35 +194,24 @@ class DiscreteOpt(OptProb):
             U_sum[i] = np.sum(d == i, axis=0)
             V_sum[i] = np.sum(b == i, axis=0)
 
-        # Compute the mutual information for all sample to sample combination for each feature combination
-        # ((max_val-1)^2)
         for i in range(0, self.max_val):
             for j in range(0, self.max_val):
-                # This corresponds to U and V of mutual info matrix, for this feature pair
                 coeff = np.sum(U[i] * V[j], axis=0)
-                # Compute length N, for the particular feature pair
                 UV_length = U_sum[i] * V_sum[j]
 
-                # compute the second term of the MI matrix
                 temp = np.log(coeff) - np.log(UV_length) + np.log(len_sample_kept)
-                # remove the nans and negative infinity
                 temp[np.isnan(temp)] = 0
                 temp[np.isneginf(temp)] = 0
 
-                # combine the first and the second term, divide by the length N.
-                # Add the whole MI matrix for the feature to the previously computed values
                 div = temp * np.divide(coeff, len_sample_kept)
                 div[self._mut_mask] = 0
                 self._mut_inf += div
 
-        # Need to multiply by negative to get the mutual information
         self._mut_inf = -self._mut_inf.reshape(self.length, self.length)
-        # Only get the upper triangle matrix above the identity row.
-        # Possible enhancements, currently we are doing double the computation required.
-        # Pre set the matrix so the computation is only done for rows that are needed. To do for the future.
 
         mutual_info = self._mut_inf.T
         self._mut_inf = self._mut_inf.reshape(self.length * self.length)
+
         return mutual_info
 
     def find_neighbors(self):
@@ -216,7 +223,6 @@ class DiscreteOpt(OptProb):
                 neighbor = np.copy(self.state)
                 neighbor[i] = np.abs(neighbor[i] - 1)
                 self.neighbors.append(neighbor)
-
         else:
             for i in range(self.length):
                 vals = list(np.arange(self.max_val))
@@ -236,8 +242,6 @@ class DiscreteOpt(OptProb):
         while len(sample_order) < self.length:
             inds = []
 
-            # If last nodes list is empty, select random node than has not
-            # previously been selected
             if len(last) == 0:
                 inds = [np.random.choice(list(set(np.arange(self.length)) - set(sample_order)))]
             else:
@@ -249,65 +253,57 @@ class DiscreteOpt(OptProb):
 
         self.sample_order = sample_order
 
-    def find_top_pct(self, keep_pct):
+    def find_top_pct(self, keep_pct: float):
         """Select samples with fitness in the top keep_pct percentile.
 
         Parameters
         ----------
-        keep_pct: float
+        keep_pct : float
             Proportion of samples to keep.
         """
-        if (keep_pct < 0) or (keep_pct > 1):
-            raise Exception("""keep_pct must be between 0 and 1.""")
+        if not (0 <= keep_pct <= 1):
+            raise ValueError("keep_pct must be between 0 and 1.")
 
-        # Determine threshold
         theta = np.percentile(self.pop_fitness, 100 * (1 - keep_pct))
-
-        # Determine samples for keeping
         keep_inds = np.where(self.pop_fitness >= theta)[0]
-
-        # Determine sample for keeping
         self.keep_sample = self.population[keep_inds]
 
-    def get_keep_sample(self):
+    def get_keep_sample(self) -> np.ndarray:
         """Return the keep sample.
 
         Returns
         -------
-        self.keep_sample: np.ndarray
-            Numpy array containing samples with fitness in the top keep_pct
-            percentile.
+        np.ndarray
+            Numpy array containing samples with fitness in the top keep_pct percentile.
         """
         return self.keep_sample
 
-    def get_problem_type(self):
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
         -------
-        self.prob_type: str
+        str
             Returns problem type.
         """
         return self.prob_type
 
-    def random(self):
+    def random(self) -> np.ndarray:
         """Return a random state vector.
 
         Returns
         -------
-        state: np.ndarray
+        np.ndarray
             Randomly generated state vector.
         """
-        state = np.random.randint(0, self.max_val, self.length)
+        return np.random.randint(0, self.max_val, self.length)
 
-        return state
-
-    def random_neighbor(self):
+    def random_neighbor(self) -> np.ndarray:
         """Return random neighbor of current state vector.
 
         Returns
         -------
-        neighbor: np.ndarray
+        np.ndarray
             State vector of random neighbor.
         """
         neighbor = np.copy(self.state)
@@ -315,7 +311,6 @@ class DiscreteOpt(OptProb):
 
         if self.max_val == 2:
             neighbor[i] = np.abs(neighbor[i] - 1)
-
         else:
             vals = list(np.arange(self.max_val))
             vals.remove(neighbor[i])
@@ -323,21 +318,16 @@ class DiscreteOpt(OptProb):
 
         return neighbor
 
-    def random_pop(self, pop_size):
+    def random_pop(self, pop_size: int):
         """Create a population of random state vectors.
 
         Parameters
         ----------
-        pop_size: int
+        pop_size : int
             Size of population to be created.
         """
         if pop_size <= 0:
-            raise Exception("""pop_size must be a positive integer.""")
-        elif not isinstance(pop_size, int):
-            if pop_size.is_integer():
-                pop_size = int(pop_size)
-            else:
-                raise Exception("""pop_size must be a positive integer.""")
+            raise ValueError("pop_size must be a positive integer.")
 
         population = []
         pop_fitness = []
@@ -351,37 +341,31 @@ class DiscreteOpt(OptProb):
         self.population = np.array(population)
         self.pop_fitness = np.array(pop_fitness)
 
-    def reproduce(self, parent_1, parent_2, mutation_prob=0.1):
+    def reproduce(self, parent_1: np.ndarray, parent_2: np.ndarray, mutation_prob: float = 0.1) -> np.ndarray:
         """Create child state vector from two parent state vectors.
 
         Parameters
         ----------
-        parent_1: np.ndarray
+        parent_1 : np.ndarray
             State vector for parent 1.
-        parent_2: np.ndarray
+        parent_2 : np.ndarray
             State vector for parent 2.
-        mutation_prob: float
-            Probability of a mutation at each state element during
-            reproduction.
+        mutation_prob : float
+            Probability of a mutation at each state element during reproduction.
 
         Returns
         -------
-        child: np.ndarray
+        np.ndarray
             Child state vector produced from parents 1 and 2.
         """
         if len(parent_1) != self.length or len(parent_2) != self.length:
-            raise Exception("""Lengths of parents must match problem length""")
+            raise ValueError("Lengths of parents must match problem length.")
 
-        if (mutation_prob < 0) or (mutation_prob > 1):
-            raise Exception("""mutation_prob must be between 0 and 1.""")
+        if not (0 <= mutation_prob <= 1):
+            raise ValueError("mutation_prob must be between 0 and 1.")
 
-        # Reproduce parents
         child = self._crossover.mate(parent_1, parent_2)
-
-        # Mutate child
-        child = self._mutator.mutate(child, mutation_prob)
-
-        return child
+        return self._mutator.mutate(child, mutation_prob)
 
     def reset(self):
         """Set the current state vector to a random value and get its fitness."""
@@ -391,38 +375,28 @@ class DiscreteOpt(OptProb):
         self.fitness_evaluations = 0
         self.current_iteration = 0
 
-    def sample_pop(self, sample_size):
+    def sample_pop(self, sample_size: int) -> np.ndarray:
         """Generate new sample from probability density.
 
         Parameters
         ----------
-        sample_size: int
+        sample_size : int
             Size of sample to be generated.
 
         Returns
         -------
-        new_sample: np.ndarray
+        np.ndarray
             Numpy array containing new sample.
         """
         if sample_size <= 0:
-            raise Exception("""sample_size must be a positive integer.""")
-        elif not isinstance(sample_size, int):
-            if sample_size.is_integer():
-                sample_size = int(sample_size)
-            else:
-                raise Exception("""sample_size must be a positive integer.""")
+            raise ValueError("sample_size must be a positive integer.")
 
-        # Initialize new sample matrix
         new_sample = np.zeros([sample_size, self.length])
-
-        # Get value of first element in new samples
         new_sample[:, 0] = np.random.choice(self.max_val, sample_size, p=self.node_probs[0, 0])
 
-        # Get sample order
         self.find_sample_order()
         sample_order = self.sample_order[1:]
 
-        # Get values for remaining elements in new samples
         for i in sample_order:
             par_ind = self.parent_nodes[i - 1]
 

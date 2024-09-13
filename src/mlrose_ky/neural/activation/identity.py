@@ -1,37 +1,32 @@
-"""Neural network activation functions."""
+"""Neural network 'Identity' activation function."""
 
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
-from mlrose_ky.decorators import short_name
+
+import warnings
 
 import numpy as np
 
-import warnings
+from mlrose_ky.decorators import short_name
 
 warnings.filterwarnings("ignore")
 
 
 @short_name("identity")
-def identity(x, deriv=False):
-    """Linear activation function
+def identity(x: np.ndarray, deriv: bool = False) -> np.ndarray:
+    """Linear activation function.
 
     Parameters
     ----------
     x: np.ndarray
         Array containing input data.
 
-    deriv: bool, default: False
-        Whether to return the function or its derivative.
-        Set True for derivative.
+    deriv: bool, optional, default=False
+        Whether to return the function (when False) or its derivative (when True).
 
     Returns
     -------
     fx: np.ndarray
-        Value of activation function at x
+        Value of activation function at x.
     """
-    if not deriv:
-        fx = x
-    else:
-        fx = np.ones(np.shape(x))
-
-    return fx
+    return np.ones(np.shape(x)) if deriv else x

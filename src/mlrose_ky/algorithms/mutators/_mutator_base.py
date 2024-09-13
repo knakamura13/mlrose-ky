@@ -7,9 +7,10 @@ detailing how individual solutions (chromosomes) can be altered to introduce gen
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
-from typing import Any
 from abc import ABC, abstractmethod
+from typing import Any
+
+import numpy as np
 
 
 class _MutatorBase(ABC):
@@ -21,21 +22,22 @@ class _MutatorBase(ABC):
 
     Attributes
     ----------
-    optimization_problem : Any
+    _opt_prob : Any
         The optimization problem instance associated with the mutation operations.
-    chromosome_length : int
+    _length : int
         The length of the chromosome in the genetic algorithm, derived from the optimization problem.
 
     Parameters
     ----------
-    optimization_problem : Any
+    opt_prob : Any
         An instance of an optimization problem that the mutator will operate on.
     """
 
-    def __init__(self, optimization_problem: Any) -> None:
+    def __init__(self, opt_prob: Any):
         super().__init__()
-        self.optimization_problem = optimization_problem
-        self.chromosome_length = optimization_problem.length
+
+        self._opt_prob: Any = opt_prob
+        self._length: int = opt_prob.length
 
     @abstractmethod
     def mutate(self, child: np.ndarray, mutation_probability: float) -> Any:

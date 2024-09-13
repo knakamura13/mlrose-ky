@@ -7,14 +7,6 @@ import os
 
 from unittest.mock import patch
 
-try:
-    import mlrose_ky
-except ImportError:
-    import sys
-
-    sys.path.append("..")
-    import mlrose_ky
-
 from mlrose_ky.runners import build_data_filename
 
 

@@ -3,10 +3,11 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
-import networkx as nx
 import itertools as it
 from collections import defaultdict
+
+import networkx as nx
+import numpy as np
 
 from mlrose_ky import TSPOpt
 
@@ -15,20 +16,20 @@ class TSPGenerator:
     """A class to generate Traveling Salesman Problem (TSP) optimization problems."""
 
     @staticmethod
-    def generate(seed: int, number_of_cities: int, area_width: int = 250, area_height: int = 250) -> TSPOpt:
+    def generate(number_of_cities: int, area_width: int = 250, area_height: int = 250, seed: int = 42) -> TSPOpt:
         """
         Generate a TSP optimization problem instance.
 
         Parameters
         ----------
-        seed : int
-            Seed for the random number generator.
         number_of_cities : int
             The number of cities (nodes) in the TSP.
         area_width : int, optional, default=250
             The width of the area in which cities are placed.
         area_height : int, optional, default=250
             The height of the area in which cities are placed.
+        seed : int, optional, default=42
+            Seed for the random number generator.
 
         Returns
         -------
@@ -49,8 +50,9 @@ class TSPGenerator:
         if not isinstance(area_height, int) or area_height <= 0:
             raise ValueError(f"Area height must be a positive integer. Got {area_height}")
 
-        # Generate random coordinates for cities
         np.random.seed(seed)
+
+        # Generate random coordinates for cities
         x_coords = np.random.randint(area_width, size=number_of_cities)
         y_coords = np.random.randint(area_height, size=number_of_cities)
 
@@ -99,6 +101,7 @@ class TSPGenerator:
             for c1, c2 in it.product(range(len(coords)), range(len(coords)))
             if c1 != c2 and c2 > c1
         ]
+
         if truncate:
             distances = [(c1, c2, int(d)) for c1, c2, d in distances]
 

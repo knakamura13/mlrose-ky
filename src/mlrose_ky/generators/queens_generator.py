@@ -12,13 +12,13 @@ class QueensGenerator:
     """A class to generate N-Queens optimization problems."""
 
     @staticmethod
-    def generate(seed: int, size: int = 20, maximize: bool = False) -> QueensOpt:
+    def generate(seed: int = 42, size: int = 20, maximize: bool = False) -> QueensOpt:
         """
         Generate an N-Queens optimization problem instance.
 
         Parameters
         ----------
-        seed : int
+        seed : int, optional, default=42
             Seed for the random number generator.
         size : int, optional, default=20
             The size of the board (number of queens).
@@ -44,6 +44,4 @@ class QueensGenerator:
 
         np.random.seed(seed)
 
-        problem = QueensOpt(length=size, maximize=maximize)
-
-        return problem
+        return QueensOpt(length=size, maximize=maximize)

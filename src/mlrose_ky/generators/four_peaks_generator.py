@@ -12,18 +12,18 @@ class FourPeaksGenerator:
     """A class to generate Four Peaks optimization problem instances."""
 
     @staticmethod
-    def generate(seed: int, size: int = 20, threshold_percentage: float = 0.1) -> DiscreteOpt:
+    def generate(seed: int = 42, size: int = 20, t_pct: float = 0.1) -> DiscreteOpt:
         """
         Generate a Four Peaks optimization problem with a given seed, size, and threshold percentage.
 
         Parameters
         ----------
-        seed : int
+        seed : int, optional, default=42
             The seed for the random number generator.
-        size : int, optional
-            The size of the problem (default is 20).
-        threshold_percentage : float, optional
-            The threshold percentage for the Four Peaks problem (default is 0.1).
+        size : int, optional, default=20
+            The size of the problem.
+        t_pct : float, optional, default=0.1
+            The threshold percentage for the Four Peaks problem.
 
         Returns
         -------
@@ -33,16 +33,14 @@ class FourPeaksGenerator:
         Raises
         ------
         ValueError
-            If the size is not a positive integer or if the threshold_percentage is not between 0 and 1.
+            If the size is not a positive integer or if the `t_pct` is not between 0 and 1.
         """
         if size <= 0:
             raise ValueError(f"Size must be a positive integer. Got {size}.")
-        if not (0 <= threshold_percentage <= 1):
-            raise ValueError(f"Threshold percentage must be between 0 and 1. Got {threshold_percentage}.")
+        if not (0 <= t_pct <= 1):
+            raise ValueError(f"Threshold percentage must be between 0 and 1. Got {t_pct}.")
 
         np.random.seed(seed)
 
-        fitness = FourPeaks(threshold_percentage=threshold_percentage)
-        problem = DiscreteOpt(length=size, fitness_fn=fitness)
-
-        return problem
+        fitness = FourPeaks(t_pct=t_pct)
+        return DiscreteOpt(length=size, fitness_fn=fitness)

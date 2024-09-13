@@ -12,17 +12,17 @@ class ContinuousPeaksGenerator:
     """A class to generate Continuous Peaks optimization problems."""
 
     @staticmethod
-    def generate(seed: int, size: int = 20, threshold_percentage: float = 0.1) -> DiscreteOpt:
+    def generate(seed: int = 42, size: int = 20, t_pct: float = 0.1) -> DiscreteOpt:
         """
         Generate a Continuous Peaks optimization problem instance.
 
         Parameters
         ----------
-        seed : int
+        seed : int, optional, default=42
             Seed for the random number generator.
         size : int, optional, default=20
             The size of the optimization problem.
-        threshold_percentage : float, optional, default=0.1
+        t_pct : float, optional, default=0.1
             The threshold percentage for the Continuous Peaks fitness function.
 
         Returns
@@ -33,18 +33,16 @@ class ContinuousPeaksGenerator:
         Raises
         ------
         ValueError
-            If the `size` is not a positive integer or if `threshold_percentage` is not between 0 and 1.
+            If the `size` is not a positive integer or if `t_pct` is not between 0 and 1.
         """
         if not isinstance(size, int) or size <= 0:
             raise ValueError(f"Size must be a positive integer. Got {size}")
-        if not isinstance(threshold_percentage, float):
-            raise ValueError(f"Threshold percentage must be a float. Got {type(threshold_percentage).__name__}")
-        if not (0 <= threshold_percentage <= 1):
-            raise ValueError(f"Threshold percentage must be between 0 and 1. Got {threshold_percentage}")
+        if not isinstance(t_pct, float):
+            raise ValueError(f"Threshold percentage must be a float. Got {type(t_pct).__name__}")
+        if not (0 <= t_pct <= 1):
+            raise ValueError(f"Threshold percentage must be between 0 and 1. Got {t_pct}")
 
         np.random.seed(seed)
 
-        fitness = ContinuousPeaks(threshold_percentage=threshold_percentage)
-        problem = DiscreteOpt(length=size, fitness_fn=fitness)
-
-        return problem
+        fitness = ContinuousPeaks(t_pct=t_pct)
+        return DiscreteOpt(length=size, fitness_fn=fitness)

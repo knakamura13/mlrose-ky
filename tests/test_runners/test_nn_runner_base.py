@@ -10,19 +10,12 @@ from unittest.mock import patch, MagicMock, mock_open
 
 from tests.globals import SEED
 
-try:
-    import mlrose_ky
-except ImportError:
-    import sys
-
-    sys.path.append("..")
-    import mlrose_ky
-
 # noinspection PyProtectedMember
 from mlrose_ky.runners._nn_runner_base import _NNRunnerBase
 
 
 class TestNNRunnerBase:
+    """Tests for _NNRunnerBase."""
 
     def test_nn_runner_base_initialization(self):
         """Test _NNRunnerBase initialization with default parameters"""
@@ -55,7 +48,7 @@ class TestNNRunnerBase:
         assert runner.seed == SEED
         assert runner.iteration_list == iteration_list
         assert runner.grid_search_parameters == runner.build_grid_search_parameters(grid_search_parameters)
-        assert runner.scorer_method == grid_search_scorer_method
+        assert runner._scorer_method == grid_search_scorer_method
         assert runner.cv == 5
         assert runner.generate_curves is True
         assert runner._output_directory is None

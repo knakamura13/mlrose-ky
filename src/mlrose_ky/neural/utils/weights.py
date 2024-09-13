@@ -3,55 +3,55 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
+from typing import List, Tuple
+
 import numpy as np
 
 
-def flatten_weights(weights: list) -> np.ndarray:
-    """Flatten list of weights arrays into a 1D array.
+def flatten_weights(weights: List[np.ndarray]) -> np.ndarray:
+    """
+    Flatten list of weights arrays into a 1D array.
 
     Parameters
     ----------
-    weights: list
+    weights : list of np.ndarray
         List of 2D arrays for flattening.
 
     Returns
     -------
-    flat_weights: np.ndarray
-        1D weights array.
+    np.ndarray
+        1D array of flattened weights.
     """
     flat_weights = []
 
-    for i in range(len(weights)):
-        flat_weights += list(weights[i].flatten())
+    for weight in weights:
+        flat_weights += list(weight.flatten())
 
-    flat_weights = np.array(flat_weights)
-
-    return flat_weights
+    return np.array(flat_weights)
 
 
-def unflatten_weights(flat_weights: np.ndarray, node_list: list) -> list:
-    """Convert 1D weights array into list of 2D arrays.
+def unflatten_weights(flat_weights: np.ndarray, node_list: List[int]) -> List[np.ndarray]:
+    """
+    Convert 1D weights array into list of 2D arrays.
 
     Parameters
     ----------
-    flat_weights: np.ndarray
+    flat_weights : np.ndarray
         1D weights array.
 
-    node_list: list
+    node_list : list of int
         List giving the number of nodes in each layer of the network,
         including the input and output layers.
 
     Returns
     -------
-    weights: list
+    list of np.ndarray
         List of 2D arrays created from flat_weights.
     """
-    nodes = 0
-    for i in range(len(node_list) - 1):
-        nodes += node_list[i] * node_list[i + 1]
+    nodes = sum(node_list[i] * node_list[i + 1] for i in range(len(node_list) - 1))
 
     if len(flat_weights) != nodes:
-        raise Exception("""flat_weights must have length %d""" % (nodes,))
+        raise ValueError(f"flat_weights must have length {nodes}, but got {len(flat_weights)}.")
 
     weights = []
     start = 0
@@ -64,51 +64,56 @@ def unflatten_weights(flat_weights: np.ndarray, node_list: list) -> list:
     return weights
 
 
-def gradient_descent_original(problem, max_attempts=10, max_iters=np.inf, init_state=None, curve=False, random_state=None):
-    """Use gradient_descent to find the optimal neural network weights.
+def gradient_descent_original(
+    problem,
+    max_attempts: int = 10,
+    max_iters: int | float = np.inf,
+    init_state: np.ndarray = None,
+    curve: bool = False,
+    random_state: int = None,
+) -> Tuple[np.ndarray, float, np.ndarray | None]:
+    """
+    Use gradient descent to find the optimal neural network weights.
+
     Parameters
     ----------
-    problem: optimization object
-        Object containing optimization problem to be solved.
-    max_attempts: int, default: 10
+    problem : optimization object
+        Object containing the optimization problem to be solved.
+    max_attempts : int, default=10
         Maximum number of attempts to find a better state at each step.
-    max_iters: int, default: np.inf
+    max_iters : int or float, default=np.inf
         Maximum number of iterations of the algorithm.
-    init_state: np.ndarray, default: None
-        Numpy array containing starting state for algorithm.
+    init_state : np.ndarray, default=None
+        Numpy array containing the starting state for the algorithm.
         If None, then a random state is used.
-    random_state: int, default: None
-        If random_state is a positive integer, random_state is the seed used
-        by np.random.seed(); otherwise, the random seed is not set.
-    curve: bool, default: False
-        Boolean to keep fitness values for a curve.
-        If :code:`False`, then no curve is stored.
-        If :code:`True`, then a history of fitness values is provided as a
-        third return value.
+    curve : bool, default=False
+        If True, returns a history of fitness values.
+    random_state : int, default=None
+        If provided, sets the random seed for reproducibility.
+
     Returns
     -------
-    best_state: np.ndarray
-        Numpy array containing state that optimizes fitness function.
-    best_fitness: float
-        Value of fitness function at best state.
-    fitness_curve: np.ndarray
-        Numpy array containing the fitness at every iteration.
-        Only returned if input argument :code:`curve` is :code:`True`.
+    best_state : np.ndarray
+        Numpy array containing the state that optimizes the fitness function.
+    best_fitness : float
+        Value of the fitness function at the best state.
+    fitness_curve : np.ndarray or None
+        Array containing the fitness at every iteration (if curve=True).
     """
-    if (not isinstance(max_attempts, int) and not max_attempts.is_integer()) or max_attempts < 0:
-        raise Exception("""max_attempts must be a positive integer.""")
+    if not isinstance(max_attempts, int) or max_attempts < 0:
+        raise ValueError(f"max_attempts must be a positive integer, got {max_attempts}.")
 
-    if (not isinstance(max_iters, int) and max_iters != np.inf and not max_iters.is_integer()) or max_iters < 0:
-        raise Exception("""max_iters must be a positive integer.""")
+    if (not isinstance(max_iters, int) and max_iters != np.inf) or max_iters < 0:
+        raise ValueError(f"max_iters must be a positive integer, got {max_iters}.")
 
     if init_state is not None and len(init_state) != problem.get_length():
-        raise Exception("""init_state must have same length as problem.""")
+        raise ValueError(f"init_state must have the same length as the problem, got {len(init_state)}.")
 
     # Set random seed
     if isinstance(random_state, int) and random_state > 0:
         np.random.seed(random_state)
 
-    # Initialize problem, time and attempts counter
+    # Initialize problem
     if init_state is None:
         problem.reset()
     else:
@@ -121,12 +126,11 @@ def gradient_descent_original(problem, max_attempts=10, max_iters=np.inf, init_s
     best_fitness = problem.get_maximize() * problem.get_fitness()
     best_state = problem.get_state()
 
-    while (attempts < max_attempts) and (iters < max_iters):
+    while attempts < max_attempts and iters < max_iters:
         iters += 1
 
         # Update weights
         updates = flatten_weights(problem.calculate_updates())
-
         next_state = problem.update_state(updates)
         next_fitness = problem.eval_fitness(next_state)
 

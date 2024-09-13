@@ -14,6 +14,8 @@ from mlrose_ky.algorithms.gd import gradient_descent
 # noinspection PyProtectedMember
 from mlrose_ky.neural._nn_base import _NNBase
 
+# TODO: test ._build_node_list(), ._format_x_y_data(), ._build_problem_and_fitness_function(), ._predict()
+
 
 class TestNNBase:
     """Test cases for neural network-related utilities."""

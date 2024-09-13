@@ -27,16 +27,16 @@ class OneMax:
     The One Max fitness function is suitable for use in either discrete or continuous-state optimization problems.
     """
 
-    def __init__(self) -> None:
-        self.problem_type: str = "either"
+    def __init__(self):
+        self.prob_type: str = "either"
 
     @staticmethod
-    def evaluate(state_vector: np.ndarray) -> float:
+    def evaluate(state: np.ndarray) -> float:
         """Evaluate the fitness of a state vector.
 
         Parameters
         ----------
-        state_vector: np.ndarray
+        state: np.ndarray
             State array for evaluation.
 
         Returns
@@ -47,14 +47,14 @@ class OneMax:
         Raises
         ------
         TypeError
-            If `state_vector` is not an instance of `np.ndarray`.
+            If `state` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_vector, np.ndarray):
-            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state_vector).__name__} instead.")
+        if not isinstance(state, np.ndarray):
+            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state).__name__} instead.")
 
-        return float(np.sum(state_vector))
+        return float(np.sum(state))
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
@@ -62,4 +62,4 @@ class OneMax:
         str
             Specifies problem type as 'either'.
         """
-        return self.problem_type
+        return self.prob_type

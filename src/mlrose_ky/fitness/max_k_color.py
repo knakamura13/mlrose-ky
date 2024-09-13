@@ -62,20 +62,20 @@ class MaxKColor:
         maximize : bool, optional, default=False
             Whether to maximize or minimize the fitness function.
         """
-        self.problem_type: str = "discrete"
-        self.maximize = maximize
+        self.prob_type: str = "discrete"
+        self.maximize: bool = maximize
         self.graph_edges: list[tuple[int, int]] | None = None
 
         # Remove any duplicates from list
         # noinspection PyTypeChecker
         self.edges: list[tuple[int, int]] = list({tuple(sorted(edge)) for edge in edges})
 
-    def evaluate(self, state_vector: np.ndarray) -> float:
+    def evaluate(self, state: np.ndarray) -> float:
         """Evaluate the fitness of a state vector.
 
         Parameters
         ----------
-        state_vector : np.ndarray
+        state : np.ndarray
             State array for evaluation.
 
         Returns
@@ -86,21 +86,21 @@ class MaxKColor:
         Raises
         ------
         TypeError
-            If `state_vector` is not an instance of `np.ndarray`.
+            If `state` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_vector, np.ndarray):
-            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state_vector).__name__} instead.")
+        if not isinstance(state, np.ndarray):
+            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state).__name__} instead.")
 
         edges = self.graph_edges if self.graph_edges is not None else self.edges
 
         if self.maximize:
             # Maximize the number of adjacent nodes not of the same color.
-            return float(sum(state_vector[n1] != state_vector[n2] for (n1, n2) in edges))
+            return float(sum(state[n1] != state[n2] for (n1, n2) in edges))
 
         # Minimize the number of adjacent nodes of the same color.
-        return float(sum(state_vector[n1] == state_vector[n2] for (n1, n2) in edges))
+        return float(sum(state[n1] == state[n2] for (n1, n2) in edges))
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
@@ -108,9 +108,9 @@ class MaxKColor:
         str
             Specifies problem type as 'discrete'.
         """
-        return self.problem_type
+        return self.prob_type
 
-    def set_graph(self, graph) -> None:
+    def set_graph(self, graph):
         """Set the graph edges from an external graph representation.
 
         Parameters

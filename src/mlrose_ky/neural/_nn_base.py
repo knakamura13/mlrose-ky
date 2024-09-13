@@ -2,7 +2,9 @@
 
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
+
 from abc import ABC, abstractmethod
+from typing import Callable
 
 import numpy as np
 from sklearn.base import BaseEstimator
@@ -13,111 +15,237 @@ from mlrose_ky.opt_probs import ContinuousOpt
 
 
 class _NNBase(BaseEstimator, ABC):
+    """
+    Abstract base class for neural network models.
+
+    Defines the necessary methods and utility functions for training and
+    predicting with neural network models.
+    """
 
     @abstractmethod
     def __init__(self):
         pass
 
     @abstractmethod
-    def fit(self, X, y=None, init_weights=None):
-        """Fit neural network to data.
+    def fit(self, X: np.ndarray, y: np.ndarray = None, init_weights: np.ndarray = None):
+        """
+        Fit the neural network to the data.
 
         Parameters
         ----------
-        X: np.ndarray
-            Numpy array containing feature dataset with each row
+        X : np.ndarray
+            Numpy array containing the feature dataset with each row
             representing a single observation.
-
-        y: np.ndarray
-            Numpy array containing data labels. Length must be same as
-            length of X.
-
-        init_weights: np.ndarray, default: None
-            Numpy array containing starting weights for algorithm.
-            If :code:`None`, then a random state is used.
+        y : np.ndarray, optional
+            Numpy array containing data labels. Length must be the same as
+            the length of X.
+        init_weights : np.ndarray, optional
+            Numpy array containing starting weights for the algorithm.
+            If None, a random state is used.
         """
         pass
 
     @abstractmethod
-    def predict(self, X):
-        """Use model to predict data labels for given feature array.
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        """
+        Use the model to predict data labels for a given feature array.
 
         Parameters
         ----------
-        X: np.ndarray
-            Numpy array containing feature dataset with each row
+        X : np.ndarray
+            Numpy array containing the feature dataset with each row
             representing a single observation.
 
         Returns
         -------
-        y_pred: np.ndarray
-            Numpy array containing predicted data labels.
+        np.ndarray
+            Numpy array containing the predicted data labels.
         """
         pass
 
     @staticmethod
-    def _calculate_state_size(node_list):
-        num_nodes = 0
-        for i in range(len(node_list) - 1):
-            num_nodes += node_list[i] * node_list[i + 1]
-        return num_nodes
+    def _calculate_state_size(node_list: list[int]) -> int:
+        """
+        Calculate the total number of nodes in the network layers.
+
+        Parameters
+        ----------
+        node_list : list of int
+            List of the number of nodes in each layer, including input
+            and output layers.
+
+        Returns
+        -------
+        int
+            The total number of nodes in the network.
+        """
+        return sum(node_list[i] * node_list[i + 1] for i in range(len(node_list) - 1))
 
     @staticmethod
-    def _build_node_list(X, y, hidden_nodes, bias):
-        # Determine number of nodes in each layer
+    def _build_node_list(X: np.ndarray, y: np.ndarray, hidden_nodes: list[int], bias: bool = False) -> list[int]:
+        """
+        Build a list of nodes in each layer of the network.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Feature dataset with each row representing a single observation.
+        y : np.ndarray
+            Array of data labels.
+        hidden_nodes : list of int
+            List of the number of nodes in the hidden layers.
+        bias : bool, optional, default=False
+            Whether to include a bias term in the network.
+
+        Returns
+        -------
+        list of int
+            A list containing the number of nodes in each layer of the network.
+        """
         input_nodes = np.shape(X)[1] + bias
         output_nodes = np.shape(y)[1]
-        node_list = [input_nodes] + list(hidden_nodes) + [output_nodes]
-        return node_list
+
+        return [input_nodes] + hidden_nodes + [output_nodes]
 
     @staticmethod
-    def _format_x_y_data(X, y):
-        # Make sure y is an array and not a list
+    def _format_x_y_data(X: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """
+        Ensure that the X and y data are correctly formatted.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Feature dataset with each row representing a single observation.
+        y : np.ndarray
+            Data labels.
+
+        Returns
+        -------
+        X : np.ndarray
+            Formatted feature dataset.
+        y : np.ndarray
+            Formatted data labels.
+
+        Raises
+        ------
+        ValueError
+            If the lengths of X and y do not match.
+        """
         y = np.array(y)
-        # Convert y to 2D if necessary
+
         if len(np.shape(y)) == 1:
             y = np.reshape(y, [len(y), 1])
-        # Verify X and y are the same length
-        if not np.shape(X)[0] == np.shape(y)[0]:
-            raise Exception("The length of X and y must be equal.")
+
+        if np.shape(X)[0] != np.shape(y)[0]:
+            raise ValueError(f"The length of X ({np.shape(X)[0]}) and y ({np.shape(y)[0]}) must be equal.")
+
         return X, y
 
     @staticmethod
-    def _build_problem_and_fitness_function(X, y, node_list, activation, learning_rate, bias, clip_max, is_classifier=True):
-        # Initialize optimization problem
+    def _build_problem_and_fitness_function(
+        X: np.ndarray,
+        y: np.ndarray,
+        node_list: list[int],
+        activation: Callable,
+        learning_rate: float,
+        clip_max: float,
+        bias: bool = False,
+        is_classifier: bool = True,
+    ) -> tuple[NetworkWeights, ContinuousOpt]:
+        """
+        Initialize the optimization problem and fitness function.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Feature dataset.
+        y : np.ndarray
+            Data labels.
+        node_list : list of int
+            List of the number of nodes in each layer.
+        activation : Callable
+            Activation function for the network.
+        learning_rate : float
+            Learning rate for weight updates.
+        clip_max : float
+            Maximum value for weights.
+        bias : bool, optional, default=False
+            Whether to include a bias term in the network.
+        is_classifier : bool, optional, default=True
+            Whether the network is a classifier.
+
+        Returns
+        -------
+        NetworkWeights
+            The fitness function for optimizing the network weights.
+        ContinuousOpt
+            The continuous optimization problem for gradient descent.
+        """
         fitness = NetworkWeights(X, y, node_list, activation, bias, is_classifier, learning_rate=learning_rate)
         num_nodes = _NNBase._calculate_state_size(node_list)
+
         problem = ContinuousOpt(
-            length=num_nodes, fitness_fn=fitness, maximize=False, min_val=-1 * clip_max, max_val=clip_max, step=learning_rate
+            length=num_nodes, fitness_fn=fitness, maximize=False, min_val=-clip_max, max_val=clip_max, step=learning_rate
         )
+
         return fitness, problem
 
     @staticmethod
-    def _predict(X, fitted_weights, node_list, bias, input_activation, output_activation, is_classifier=True):
+    def _predict(
+        X: np.ndarray,
+        fitted_weights: np.ndarray,
+        node_list: list[int],
+        input_activation: Callable,
+        output_activation: Callable,
+        bias: bool = False,
+        is_classifier: bool = True,
+    ) -> tuple[np.ndarray, np.ndarray | None]:
+        """
+        Predict data labels based on the fitted weights of the network.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Feature dataset.
+        fitted_weights : np.ndarray
+            Flattened weight array for the network.
+        node_list : list of int
+            List of the number of nodes in each layer.
+        input_activation : Callable
+            Activation function for the hidden layers.
+        output_activation : Callable
+            Activation function for the output layer.
+        bias : bool, optional, default=False
+            Whether to include a bias term in the network.
+        is_classifier : bool, optional, default=True
+            Whether the network is a classifier.
+
+        Returns
+        -------
+        y_pred : np.ndarray
+            Predicted labels for the input dataset.
+        predicted_probs : np.ndarray or None
+            Predicted probabilities for the input dataset, if the network is a classifier.
+        """
         weights = list(unflatten_weights(fitted_weights, node_list))
 
-        # Add bias column to inputs matrix, if required
         if bias:
             ones = np.ones([np.shape(X)[0], 1])
             inputs = np.hstack((X, ones))
-
         else:
             inputs = X
 
-        # Pass data through network
-        y_pred = None
+        y_pred = np.empty(0)  # Initialize y_pred to prevent uninitialized warning
+        predicted_probs = None  # Initialize predicted_probs
+
         for i in range(len(weights)):
-            # Multiple inputs by weights
             outputs = np.dot(inputs, weights[i])
 
-            # Transform outputs to get inputs for next layer (or final preds)
             if i < len(weights) - 1:
                 inputs = input_activation(outputs)
             else:
                 y_pred = output_activation(outputs)
 
-        # For classifier, convert predicted probabilities to 0-1 labels
-        predicted_probs = None
         if is_classifier:
             predicted_probs = y_pred
 

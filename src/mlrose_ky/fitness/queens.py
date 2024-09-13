@@ -39,16 +39,16 @@ class Queens:
         maximize : bool, optional, default=False
             Whether to maximize or minimize the fitness function.
         """
-        self.problem_type: str = "discrete"
+        self.prob_type: str = "discrete"
         self.maximize: bool = maximize
 
     @staticmethod
-    def shift(arr: np.ndarray, num: int, fill_value: float | int = np.nan) -> np.ndarray:
+    def shift(a: np.ndarray, num: int, fill_value: float | int = np.nan) -> np.ndarray:
         """Shift elements of an array by a given number of places.
 
         Parameters
         ----------
-        arr : np.ndarray
+        a : np.ndarray
             Input array to be shifted.
         num : int
             Number of places to shift the elements of the array.
@@ -60,25 +60,25 @@ class Queens:
         np.ndarray
             Shifted array.
         """
-        result = np.empty(arr.shape)
+        result = np.empty(a.shape)
 
         if num > 0:
             result[:num] = fill_value  # Fill the beginning with the fill_value
-            result[num:] = arr[:-num]  # Shift the rest of the array to the right
+            result[num:] = a[:-num]  # Shift the rest of the array to the right
         elif num < 0:
             result[num:] = fill_value  # Fill the end with the fill_value
-            result[:num] = arr[-num:]  # Shift the rest of the array to the left
+            result[:num] = a[-num:]  # Shift the rest of the array to the left
         else:
-            result[:] = arr  # No shift needed
+            result[:] = a  # No shift needed
 
         return result
 
-    def evaluate(self, state_vector: np.ndarray) -> float:
+    def evaluate(self, state: np.ndarray) -> float:
         """Evaluate the fitness of a state vector.
 
         Parameters
         ----------
-        state_vector : np.ndarray
+        state : np.ndarray
             State array for evaluation.
 
         Returns
@@ -89,24 +89,24 @@ class Queens:
         Raises
         ------
         TypeError
-            If `state_vector` is not an instance of `np.ndarray`.
+            If `state` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_vector, np.ndarray):
-            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state_vector).__name__} instead.")
+        if not isinstance(state, np.ndarray):
+            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state).__name__} instead.")
 
         # Check for horizontal conflicts (queens in the same row)
-        horizontal_conflicts = np.sum(np.unique(state_vector, return_counts=True)[1] - 1)
+        horizontal_conflicts = np.sum(np.unique(state, return_counts=True)[1] - 1)
 
-        size = state_vector.size
+        size = state.size
 
         # Generate state shifts for diagonal conflict checks
         state_shifts = np.array(
-            [self.shift(state_vector, i) + i for i in range(1 - size, size) if i != 0]
-            + [self.shift(state_vector, -i) + i for i in range(1 - size, size) if i != 0]
+            [self.shift(state, i) + i for i in range(1 - size, size) if i != 0]
+            + [self.shift(state, -i) + i for i in range(1 - size, size) if i != 0]
         )
 
         # Check for diagonal conflicts (queens on the same diagonal)
-        diagonal_conflicts = np.sum(state_shifts == state_vector) // 2  # Each diagonal conflict is counted twice
+        diagonal_conflicts = np.sum(state_shifts == state) // 2  # Each diagonal conflict is counted twice
 
         # Calculate total fitness value
         fitness_value = horizontal_conflicts + diagonal_conflicts
@@ -117,7 +117,7 @@ class Queens:
 
         return float(fitness_value)
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
@@ -125,7 +125,7 @@ class Queens:
         str
             Specifies problem type as 'discrete'.
         """
-        return self.problem_type
+        return self.prob_type
 
     @staticmethod
     def get_max_size(problem_size: int) -> int:

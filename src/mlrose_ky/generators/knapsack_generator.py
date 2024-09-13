@@ -4,6 +4,7 @@
 # License: BSD 3-clause
 
 import numpy as np
+
 from mlrose_ky import KnapsackOpt
 
 
@@ -12,12 +13,12 @@ class KnapsackGenerator:
 
     @staticmethod
     def generate(
-        seed: int,
+        seed: int = 42,
         number_of_item_types: int = 10,
         max_item_count: int = 5,
         max_weight_per_item: int = 25,
         max_value_per_item: int = 10,
-        max_weight_percentage: float = 0.6,
+        max_weight_pct: float = 0.6,
         multiply_by_max_item_count: bool = True,
     ) -> KnapsackOpt:
         """
@@ -25,7 +26,7 @@ class KnapsackGenerator:
 
         Parameters
         ----------
-        seed : int
+        seed : int, optional, default=42
             Seed for the random number generator.
         number_of_item_types : int, optional, default=10
             Number of different item types.
@@ -35,7 +36,7 @@ class KnapsackGenerator:
             Maximum weight for each item type.
         max_value_per_item : int, optional, default=10
             Maximum value for each item type.
-        max_weight_percentage : float, optional, default=0.6
+        max_weight_pct : float, optional, default=0.6
             Maximum weight percentage of the knapsack.
         multiply_by_max_item_count : bool, optional, default=True
             If True, multiply weights and values by max_item_count.
@@ -60,8 +61,8 @@ class KnapsackGenerator:
             raise ValueError(f"Max weight per item must be a positive integer. Got {max_weight_per_item}")
         if not isinstance(max_value_per_item, int) or max_value_per_item <= 0:
             raise ValueError(f"Max value per item must be a positive integer. Got {max_value_per_item}")
-        if not isinstance(max_weight_percentage, float) or not (0 <= max_weight_percentage <= 1):
-            raise ValueError(f"Max weight percentage must be a float between 0 and 1. Got {max_weight_percentage}")
+        if not isinstance(max_weight_pct, float) or not (0 <= max_weight_pct <= 1):
+            raise ValueError(f"Max weight percentage must be a float between 0 and 1. Got {max_weight_pct}")
         if not isinstance(multiply_by_max_item_count, bool):
             raise ValueError(f"multiply_by_max_item_count must be a boolean. Got {multiply_by_max_item_count}")
 
@@ -70,13 +71,11 @@ class KnapsackGenerator:
         weights = 1 + np.random.randint(max_weight_per_item, size=number_of_item_types)
         values = 1 + np.random.randint(max_value_per_item, size=number_of_item_types)
 
-        problem = KnapsackOpt(
+        return KnapsackOpt(
             length=number_of_item_types,
             max_val=max_item_count,
             weights=weights,
             values=values,
-            max_weight_pct=max_weight_percentage,
+            max_weight_pct=max_weight_pct,
             multiply_by_max_item_count=multiply_by_max_item_count,
         )
-
-        return problem

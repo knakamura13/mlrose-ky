@@ -57,7 +57,13 @@ class TestNeuralNetwork:
         hidden_nodes = [2]
         bias = False
         network = NeuralNetwork(
-            hidden_nodes=hidden_nodes, activation="identity", algorithm="genetic_alg", bias=bias, learning_rate=1, clip_max=1, max_attempts=1
+            hidden_nodes=hidden_nodes,
+            activation="identity",
+            algorithm="genetic_alg",
+            bias=bias,
+            learning_rate=1,
+            clip_max=1,
+            max_attempts=1,
         )
 
         node_list = [X.shape[1], *hidden_nodes, 2 if bias else 1]
@@ -158,4 +164,3 @@ class TestNeuralNetwork:
         train_sizes, train_scores, test_scores = learning_curve(network, X, y, train_sizes=train_sizes, cv=cv, scoring="accuracy")
 
         assert not np.isnan(train_scores).any() and not np.isnan(test_scores).any()
-

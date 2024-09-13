@@ -114,7 +114,7 @@ def genetic_alg(
     callback_user_info: Any = None,
     hamming_factor: float = 0.0,
     hamming_decay_factor: float = None,
-) -> tuple[np.ndarray, float, np.ndarray]:
+) -> tuple[np.ndarray, float, np.ndarray | None]:
     """
     Use a standard genetic algorithm to find the optimum for a given optimization problem.
 
@@ -172,6 +172,7 @@ def genetic_alg(
     Russell, S. and P. Norvig (2010). *Artificial Intelligence: A Modern Approach*, 3rd edition.
     Prentice Hall, New Jersey, USA.
     """
+    # TODO: fix and uncomment these problematic raise statements
     # if not isinstance(pop_size, int) or pop_size < 0:
     #     raise ValueError(f"pop_size must be a positive integer. Got {pop_size}")
     # if not 0 <= pop_breed_percent <= 1:

@@ -13,20 +13,20 @@ class ContinuousPeaks:
 
     Parameters
     ----------
-    threshold_percentage : float, default=0.1
+    t_pct : float, default=0.1
         Threshold parameter (T) for Continuous Peaks fitness function, expressed as a
-        percentage of the state space dimension, n (i.e., `T = threshold_percentage * n`).
+        percentage of the state space dimension, n (i.e., `T = t_pct * n`).
 
     Attributes
     ----------
-    threshold_percentage : float
+    t_pct : float
         The threshold percentage for the fitness function.
-    problem_type : str
+    prob_type : str
         Specifies problem type as 'discrete'.
 
     Examples
     --------
-    >>> fitness = ContinuousPeaks(threshold_percentage=0.15)
+    >>> fitness = ContinuousPeaks(t_pct=0.15)
     >>> state = np.array([0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1])
     >>> fitness.evaluate(state)
     17.0
@@ -37,12 +37,12 @@ class ContinuousPeaks:
     with `max_val = 2`) optimization problems only.
     """
 
-    def __init__(self, threshold_percentage: float = 0.1) -> None:
-        self.threshold_percentage: float = threshold_percentage
-        self.problem_type: str = "discrete"
+    def __init__(self, t_pct: float = 0.1):
+        self.t_pct: float = t_pct
+        self.prob_type: str = "discrete"
 
-        if not (0 <= self.threshold_percentage <= 1):
-            raise ValueError(f"threshold_percentage must be between 0 and 1, got {self.threshold_percentage} instead.")
+        if not (0 <= self.t_pct <= 1):
+            raise ValueError(f"t_pct must be between 0 and 1, got {self.t_pct} instead.")
 
     def evaluate(self, state: np.ndarray) -> float:
         """
@@ -59,17 +59,16 @@ class ContinuousPeaks:
             Value of the fitness function.
         """
         num_elements = len(state)
-        threshold = int(np.ceil(self.threshold_percentage * num_elements))
+        threshold = int(np.ceil(self.t_pct * num_elements))
 
-        max_zeros = self._max_run(0, state)
-        max_ones = self._max_run(1, state)
+        max_zeros = self.max_run(0, state)
+        max_ones = self.max_run(1, state)
 
         reward = num_elements if max_zeros > threshold and max_ones > threshold else 0
 
-        fitness = float(max(max_zeros, max_ones) + reward)
-        return fitness
+        return float(max(max_zeros, max_ones) + reward)
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """
         Return the problem type.
 
@@ -78,18 +77,18 @@ class ContinuousPeaks:
         str
             Specifies problem type as 'discrete'.
         """
-        return self.problem_type
+        return self.prob_type
 
     @staticmethod
-    def _max_run(value: int, vector: np.ndarray) -> int:
+    def max_run(_b: int, _x: np.ndarray) -> int:
         """
         Determine the length of the maximum run of a given value in a vector.
 
         Parameters
         ----------
-        value : int
+        _b : int
             Value to count.
-        vector : np.ndarray
+        _x : np.ndarray
             Vector of integers.
 
         Returns
@@ -98,7 +97,7 @@ class ContinuousPeaks:
             Length of the maximum run of the given value.
         """
         # Create a boolean array where each element is True if it equals the given value
-        is_value = np.array(vector == value)
+        is_value = np.array(_x == _b)
 
         # If the value does not exist in the vector, return 0
         if not np.any(is_value):
@@ -117,11 +116,11 @@ class ContinuousPeaks:
 
         # If the run ends at the end of the vector, include the last index
         if is_value[-1]:
-            run_ends = np.append(run_ends, len(vector))
+            run_ends = np.append(run_ends, len(_x))
 
         # Ensure that run_ends has the same length as run_starts
         if len(run_starts) > len(run_ends):
-            run_ends = np.append(run_ends, len(vector))
+            run_ends = np.append(run_ends, len(_x))
 
         # Calculate the lengths of the runs
         run_lengths = run_ends - run_starts

@@ -8,8 +8,9 @@ constraints.
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Any, Sequence
+
+import numpy as np
 
 from mlrose_ky.algorithms.crossovers._crossover_base import _CrossoverBase
 
@@ -26,7 +27,7 @@ class TSPCrossover(_CrossoverBase):
     _CrossoverBase : Abstract base class for crossover operations.
     """
 
-    def __init__(self, optimization_problem: Any) -> None:
+    def __init__(self, optimization_problem: Any):
         """
         Initialize the TSPCrossover with the given optimization problem.
 
@@ -75,14 +76,15 @@ class TSPCrossover(_CrossoverBase):
         np.ndarray
             The offspring TSP route.
         """
-        if self.chromosome_length > 1:
-            n = 1 + np.random.randint(self.chromosome_length - 1)
-            child = np.array([0] * self.chromosome_length)
+        if self._length > 1:
+            n = 1 + np.random.randint(self._length - 1)
+            child = np.array([0] * self._length)
             child[:n] = parent1[:n]
             unvisited = [city for city in parent2 if city not in parent1[:n]]
             child[n:] = unvisited
         else:
             child = np.copy(parent1 if np.random.randint(2) == 0 else parent2)
+
         return child
 
     def _mate_traverse(self, parent1: Sequence[int], parent2: Sequence[int]) -> np.ndarray:
@@ -106,12 +108,12 @@ class TSPCrossover(_CrossoverBase):
         np.ndarray
             The offspring TSP route.
         """
-        if self.chromosome_length > 1:
+        if self._length > 1:
             next_city_parent1 = np.append(parent1[1:], parent1[0])
             next_city_parent2 = np.append(parent2[1:], parent2[0])
 
-            visited_cities = [False] * self.chromosome_length
-            offspring_route = np.array([0] * self.chromosome_length)
+            visited_cities = [False] * self._length
+            offspring_route = np.array([0] * self._length)
 
             starting_city = np.random.randint(len(parent1))
             offspring_route[0] = starting_city
@@ -130,8 +132,8 @@ class TSPCrossover(_CrossoverBase):
                 elif not visited_city1 and visited_city2:
                     next_city = next_city1
                 elif not visited_city1 and not visited_city2:
-                    fitness1 = self.optimization_problem.fitness_fn.calculate_fitness([current_city, next_city1])
-                    fitness2 = self.optimization_problem.fitness_fn.calculate_fitness([current_city, next_city2])
+                    fitness1 = self._opt_prob.fitness_fn.calculate_fitness([current_city, next_city1])
+                    fitness2 = self._opt_prob.fitness_fn.calculate_fitness([current_city, next_city2])
                     next_city = next_city2 if fitness1 > fitness2 else next_city1  # Choose the smaller distance
                 else:
                     while True:

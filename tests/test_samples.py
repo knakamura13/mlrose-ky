@@ -4,21 +4,11 @@
 # License: BSD 3-clause
 
 from unittest.mock import patch
-
 import matplotlib.pyplot as plt
 import pytest
 from sklearn.linear_model import LogisticRegression
 
 from tests.globals import SEED
-
-try:
-    import mlrose_ky
-except ImportError:
-    import sys
-
-    sys.path.append("..")
-    import mlrose_ky
-
 from mlrose_ky.samples import SyntheticDataGenerator, plot_synthetic_dataset
 
 

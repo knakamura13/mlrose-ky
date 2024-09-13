@@ -5,14 +5,6 @@
 
 import numpy as np
 
-try:
-    import mlrose_ky
-except ImportError:
-    import sys
-
-    sys.path.append("..")
-    import mlrose_ky
-
 from mlrose_ky.neural.activation import identity, sigmoid, softmax, tanh, relu, leaky_relu
 
 

@@ -3,11 +3,13 @@
 [![PyPI version](https://badge.fury.io/py/mlrose-ky.svg)](https://pypi.org/project/mlrose-ky/)
 [![Coverage badge](https://img.shields.io/badge/dynamic/json?color=brightgreen&label=coverage&query=%24.message&url=https%3A%2F%2Fraw.githubusercontent.com%2Fnkapila6%2Fmlrose-ky%2Fpython-coverage-comment-action-data%2Fendpoint.json)](https://htmlpreview.github.io/?https://github.com/nkapila6/mlrose-ky/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-**Usage Warning (updated Aug. 22, 2024)**
-This project is not fully backwards compatible with mlrose-hiive at this time. You should not expect existing mlrose-hiive example code to work right out of the box when using mlrose-ky. 
-Progress is currently being made towards supporting backwards compatibility.
-
 mlrose-ky is a Python package for applying some of the most common randomized optimization and search algorithms to a range of different optimization problems, over both discrete- and continuous-valued parameter spaces.
+
+### Usage Warning (updated Aug. 22, 2024)
+
+This project is not fully backwards compatible with mlrose-hiive at this time. You should not expect existing mlrose-hiive example code to work right out of the box when using mlrose-ky. 
+
+Progress is currently being made ([issue #7](https://github.com/knakamura13/mlrose-ky/issues/7)) towards supporting backwards compatibility.
 
 ## Project Background
 
@@ -70,7 +72,7 @@ import mlrose_ky
 
 ## Documentation
 
-The official mlrose-ky documentation can be found [here](https://mlrose.readthedocs.io/).
+The official mlrose-ky documentation can be found [here](https://nkapila6.github.io/mlrose-ky/).
 
 A Jupyter notebook containing the examples used in the documentation is also available [here](https://github.com/gkhayes/mlrose/blob/master/tutorial_examples.ipynb).
 
@@ -81,7 +83,7 @@ mlrose-ky was forked from the `mlrose-hiive` repository, which was a fork of the
 The original `mlrose` was written by Genevieve Hayes and is distributed under the [3-Clause BSD license](https://github.com/gkhayes/mlrose/blob/master/LICENSE). 
 
 You can cite mlrose-ky in research publications and reports as follows:
-* Nakamura, K. (2024). ***mlrose-ky: Machine Learning, Randomized Optimization, and SEarch package for Python***. https://github.com/your-repo-url. Accessed: *day month year*.
+* Nakamura, K. (2024). ***mlrose-ky: Machine Learning, Randomized Optimization, and SEarch package for Python***. https://github.com/knakamura13/mlrose-ky/. Accessed: *day month year*.
 
 Please also keep the original authors' citations:
 * Rollings, A. (2020). ***mlrose: Machine Learning, Randomized Optimization and SEarch package for Python, hiive extended remix***. https://github.com/hiive/mlrose. Accessed: *day month year*.
@@ -95,7 +97,7 @@ BibTeX entry:
  author = {Nakamura, K.},
  title  = {{mlrose-ky: Machine Learning, Randomized Optimization and SEarch package for Python}},
  year   = 2024,
- howpublished = {\url{https://github.com/your-repo-url}},
+ howpublished = {\url{https://github.com/knakamura13/mlrose-ky/}},
  note   = {Accessed: day month year}
 }
 
@@ -103,7 +105,7 @@ BibTeX entry:
  author = {Rollings, A.},
  title 	= {{mlrose: Machine Learning, Randomized Optimization and SEarch package for Python, hiive extended remix}},
  year 	= 2020,
- howpublished = {\url{https://github.com/hiive/mlrose}},
+ howpublished = {\url{https://github.com/hiive/mlrose/}},
  note 	= {Accessed: day month year}
 }
 
@@ -111,7 +113,7 @@ BibTeX entry:
  author = {Hayes, G.},
  title 	= {{mlrose: Machine Learning, Randomized Optimization and SEarch package for Python}},
  year 	= 2019,
- howpublished = {\url{https://github.com/gkhayes/mlrose}},
+ howpublished = {\url{https://github.com/gkhayes/mlrose/}},
  note 	= {Accessed: day month year}
 }
 ```
@@ -136,6 +138,13 @@ BibTeX entry:
                     <sub><b>Kyle Nakamura</b></sub>
                 </a>
             </td>
+            <td align="center">
+                <a href="https://github.com/gitongah">
+                    <img src="https://avatars.githubusercontent.com/u/39062444?v=4" width="100;" alt="gitongah"/>
+                    <br />
+                    <sub><b>Edwin Mbaabu</b></sub>
+                </a>
+            </td>
 		</tr>
 	<tbody>
 </table>
@@ -155,17 +164,17 @@ BibTeX entry:
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/gkhayes">
-                    <img src="https://avatars.githubusercontent.com/u/24857299?v=4" width="100;" alt="gkhayes"/>
-                    <br />
-                    <sub><b>Dr Genevieve Hayes</b></sub>
-                </a>
-            </td>
-            <td align="center">
                 <a href="https://github.com/knakamura13">
                     <img src="https://avatars.githubusercontent.com/u/20162718?v=4" width="100;" alt="knakamura13"/>
                     <br />
                     <sub><b>Kyle Nakamura</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/gkhayes">
+                    <img src="https://avatars.githubusercontent.com/u/24857299?v=4" width="100;" alt="gkhayes"/>
+                    <br />
+                    <sub><b>Dr Genevieve Hayes</b></sub>
                 </a>
             </td>
             <td align="center">
@@ -220,12 +229,21 @@ BibTeX entry:
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/gitongah">
+                    <img src="https://avatars.githubusercontent.com/u/39062444?v=4" width="100;" alt="gitongah"/>
+                    <br />
+                    <sub><b>Edwin Mbaabu</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/KevinJBoyer">
                     <img src="https://avatars.githubusercontent.com/u/31424131?v=4" width="100;" alt="KevinJBoyer"/>
                     <br />
                     <sub><b>Kevin Boyer</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/jfs42">
                     <img src="https://avatars.githubusercontent.com/u/43157283?v=4" width="100;" alt="jfs42"/>
@@ -233,8 +251,6 @@ BibTeX entry:
                     <sub><b>Jason Seeley</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/sareini">
                     <img src="https://avatars.githubusercontent.com/u/26151060?v=4" width="100;" alt="sareini"/>
@@ -270,6 +286,8 @@ BibTeX entry:
                     <sub><b>John Mansfield</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/dstrube1">
                     <img src="https://avatars.githubusercontent.com/u/7396679?v=4" width="100;" alt="dstrube1"/>
@@ -277,8 +295,6 @@ BibTeX entry:
                     <sub><b>David Strube</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/austin-bowen">
                     <img src="https://avatars.githubusercontent.com/u/4653828?v=4" width="100;" alt="austin-bowen"/>
@@ -314,6 +330,8 @@ BibTeX entry:
                     <sub><b>Keith Beattie</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/cbhyphen">
                     <img src="https://avatars.githubusercontent.com/u/12734117?v=4" width="100;" alt="cbhyphen"/>
@@ -321,8 +339,6 @@ BibTeX entry:
                     <sub><b>cbhyphen</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/dsctt">
                     <img src="https://avatars.githubusercontent.com/u/45729071?v=4" width="100;" alt="dsctt"/>

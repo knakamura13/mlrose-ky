@@ -3,16 +3,18 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Callable, Any
+
+import numpy as np
+
+from mlrose_ky.algorithms.decay import GeomDecay
 from mlrose_ky.decorators import short_name
-from mlrose_ky.algorithms.decay import GeometricDecay
 
 
 @short_name("sa")
 def simulated_annealing(
     problem: Any,
-    schedule: Any = GeometricDecay(),
+    schedule: Any = GeomDecay(),
     max_attempts: int = 10,
     max_iters: int = np.inf,
     init_state: np.ndarray = None,
@@ -29,7 +31,7 @@ def simulated_annealing(
         Object containing fitness function optimization problem to be solved.
         For example, :code:`DiscreteOpt()`, :code:`ContinuousOpt()` or
         :code:`TSPOpt()`.
-    schedule: schedule object, default: :code:`mlrose_ky.GeometricDecay()`
+    schedule: schedule object, default: :code:`mlrose_ky.GeomDecay()`
         Schedule used to determine the value of the temperature parameter.
     max_attempts: int, default: 10
         Maximum number of attempts to find a better neighbor at each step.
@@ -68,6 +70,7 @@ def simulated_annealing(
     Russell, S. and P. Norvig (2010). *Artificial Intelligence: A Modern Approach*, 3rd edition.
     Prentice Hall, New Jersey, USA.
     """
+    # TODO: fix and uncomment these problematic raise statements
     # if not isinstance(max_attempts, int) or max_attempts < 0:
     #     raise ValueError(f"max_attempts must be a positive integer. Got {max_attempts}")
     # if not (isinstance(max_iters, int) or max_iters == np.inf) or max_iters < 0:
@@ -149,7 +152,4 @@ def simulated_annealing(
     best_fitness = problem.get_maximize() * problem.get_fitness()
     best_state = problem.get_state()
 
-    if curve:
-        return best_state, best_fitness, np.asarray(fitness_curve)
-
-    return best_state, best_fitness, None
+    return best_state, best_fitness, np.asarray(fitness_curve) if curve else None

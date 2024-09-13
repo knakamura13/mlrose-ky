@@ -7,8 +7,9 @@ where a single crossover point is chosen randomly to combine two parent solution
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Any, Sequence
+
+import numpy as np
 
 from mlrose_ky.algorithms.crossovers._crossover_base import _CrossoverBase
 
@@ -25,7 +26,7 @@ class OnePointCrossover(_CrossoverBase):
     _CrossoverBase : Abstract base class for crossover operations.
     """
 
-    def __init__(self, optimization_problem: Any) -> None:
+    def __init__(self, optimization_problem: Any):
         """
         Initialize the OnePointCrossover with the given optimization problem.
 
@@ -55,6 +56,5 @@ class OnePointCrossover(_CrossoverBase):
         np.ndarray
             The offspring chromosome resulting from the crossover.
         """
-        crossover_point = 1 + np.random.randint(self.chromosome_length - 1)
-        offspring = np.array([*parent1[:crossover_point], *parent2[crossover_point:]])
-        return offspring
+        crossover_point = 1 + np.random.randint(self._length - 1)
+        return np.array([*parent1[:crossover_point], *parent2[crossover_point:]])

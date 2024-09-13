@@ -3,8 +3,9 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-import numpy as np
 from typing import Callable, Any
+
+import numpy as np
 
 
 class CustomFitness:
@@ -62,12 +63,12 @@ class CustomFitness:
         self.problem_type: str = problem_type
         self.kwargs: Any = kwargs
 
-    def evaluate(self, state_vector: np.ndarray) -> float:
+    def evaluate(self, state: np.ndarray) -> float:
         """Evaluate the fitness of a state vector.
 
         Parameters
         ----------
-        state_vector : np.ndarray
+        state : np.ndarray
             State array for evaluation.
 
         Returns
@@ -80,12 +81,12 @@ class CustomFitness:
         TypeError
             If `state_vector` is not an instance of `np.ndarray`.
         """
-        if not isinstance(state_vector, np.ndarray):
-            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state_vector).__name__} instead.")
+        if not isinstance(state, np.ndarray):
+            raise TypeError(f"Expected state_vector to be np.ndarray, got {type(state).__name__} instead.")
 
-        return float(self.fitness_fn(state_vector, **self.kwargs))
+        return float(self.fitness_fn(state, **self.kwargs))
 
-    def get_problem_type(self) -> str:
+    def get_prob_type(self) -> str:
         """Return the problem type.
 
         Returns
