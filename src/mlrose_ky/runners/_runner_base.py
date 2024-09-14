@@ -53,20 +53,20 @@ class _RunnerBase(ABC):
     _sigint_params: tuple[int, Any] | None = None
 
     @classmethod
-    def get_runner_name(cls) -> str:
+    def runner_name(cls) -> str:
         """Get a short name for the runner class."""
         return get_short_name(cls)
 
-    def get_dynamic_runner_name(self) -> str:
+    def dynamic_runner_name(self) -> str:
         """Get the dynamic name of the runner, if set, otherwise return the default runner name."""
-        dynamic_runner_name = self._dynamic_short_name or self.get_runner_name()
+        dynamic_runner_name = self._dynamic_short_name or self.runner_name()
 
         if not dynamic_runner_name:
             raise ValueError("dynamic_runner_name is None")
 
         return dynamic_runner_name
 
-    def set_dynamic_runner_name(self, name: str):
+    def _set_dynamic_runner_name(self, name: str):
         """Set a dynamic runner name."""
         self._dynamic_short_name = name
 
@@ -285,7 +285,7 @@ class _RunnerBase(ABC):
 
         value_sets = list(itertools.product(*values))
 
-        logging.info(f"Running {self.get_dynamic_runner_name()}")
+        logging.info(f"Running {self.dynamic_runner_name()}")
         run_start = time.perf_counter()
 
         for value_set in value_sets:
@@ -380,7 +380,7 @@ class _RunnerBase(ABC):
         """Generate the root filename for the pickle file based on experiment metadata."""
         return build_data_filename(
             output_directory=self._output_directory,
-            runner_name=self.get_dynamic_runner_name(),
+            runner_name=self.dynamic_runner_name(),
             experiment_name=self._experiment_name,
             df_name=name,
         )
@@ -598,7 +598,7 @@ class _RunnerBase(ABC):
             logging.debug(data_desc)
 
         logging.debug(
-            f"runner_name:[{self.get_dynamic_runner_name()}], experiment_name:[{self._experiment_name}], "
+            f"runner_name:[{self.dynamic_runner_name()}], experiment_name:[{self._experiment_name}], "
             + ("" if attempt is None else f"attempt:[{attempt}], ")
             + f"iteration:[{iteration}], done:[{done}], "
             f"time:[{t:.2f}], fitness:[{fitness:.4f}]"

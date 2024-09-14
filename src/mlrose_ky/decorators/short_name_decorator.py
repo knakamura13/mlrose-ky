@@ -29,12 +29,12 @@ def short_name(expr: str) -> Callable:
         A decorator that assigns the provided short name to a function and returns the function.
     """
 
-    def decorator(func: Callable) -> Callable:
+    def short_name_func_applicator(func: Callable) -> Callable:
         """Assign a short name to the given function."""
         func.__short_name__ = expr
         return func
 
-    return decorator
+    return short_name_func_applicator
 
 
 def get_short_name(v: Any) -> str:

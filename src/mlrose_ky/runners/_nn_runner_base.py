@@ -182,7 +182,7 @@ class _NNRunnerBase(_RunnerBase, GridSearchMixin, ABC):
                     search_results = pk.load(pickle_file)
             else:
                 run_start = time.perf_counter()
-                search_results = self.perform_grid_search(
+                search_results = self._perform_grid_search(
                     classifier=self.classifier,
                     parameters=self.grid_search_parameters,
                     x_train=self.x_train,

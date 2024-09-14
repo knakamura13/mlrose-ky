@@ -157,7 +157,7 @@ class NNGSRunner(_NNRunnerBase):
         )
 
         # Update short name based on the algorithm
-        self.set_dynamic_runner_name(f"{get_short_name(self)}_{get_short_name(algorithm)}")
+        self._set_dynamic_runner_name(f"{get_short_name(self)}_{get_short_name(algorithm)}")
 
     def run_one_experiment_(self, algorithm: Any, total_args: dict, **params: dict) -> tuple | None:
         """

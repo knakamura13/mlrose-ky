@@ -40,7 +40,7 @@ class GridSearchMixin:
         self._params: inspect.Signature = inspect.signature(self._scorer_method)
         self._get_y_argmax: bool = False
 
-    def perform_grid_search(
+    def _perform_grid_search(
         self, classifier: Any, x_train: np.ndarray, y_train: np.ndarray, cv: int, parameters: dict, n_jobs: int = 1, verbose: bool = False
     ) -> skms.GridSearchCV:
         """

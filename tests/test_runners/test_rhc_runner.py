@@ -69,7 +69,7 @@ class TestRHCRunner:
         runner = RHCRunner(**runner_kwargs, **additional_kwargs)
 
         assert runner.problem == problem
-        assert runner.get_runner_name() == "rhc"
+        assert runner.runner_name() == "rhc"
         assert runner._experiment_name == runner_kwargs["experiment_name"]
         assert runner.seed == runner_kwargs["seed"]
         assert runner.iteration_list == runner_kwargs["iteration_list"]

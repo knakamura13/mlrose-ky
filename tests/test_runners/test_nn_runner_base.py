@@ -127,7 +127,7 @@ class TestNNRunnerBase:
                 output_directory="test_output",
             )
 
-            runner.get_runner_name = MagicMock(return_value="TestRunner")
+            runner.runner_name = MagicMock(return_value="TestRunner")
             runner.best_params = {"param1": 0.1, "param2": 1}
             runner._output_directory = "test_output"
             runner.replay_mode = MagicMock(return_value=False)
