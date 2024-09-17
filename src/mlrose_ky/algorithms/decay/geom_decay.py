@@ -3,6 +3,8 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
+import warnings
+
 
 class GeomDecay:
     """
@@ -18,43 +20,47 @@ class GeomDecay:
 
     Parameters
     ----------
-    init_temp : float, default=1.0
+    initial_temperature : float, default=1.0
         The initial value of the temperature parameter T. Must be greater than 0.
-    decay : float, default=0.99
+    decay_rate : float, default=0.99
         The rate of geometric decay. Must be between 0 (exclusive) and 1 (inclusive).
-    min_temp : float, default=0.001
-        The minimum allowable temperature. Must be greater than 0 and less than `init_temp`.
+    minimum_temperature : float, default=0.001
+        The minimum allowable temperature. Must be greater than 0 and less than `initial_temperature`.
 
     Attributes
     ----------
-    init_temp : float
+    initial_temperature : float
         Stores the initial temperature.
-    decay : float
+    decay_rate : float
         Stores the rate of geometric decay.
-    min_temp : float
+    minimum_temperature : float
         Stores the minimum temperature.
 
     Examples
     --------
-    >>> schedule = GeomDecay(init_temp=10, decay=0.95, min_temp=1)
+    >>> schedule = GeomDecay(initial_temperature=10, decay_rate=0.95, minimum_temperature=1)
     >>> print(schedule.evaluate(5))
     7.737809374999998
     """
 
-    def __init__(self, init_temp: float = 1.0, decay: float = 0.99, min_temp: float = 0.001):
-        self.init_temp: float = init_temp
-        self.decay: float = decay
-        self.min_temp: float = min_temp
+    def __init__(self, initial_temperature: float = 1.0, decay_rate: float = 0.99, minimum_temperature: float = 0.001) -> None:
+        self.initial_temperature: float = initial_temperature
+        self.decay_rate: float = decay_rate
+        self.minimum_temperature: float = minimum_temperature
 
-        if self.init_temp <= 0:
+        if self.initial_temperature <= 0:
             raise ValueError("Initial temperature must be greater than 0.")
-        if not (0 < self.decay <= 1):
+        if not (0 < self.decay_rate <= 1):
             raise ValueError("Decay rate must be between 0 and 1, exclusive of 0.")
-        if not (0 < self.min_temp < self.init_temp):
+        if not (0 < self.minimum_temperature < self.initial_temperature):
             raise ValueError("Minimum temperature must be greater than 0 and less than initial temperature.")
 
     def __str__(self) -> str:
-        return f"GeomDecay(init_temp={self.init_temp}, decay={self.decay}, min_temp={self.min_temp})"
+        return (
+            f"GeometricDecay(initial_temperature={self.initial_temperature}, "
+            f"decay_rate={self.decay_rate}, "
+            f"minimum_temperature={self.minimum_temperature})"
+        )
 
     def __repr__(self) -> str:
         return self.__str__()
@@ -62,15 +68,17 @@ class GeomDecay:
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, GeomDecay):
             return False
-        return self.init_temp == other.init_temp and self.decay == other.decay and self.min_temp == other.min_temp
+        return (self.initial_temperature == other.initial_temperature
+                and self.decay_rate == other.decay_rate
+                and self.minimum_temperature == other.minimum_temperature)
 
-    def evaluate(self, t: int) -> float:
+    def evaluate(self, time: int) -> float:
         """
         Evaluate the temperature parameter at the specified time using geometric decay.
 
         Parameters
         ----------
-        t : int
+        time : int
             The time at which the temperature parameter T is evaluated.
 
         Returns
@@ -78,15 +86,15 @@ class GeomDecay:
         float
             The temperature parameter at the given time, respecting the minimum temperature.
         """
-        return float(max(self.init_temp * (self.decay**t), self.min_temp))
+        return max(self.initial_temperature * (self.decay_rate ** time), self.minimum_temperature)
 
-    def get_info__(self, t: int = None, prefix: str = "") -> dict:
+    def get_info(self, time: int | None = None, prefix: str = "") -> dict:
         """
         Retrieve a dictionary containing the configuration and optionally the current value of the decay schedule.
 
         Parameters
         ----------
-        t : int | None, optional
+        time : int | None, optional
             If provided, include the current temperature value at the given time.
         prefix : str, optional
             A prefix to append to each dictionary key, enhancing integration with other data structures.
@@ -100,12 +108,14 @@ class GeomDecay:
 
         info = {
             f"{info_prefix}type": "geometric",
-            f"{info_prefix}init_temp": self.init_temp,
-            f"{info_prefix}decay": self.decay,
-            f"{info_prefix}min_temp": self.min_temp,
+            f"{info_prefix}initial_temperature": self.initial_temperature,
+            f"{info_prefix}decay_rate": self.decay_rate,
+            f"{info_prefix}minimum_temperature": self.minimum_temperature,
         }
 
-        if t is not None:
-            info[f"{info_prefix}current_value"] = self.evaluate(t)
+        if time is not None:
+            info[f"{info_prefix}current_value"] = self.evaluate(time)
 
         return info
+
+
