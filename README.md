@@ -7,7 +7,7 @@ mlrose-ky is a Python package for applying some of the most common randomized op
 
 ### Usage Warning (updated Aug. 22, 2024)
 
-This project is not fully backwards compatible with mlrose-hiive at this time. You should not expect existing mlrose-hiive example code to work right out of the box when using mlrose-ky. 
+This project is fully backwards compatible with mlrose-hiive at this time. You should not expect existing mlrose-hiive example code to work right out of the box when using mlrose-ky. 
 
 Progress is currently being made ([issue #7](https://github.com/knakamura13/mlrose-ky/issues/7)) towards supporting backwards compatibility.
 
