@@ -24,12 +24,13 @@ docs/_templates/*
 # Package info
 *.egg-info/
 
-# Test directories
-tsp_test/
+# Test metadata
+.coverage
 
 # Virtual environments
 venvp/
 venv
+
 # Aider tool
 .aider*
 

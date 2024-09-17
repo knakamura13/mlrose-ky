@@ -14,7 +14,7 @@ from mlrose_ky.decorators import short_name
 def random_hill_climb(
     problem: Any,
     max_attempts: int = 10,
-    max_iters: int = np.inf,
+    max_iters: int | float = np.inf,
     restarts: int = 0,
     init_state: np.ndarray = None,
     curve: bool = False,

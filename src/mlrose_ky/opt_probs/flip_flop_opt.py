@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from mlrose_ky.algorithms.crossovers import OnePointCrossover
+from mlrose_ky.algorithms.crossovers import OnePointCrossOver
 from mlrose_ky.algorithms.mutators import ChangeOneMutator
 from mlrose_ky.fitness import FlipFlop
 from mlrose_ky.opt_probs.discrete_opt import DiscreteOpt
@@ -27,8 +27,8 @@ class FlipFlopOpt(DiscreteOpt):
     maximize : bool, default=True
         Whether to maximize the fitness function. Set :code:`False` for minimization problems.
 
-    crossover : OnePointCrossover, default=None
-        Crossover operation used for reproduction. If None, defaults to `OnePointCrossover`.
+    crossover : OnePointCrossOver, default=None
+        Crossover operation used for reproduction. If None, defaults to `OnePointCrossOver`.
 
     mutator : ChangeOneMutator, default=None
         Mutation operation used for reproduction. If None, defaults to `ChangeOneMutator`.
@@ -56,7 +56,7 @@ class FlipFlopOpt(DiscreteOpt):
         length: int = None,
         fitness_fn: Any = None,
         maximize: bool = True,
-        crossover: "OnePointCrossover" = None,
+        crossover: "OnePointCrossOver" = None,
         mutator: "ChangeOneMutator" = None,
     ):
         if (fitness_fn is None) and (length is None):
@@ -71,7 +71,7 @@ class FlipFlopOpt(DiscreteOpt):
             fitness_fn = FlipFlop()
 
         self.max_val: int = 2
-        crossover = OnePointCrossover(self) if crossover is None else crossover
+        crossover = OnePointCrossOver(self) if crossover is None else crossover
         mutator = ChangeOneMutator(self) if mutator is None else mutator
 
         super().__init__(length, fitness_fn, maximize, crossover=crossover, mutator=mutator)

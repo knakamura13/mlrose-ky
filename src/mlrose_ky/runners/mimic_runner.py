@@ -112,7 +112,7 @@ class MIMICRunner(_RunnerBase):
         super()._setup()
 
         if self._use_fast_mimic is not None:
-            self.log_current_argument("use_fast_mimic", self._use_fast_mimic)
+            self._log_current_argument("use_fast_mimic", self._use_fast_mimic)
 
     def run(self) -> tuple[pd.DataFrame | None, pd.DataFrame | None]:
         """
@@ -126,7 +126,7 @@ class MIMICRunner(_RunnerBase):
         tuple
             A tuple containing two DataFrames: run statistics and run curves
         """
-        return super().run_experiment(
+        return super().run_experiment_(
             algorithm=mlrose_ky.mimic,
             pop_size=("Population Size", self.population_sizes),
             keep_pct=("Keep Percent", self.keep_percent_list),

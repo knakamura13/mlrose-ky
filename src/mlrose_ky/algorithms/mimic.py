@@ -17,7 +17,7 @@ def mimic(
     keep_pct: float = 0.2,
     max_attempts: int = 10,
     noise: float = 0.0,
-    max_iters: int = np.inf,
+    max_iters: int | float = np.inf,
     curve: bool = False,
     random_state: int = None,
     state_fitness_callback: Callable = None,

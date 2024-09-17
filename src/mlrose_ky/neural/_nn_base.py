@@ -23,45 +23,14 @@ class _NNBase(BaseEstimator, ABC):
     """
 
     @abstractmethod
-    def __init__(self):
-        pass
-
-    @abstractmethod
     def fit(self, X: np.ndarray, y: np.ndarray = None, init_weights: np.ndarray = None):
-        """
-        Fit the neural network to the data.
-
-        Parameters
-        ----------
-        X : np.ndarray
-            Numpy array containing the feature dataset with each row
-            representing a single observation.
-        y : np.ndarray, optional
-            Numpy array containing data labels. Length must be the same as
-            the length of X.
-        init_weights : np.ndarray, optional
-            Numpy array containing starting weights for the algorithm.
-            If None, a random state is used.
-        """
-        pass
+        """Fit the neural network to the data."""
+        raise NotImplementedError("Subclasses must implement fit method")
 
     @abstractmethod
     def predict(self, X: np.ndarray) -> np.ndarray:
-        """
-        Use the model to predict data labels for a given feature array.
-
-        Parameters
-        ----------
-        X : np.ndarray
-            Numpy array containing the feature dataset with each row
-            representing a single observation.
-
-        Returns
-        -------
-        np.ndarray
-            Numpy array containing the predicted data labels.
-        """
-        pass
+        """Use the model to predict data labels for a given feature array."""
+        raise NotImplementedError("Subclasses must implement predict method")
 
     @staticmethod
     def _calculate_state_size(node_list: list[int]) -> int:
@@ -227,6 +196,9 @@ class _NNBase(BaseEstimator, ABC):
         predicted_probs : np.ndarray or None
             Predicted probabilities for the input dataset, if the network is a classifier.
         """
+        if not node_list:
+            raise ValueError("node_list cannot be empty.")
+
         weights = list(unflatten_weights(fitted_weights, node_list))
 
         if bias:

@@ -113,7 +113,7 @@ class _OptProb:
         self.fitness_evaluations += 1
         return fitness
 
-    def eval_mate_probs(self):
+    def eval_mate_probs(self) -> None:
         """Calculate the probability of each member of the population reproducing."""
         pop_fitness = np.copy(self.pop_fitness)
 
@@ -210,7 +210,7 @@ class _OptProb:
         """
         return self.state
 
-    def set_population(self, new_population: np.ndarray):
+    def set_population(self, new_population: np.ndarray) -> None:
         """Set a new population and evaluate its fitness.
 
         Parameters
@@ -221,11 +221,11 @@ class _OptProb:
         self.population = new_population
         self.evaluate_population_fitness()
 
-    def evaluate_population_fitness(self):
+    def evaluate_population_fitness(self) -> None:
         """Evaluate the fitness of the current population."""
         self.pop_fitness = np.array([self.eval_fitness(indiv) for indiv in self.population])
 
-    def set_state(self, new_state: np.ndarray):
+    def set_state(self, new_state: np.ndarray) -> None:
         """Set a new state vector and evaluate its fitness.
 
         Parameters

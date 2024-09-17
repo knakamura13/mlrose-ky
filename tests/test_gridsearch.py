@@ -66,7 +66,7 @@ class TestGridSearchMixin:
         """Should perform grid search with a classifier and return GridSearchCV object"""
         X_train, X_test, y_train, y_test = sample_data
 
-        search_results = grid_search_mixin.perform_grid_search(
+        search_results = grid_search_mixin._perform_grid_search(
             classifier=dummy_classifier, x_train=X_train, y_train=y_train, cv=3, parameters=param_grid
         )
 
@@ -79,7 +79,7 @@ class TestGridSearchMixin:
     def test_handle_empty_input(self, grid_search_mixin):
         """Should handle empty input data gracefully"""
         with pytest.raises(ValueError):
-            grid_search_mixin.perform_grid_search(
+            grid_search_mixin._perform_grid_search(
                 classifier=DummyClassifier(), x_train=np.array([]), y_train=np.array([]), cv=3, parameters={"strategy": ["most_frequent"]}
             )
 
@@ -172,7 +172,7 @@ class TestGridSearchMixin:
         X_train, X_test, y_train, y_test = sample_data
 
         # Perform grid search with verbose output enabled
-        search_results = grid_search_mixin.perform_grid_search(
+        search_results = grid_search_mixin._perform_grid_search(
             dummy_classifier, X_train, y_train, cv=3, parameters=grid_search_parameters, verbose=True
         )
 
@@ -187,7 +187,7 @@ class TestGridSearchMixin:
         X_train, X_test, y_train, y_test = sample_data
 
         # Perform grid search with n_jobs set to 2
-        search_results = grid_search_mixin.perform_grid_search(
+        search_results = grid_search_mixin._perform_grid_search(
             dummy_classifier, X_train, y_train, cv=3, parameters=grid_search_parameters, n_jobs=2
         )
 

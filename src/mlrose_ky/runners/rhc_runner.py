@@ -97,4 +97,4 @@ class RHCRunner(_RunnerBase):
         tuple
             A tuple containing two DataFrames: run statistics and run curves.
         """
-        return super().run_experiment(algorithm=mlrose_ky.random_hill_climb, restarts=("Restarts", self.restart_list))
+        return super().run_experiment_(algorithm=mlrose_ky.random_hill_climb, restarts=("Restarts", self.restart_list))

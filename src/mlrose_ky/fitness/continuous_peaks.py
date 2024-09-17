@@ -38,8 +38,8 @@ class ContinuousPeaks:
     """
 
     def __init__(self, t_pct: float = 0.1):
-        self.t_pct: float = t_pct
         self.prob_type: str = "discrete"
+        self.t_pct: float = t_pct
 
         if not (0 <= self.t_pct <= 1):
             raise ValueError(f"t_pct must be between 0 and 1, got {self.t_pct} instead.")

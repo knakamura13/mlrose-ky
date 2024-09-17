@@ -61,7 +61,7 @@ class SKMLPRunner(_NNRunnerBase):
             mlp_kwargs = {k: v for k, v in kwargs.items() if k in valid_args}
 
             self.mlp: MLPClassifier = MLPClassifier(**mlp_kwargs)
-            self.state_callback = self.runner.save_state
+            self.state_callback = self.runner._save_state
             self.fit_started_: bool = False
             self.user_info_: list[tuple[str, Any]] | None = None
             self.kwargs_: dict[str, Any] = kwargs
@@ -131,7 +131,7 @@ class SKMLPRunner(_NNRunnerBase):
                 The trained model.
             """
             self.fit_started_ = True
-            self.runner.start_run_timing()
+            self.runner._start_run_timing()
 
             # Make initial callback
             self._invoke_runner_callback()
@@ -258,7 +258,7 @@ class SKMLPRunner(_NNRunnerBase):
             if self.user_info_ is None:
                 self.user_info_ = [(k, self.__dict__[k]) for k in self.kwargs_.keys() if hasattr(self, k)]
                 for k, v in self.user_info_:
-                    self.runner.log_current_argument(k, v)
+                    self.runner._log_current_argument(k, v)
 
             self.state_callback(
                 iteration=iterations,

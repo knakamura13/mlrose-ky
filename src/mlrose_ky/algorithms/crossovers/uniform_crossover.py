@@ -12,10 +12,10 @@ from typing import Any, Sequence
 
 import numpy as np
 
-from mlrose_ky.algorithms.crossovers._crossover_base import _CrossoverBase
+from mlrose_ky.algorithms.crossovers._crossover_base import _CrossOverBase
 
 
-class UniformCrossover(_CrossoverBase):
+class UniformCrossOver(_CrossOverBase):
     """
     Uniform crossover for genetic algorithms.
 
@@ -24,21 +24,21 @@ class UniformCrossover(_CrossoverBase):
     method is often used when no prior knowledge about the problem structure is known.
 
     Inherits from:
-    _CrossoverBase : Abstract base class for crossover operations.
+    _CrossOverBase : Abstract base class for crossover operations.
     """
 
-    def __init__(self, optimization_problem: Any):
+    def __init__(self, opt_prob: Any):
         """
-        Initialize the UniformCrossover with the given optimization problem.
+        Initialize the UniformCrossOver with the given optimization problem.
 
         Parameters
         ----------
-        optimization_problem : Any
+        opt_prob : Any
             An instance of the optimization problem related to the genetic algorithm.
         """
-        super().__init__(optimization_problem)
+        super().__init__(opt_prob)
 
-    def mate(self, parent1: Sequence[float], parent2: Sequence[float]) -> np.ndarray:
+    def mate(self, p1: Sequence[float], p2: Sequence[float]) -> np.ndarray:
         """
         Perform the uniform crossover between two parent sequences to produce offspring.
 
@@ -47,9 +47,9 @@ class UniformCrossover(_CrossoverBase):
 
         Parameters
         ----------
-        parent1 : Sequence[float]
+        p1 : Sequence[float]
             The first parent chromosome sequence.
-        parent2 : Sequence[float]
+        p2 : Sequence[float]
             The second parent chromosome sequence.
 
         Returns
@@ -58,5 +58,5 @@ class UniformCrossover(_CrossoverBase):
             The offspring chromosome resulting from the crossover.
         """
         gene_selector = np.random.randint(2, size=self._length)
-        stacked_parents = np.vstack((parent1, parent2))
+        stacked_parents = np.vstack((p1, p2))
         return stacked_parents[gene_selector, np.arange(self._length)]

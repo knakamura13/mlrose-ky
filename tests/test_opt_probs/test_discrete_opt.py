@@ -8,7 +8,7 @@ import numpy as np
 import mlrose_ky
 from mlrose_ky.opt_probs import DiscreteOpt
 from mlrose_ky.fitness import OneMax
-from mlrose_ky.algorithms import OnePointCrossover
+from mlrose_ky.algorithms import OnePointCrossOver
 
 
 class TestDiscreteOpt:
@@ -164,7 +164,7 @@ class TestDiscreteOpt:
     def test_reproduce_mut1_max_gt2(self):
         """Test reproduce method when mutation_prob is 1 and max_val is greater than 2"""
         problem = DiscreteOpt(5, OneMax(), max_val=3)
-        problem._crossover = OnePointCrossover(problem)
+        problem._crossover = OnePointCrossOver(problem)
         father = np.zeros(5)
         mother = np.ones(5) * 2
         child = problem.reproduce(father, mother, mutation_prob=1)

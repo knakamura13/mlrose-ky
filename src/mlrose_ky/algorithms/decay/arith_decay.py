@@ -64,13 +64,13 @@ class ArithDecay:
             return False
         return self.init_temp == other.init_temp and self.decay == other.decay and self.min_temp == other.min_temp
 
-    def evaluate(self, time: int) -> float:
+    def evaluate(self, t: int) -> float:
         """
         Calculate and return the temperature parameter at the given time.
 
         Parameters
         ----------
-        time : int
+        t : int
             The time at which to evaluate the temperature parameter.
 
         Returns
@@ -78,15 +78,15 @@ class ArithDecay:
         float
             The temperature parameter at the given time, respecting the minimum temperature.
         """
-        return max(self.init_temp - (self.decay * time), self.min_temp)
+        return max(self.init_temp - (self.decay * t), self.min_temp)
 
-    def get_info(self, time: int = None, prefix: str = "") -> dict:
+    def get_info__(self, t: int = None, prefix: str = "") -> dict:
         """
         Generate a dictionary containing the decay schedule's settings and optionally its current value.
 
         Parameters
         ----------
-        time : int, optional
+        t : int, optional
             The time at which to evaluate the current temperature value.
             If provided, the current value is included in the returned dictionary.
         prefix : str, optional
@@ -106,7 +106,7 @@ class ArithDecay:
             f"{info_prefix}min_temp": self.min_temp,
         }
 
-        if time is not None:
-            info[f"{info_prefix}current_value"] = self.evaluate(time)
+        if t is not None:
+            info[f"{info_prefix}current_value"] = self.evaluate(t)
 
         return info

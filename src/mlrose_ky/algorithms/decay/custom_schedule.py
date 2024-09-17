@@ -3,6 +3,7 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
+import inspect
 from typing import Callable
 
 
@@ -30,6 +31,8 @@ class CustomSchedule:
     """
 
     def __init__(self, schedule: Callable[..., float], **kwargs):
+        if not inspect.isfunction(schedule):
+            raise TypeError(f"'schedule' must be a function, got {type(schedule).__name__}")
         self.schedule: Callable[..., float] = schedule
         self.kwargs: dict = kwargs
 

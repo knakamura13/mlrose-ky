@@ -1,4 +1,4 @@
-"""Unit tests for opt_probs/opt_prob.py"""
+"""Unit tests for opt_probs/_opt_prob.py"""
 
 # Author: Genevieve Hayes (modified by Kyle Nakamura)
 # License: BSD 3-clause
@@ -6,7 +6,7 @@
 import numpy as np
 
 from mlrose_ky.fitness import OneMax
-from mlrose_ky.opt_probs.opt_prob import _OptProb
+from mlrose_ky.opt_probs._opt_prob import _OptProb
 
 
 class TestOptProb:

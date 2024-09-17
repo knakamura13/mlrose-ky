@@ -59,8 +59,8 @@ class CustomFitness:
         if problem_type not in ["discrete", "continuous", "tsp", "either"]:
             raise ValueError(f"Invalid problem_type: {problem_type}. Must be one of ['discrete', 'continuous', 'tsp', 'either'].")
 
-        self.fitness_fn: Callable[..., float] = fitness_fn
         self.problem_type: str = problem_type
+        self.fitness_fn: Callable[..., float] = fitness_fn
         self.kwargs: Any = kwargs
 
     def evaluate(self, state: np.ndarray) -> float:

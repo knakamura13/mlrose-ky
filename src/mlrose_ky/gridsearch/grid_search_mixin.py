@@ -40,7 +40,7 @@ class GridSearchMixin:
         self._params: inspect.Signature = inspect.signature(self._scorer_method)
         self._get_y_argmax: bool = False
 
-    def perform_grid_search(
+    def _perform_grid_search(
         self, classifier: Any, x_train: np.ndarray, y_train: np.ndarray, cv: int, parameters: dict, n_jobs: int = 1, verbose: bool = False
     ) -> skms.GridSearchCV:
         """
@@ -58,10 +58,10 @@ class GridSearchMixin:
             Number of cross-validation folds.
         parameters : dict
             Dictionary with parameters names as keys and lists of parameter settings to try as values.
-        n_jobs : int, optional
-            Number of jobs to run in parallel. Defaults to 1.
-        verbose : bool, optional
-            Whether to display verbose output during grid search. Defaults to False.
+        n_jobs : int, optional, default=1
+            Number of jobs to run in parallel.
+        verbose : bool, optional, default=1
+            Whether to display verbose output during grid search.
 
         Returns
         -------

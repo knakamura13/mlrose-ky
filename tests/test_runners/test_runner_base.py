@@ -15,7 +15,7 @@ from mlrose_ky.runners._runner_base import _RunnerBase
 
 class TestRunnerBase:
     @pytest.fixture
-    def test_runner(self):
+    def _test_runner_fixture(self):
         """Fixture to create a TestRunner instance for testing."""
 
         # noinspection PyMissingOrEmptyDocstring
@@ -38,52 +38,52 @@ class TestRunnerBase:
 
         return _create_runner
 
-    def test_increment_spawn_count(self, test_runner):
+    def test_increment_spawn_count(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner()
-            initial_count = runner.get_spawn_count()
+            runner = _test_runner_fixture()
+            initial_count = runner._get_spawn_count()
             runner._increment_spawn_count()
 
-            assert runner.get_spawn_count() == initial_count + 1
+            assert runner._get_spawn_count() == initial_count + 1
 
-    def test_decrement_spawn_count(self, test_runner):
+    def test_decrement_spawn_count(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner()
+            runner = _test_runner_fixture()
             runner._increment_spawn_count()
-            initial_count = runner.get_spawn_count()
+            initial_count = runner._get_spawn_count()
             runner._decrement_spawn_count()
 
-            assert runner.get_spawn_count() == initial_count - 1
+            assert runner._get_spawn_count() == initial_count - 1
 
-    def test_get_spawn_count(self, test_runner):
+    def test_get_spawn_count(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner()
-            initial_spawn_count = runner.get_spawn_count()
+            runner = _test_runner_fixture()
+            initial_spawn_count = runner._get_spawn_count()
             runner._increment_spawn_count()
-            incremented_spawn_count = runner.get_spawn_count()
+            incremented_spawn_count = runner._get_spawn_count()
             assert incremented_spawn_count == initial_spawn_count + 1
 
             runner._decrement_spawn_count()
-            decremented_spawn_count = runner.get_spawn_count()
+            decremented_spawn_count = runner._get_spawn_count()
             assert decremented_spawn_count == initial_spawn_count
 
-    def test_abort_sets_abort_flag(self, test_runner):
+    def test_abort_sets_abort_flag(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner()
+            runner = _test_runner_fixture()
             runner.abort()
 
             assert runner.has_aborted() is True
 
-    def test_has_aborted_after_abort_called(self, test_runner):
+    def test_has_aborted_after_abort_called(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner(seed=SEED, iteration_list=[0])
+            runner = _test_runner_fixture(seed=SEED, iteration_list=[0])
             runner.abort()
 
             assert runner.has_aborted() is True
 
-    def test_set_replay_mode(self, test_runner):
+    def test_set_replay_mode(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner()
+            runner = _test_runner_fixture()
             assert not runner.replay_mode()
 
             runner.set_replay_mode()
@@ -92,17 +92,17 @@ class TestRunnerBase:
             runner.set_replay_mode(False)
             assert not runner.replay_mode()
 
-    def test_replay_mode(self, test_runner):
+    def test_replay_mode(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner(replay=True)
+            runner = _test_runner_fixture(replay=True)
             assert runner.replay_mode() is True
 
             runner.set_replay_mode(False)
             assert runner.replay_mode() is False
 
-    def test_setup_method(self, test_runner):
+    def test_setup_method(self, _test_runner_fixture):
         with patch("os.makedirs") as mock_makedirs, patch("os.path.exists", return_value=False):
-            runner = test_runner(problem="dummy_problem", seed=SEED, iteration_list=[0, 1, 2], output_directory="test_output")
+            runner = _test_runner_fixture(problem="dummy_problem", seed=SEED, iteration_list=[0, 1, 2], output_directory="test_output")
             runner._setup()
 
             assert runner._raw_run_stats == []
@@ -113,20 +113,20 @@ class TestRunnerBase:
             assert runner._current_logged_algorithm_args == {}
             mock_makedirs.assert_called_once_with("test_output")
 
-    def test_tear_down_restores_original_sigint_handler(self, test_runner):
+    def test_tear_down_restores_original_sigint_handler(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
             original_handler = signal.getsignal(signal.SIGINT)
-            runner = test_runner()
+            runner = _test_runner_fixture()
             runner._tear_down()
             restored_handler = signal.getsignal(signal.SIGINT)
 
             assert restored_handler == original_handler
 
-    def test_log_current_argument(self, test_runner):
+    def test_log_current_argument(self, _test_runner_fixture):
         with patch("os.makedirs"), patch("os.path.exists", return_value=True):
-            runner = test_runner(seed=SEED, iteration_list=[0, 1, 2])
+            runner = _test_runner_fixture(seed=SEED, iteration_list=[0, 1, 2])
             arg_name = "test_arg"
             arg_value = "test_value"
-            runner.log_current_argument(arg_name, arg_value)
+            runner._log_current_argument(arg_name, arg_value)
 
             assert runner._current_logged_algorithm_args[arg_name] == arg_value

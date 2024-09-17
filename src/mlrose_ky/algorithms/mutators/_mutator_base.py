@@ -40,25 +40,10 @@ class _MutatorBase(ABC):
         self._length: int = opt_prob.length
 
     @abstractmethod
-    def mutate(self, child: np.ndarray, mutation_probability: float) -> Any:
+    def mutate(self, child: np.ndarray, mutation_probability: float) -> np.ndarray:
         """
         Apply mutation operation to a given child chromosome based on a mutation probability.
 
-        Parameters
-        ----------
-        child : np.ndarray
-            The chromosome of a child individual to be mutated.
-        mutation_probability : float
-            The probability of each gene being mutated.
-
-        Returns
-        -------
-        Any
-            The mutated chromosome.
-
-        Raises
-        ------
-        ValueError
-            If the mutation_probability is not within the range [0, 1].
+        This method must be implemented by subclasses to define specific mutation strategies.
         """
-        pass
+        raise NotImplementedError("Subclasses must implement this method")

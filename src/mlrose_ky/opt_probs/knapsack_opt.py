@@ -5,7 +5,7 @@
 
 from typing import Any
 
-from mlrose_ky.algorithms.crossovers import UniformCrossover
+from mlrose_ky.algorithms.crossovers import UniformCrossOver
 from mlrose_ky.algorithms.mutators import ChangeOneMutator
 from mlrose_ky.fitness.knapsack import Knapsack
 from mlrose_ky.opt_probs.discrete_opt import DiscreteOpt
@@ -37,8 +37,8 @@ class KnapsackOpt(DiscreteOpt):
     max_weight_pct : float, default=0.35
         Maximum allowable weight as a percentage of the total weight.
 
-    crossover : UniformCrossover, default=None
-        Crossover operation used for reproduction. If None, defaults to `UniformCrossover`.
+    crossover : UniformCrossOver, default=None
+        Crossover operation used for reproduction. If None, defaults to `UniformCrossOver`.
 
     mutator : ChangeOneMutator, default=None
         Mutation operation used for reproduction. If None, defaults to `ChangeOneMutator`.
@@ -67,7 +67,7 @@ class KnapsackOpt(DiscreteOpt):
         weights: list[float] = None,
         values: list[float] = None,
         max_weight_pct: float = 0.35,
-        crossover: "UniformCrossover" = None,
+        crossover: "UniformCrossOver" = None,
         mutator: "ChangeOneMutator" = None,
         multiply_by_max_item_count: bool = False,
     ):
@@ -94,7 +94,7 @@ class KnapsackOpt(DiscreteOpt):
                 multiply_by_max_item_count=multiply_by_max_item_count,
             )
 
-        crossover = UniformCrossover(self) if crossover is None else crossover
+        crossover = UniformCrossOver(self) if crossover is None else crossover
         mutator = ChangeOneMutator(self) if mutator is None else mutator
 
         super().__init__(length, fitness_fn, maximize, max_val, crossover, mutator)

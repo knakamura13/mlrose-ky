@@ -68,8 +68,8 @@ class KnapsackGenerator:
 
         np.random.seed(seed)
 
-        weights = 1 + np.random.randint(max_weight_per_item, size=number_of_item_types)
-        values = 1 + np.random.randint(max_value_per_item, size=number_of_item_types)
+        weights = np.random.randint(1, max_weight_per_item + 1, size=number_of_item_types).tolist()
+        values = np.random.randint(1, max_value_per_item + 1, size=number_of_item_types).tolist()
 
         return KnapsackOpt(
             length=number_of_item_types,

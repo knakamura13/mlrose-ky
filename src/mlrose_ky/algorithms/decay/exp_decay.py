@@ -6,9 +6,6 @@
 import numpy as np
 
 
-# temp comment
-
-
 class ExpDecay:
     """
     Defines an exponential decay schedule for the temperature parameter T in simulated annealing,

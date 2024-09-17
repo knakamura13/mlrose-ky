@@ -117,7 +117,7 @@ class GARunner(_RunnerBase):
         tuple
             A tuple containing two DataFrames: run statistics and run curves
         """
-        return super().run_experiment(
+        return super().run_experiment_(
             algorithm=mlrose_ky.genetic_alg,
             pop_size=("Population Size", self.population_sizes),
             mutation_prob=("Mutation Rate", self.mutation_rates),

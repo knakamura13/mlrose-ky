@@ -4,7 +4,7 @@ from typing import Any
 
 import numpy as np
 
-from mlrose_ky.opt_probs.opt_prob import _OptProb
+from mlrose_ky.opt_probs._opt_prob import _OptProb
 
 
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
@@ -63,10 +63,10 @@ class ContinuousOpt(_OptProb):
         if (max_val - min_val) < step:
             raise ValueError(f"step size must be less than (max_val - min_val).")
 
+        self.prob_type: str = "continuous"
         self.min_val: float = min_val
         self.max_val: float = max_val
         self.step: float = step
-        self.prob_type: str = "continuous"
 
     def calculate_updates(self) -> list:
         """Calculate gradient descent updates.

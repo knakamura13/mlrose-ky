@@ -150,17 +150,6 @@ class _NNRunnerBase(_RunnerBase, GridSearchMixin, ABC):
         self.cv_results_df: pd.DataFrame | None = None
         self.best_params: dict | None = None
 
-    def dynamic_runner_name(self) -> str:
-        """
-        Generates a dynamic name for the runner based on the class name and experiment name.
-
-        Returns
-        -------
-        str
-            The dynamic name for the runner.
-        """
-        return f"{self.__class__.__name__}_{self._experiment_name}"
-
     def run(self) -> tuple[pd.DataFrame | None, pd.DataFrame | None, pd.DataFrame | None, Any | None]:
         """
         Executes the runner, performing grid search and handling the results.
@@ -182,7 +171,7 @@ class _NNRunnerBase(_RunnerBase, GridSearchMixin, ABC):
                     search_results = pk.load(pickle_file)
             else:
                 run_start = time.perf_counter()
-                search_results = self.perform_grid_search(
+                search_results = self._perform_grid_search(
                     classifier=self.classifier,
                     parameters=self.grid_search_parameters,
                     x_train=self.x_train,

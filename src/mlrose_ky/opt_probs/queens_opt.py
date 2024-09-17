@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from mlrose_ky.algorithms.crossovers import UniformCrossover
+from mlrose_ky.algorithms.crossovers import UniformCrossOver
 from mlrose_ky.algorithms.mutators import ChangeOneMutator
 from mlrose_ky.fitness.queens import Queens
 from mlrose_ky.opt_probs.discrete_opt import DiscreteOpt
@@ -27,8 +27,8 @@ class QueensOpt(DiscreteOpt):
     maximize : bool, default=False
         Whether to maximize the fitness function. Set :code:`False` for minimization problems.
 
-    crossover : UniformCrossover, default=None
-        Crossover operation used for reproduction. If None, defaults to `UniformCrossover`.
+    crossover : UniformCrossOver, default=None
+        Crossover operation used for reproduction. If None, defaults to `UniformCrossOver`.
 
     mutator : ChangeOneMutator, default=None
         Mutation operation used for reproduction. If None, defaults to `ChangeOneMutator`.
@@ -53,7 +53,7 @@ class QueensOpt(DiscreteOpt):
         length: int = None,
         fitness_fn: Any = None,
         maximize: bool = False,
-        crossover: "UniformCrossover" = None,
+        crossover: "UniformCrossOver" = None,
         mutator: "ChangeOneMutator" = None,
     ):
         # Ensure that either fitness_fn or length is provided
@@ -77,7 +77,7 @@ class QueensOpt(DiscreteOpt):
         self.max_val: int = length
 
         # Use default crossover and mutator if none are provided
-        crossover = UniformCrossover(self) if crossover is None else crossover
+        crossover = UniformCrossOver(self) if crossover is None else crossover
         mutator = ChangeOneMutator(self) if mutator is None else mutator
         super().__init__(length, fitness_fn, maximize, length, crossover, mutator)
 

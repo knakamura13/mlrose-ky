@@ -26,7 +26,6 @@ class _NNCore(_NNBase):
     Use derived classes instead.
     """
 
-    @abstractmethod
     def __init__(
         self,
         hidden_nodes: list[int] = None,
@@ -76,34 +75,24 @@ class _NNCore(_NNBase):
         """Validate the model parameters."""
         if (not isinstance(self.max_iters, int) and self.max_iters != np.inf) or self.max_iters < 0:
             raise ValueError(f"max_iters must be a positive integer, got {self.max_iters}.")
-
         if not isinstance(self.bias, bool):
             raise ValueError(f"bias must be True or False, got {self.bias}.")
-
         if not isinstance(self.is_classifier, bool):
             raise ValueError(f"is_classifier must be True or False, got {self.is_classifier}.")
-
         if self.learning_rate <= 0:
             raise ValueError(f"learning_rate must be greater than 0, got {self.learning_rate}.")
-
         if not isinstance(self.early_stopping, bool):
             raise ValueError(f"early_stopping must be True or False, got {self.early_stopping}.")
-
         if self.clip_max <= 0:
             raise ValueError(f"clip_max must be greater than 0, got {self.clip_max}.")
-
         if not isinstance(self.max_attempts, int) or self.max_attempts < 0:
             raise ValueError(f"max_attempts must be a positive integer, got {self.max_attempts}.")
-
         if self.pop_size < 0 or not isinstance(self.pop_size, int):
             raise ValueError(f"pop_size must be a positive integer, got {self.pop_size}.")
-
         if not (0 <= self.mutation_prob <= 1):
             raise ValueError(f"mutation_prob must be between 0 and 1, got {self.mutation_prob}.")
-
         if self.activation not in self.activation_dict:
             raise ValueError(f"Activation function must be one of: 'identity', 'relu', 'sigmoid', or 'tanh', got {self.activation}.")
-
         if self.algorithm not in ["random_hill_climb", "simulated_annealing", "genetic_alg", "gradient_descent"]:
             raise ValueError(
                 f"Algorithm must be one of: "

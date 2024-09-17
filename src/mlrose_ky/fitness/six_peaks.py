@@ -59,8 +59,8 @@ class SixPeaks(_DiscretePeaksBase):
         t_pct : float, optional, default=0.1
             Threshold parameter (T) for Six Peaks fitness function.
         """
-        self.t_pct: float = t_pct
         self.prob_type: str = "discrete"
+        self.t_pct: float = t_pct
 
         if not (0 <= self.t_pct <= 1):
             raise ValueError(f"threshold_pct must be between 0 and 1, got {self.t_pct}.")

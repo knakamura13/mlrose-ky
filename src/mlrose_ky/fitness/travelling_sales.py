@@ -89,33 +89,6 @@ class TravellingSales:
                 self.distance_matrix[u, v] = d
                 self.distance_matrix[v, u] = d
 
-    def evaluate(self, state: np.ndarray) -> float:
-        """
-        Evaluate the fitness of a state vector.
-
-        Parameters
-        ----------
-        state : np.ndarray
-            State array for evaluation. Each integer between 0 and (len(state) - 1), inclusive must appear exactly once in the array.
-
-        Returns
-        -------
-        fitness : float
-            Value of fitness function. Returns np.inf if travel between two consecutive nodes on the tour is not possible.
-        """
-        # Validation checks on the state array
-        if self.is_coords and len(state) != len(self.coords):
-            raise ValueError("state must have the same length as coords.")
-        if not len(state) == len(set(state)):
-            raise ValueError("Each node must appear exactly once in state.")
-        if min(state) < 0:
-            raise ValueError("All elements of state must be non-negative integers.")
-        if max(state) >= len(state):
-            raise ValueError("All elements of state must be less than len(state).")
-
-        # Calculate and return the fitness of the state
-        return float(self.calculate_fitness(state))
-
     def __calculate_fitness_by_coords(self, state: np.ndarray) -> float:
         """
         Calculate fitness based on coordinates.
@@ -169,6 +142,33 @@ class TravellingSales:
             fitness += distance
 
         return float(fitness)
+
+    def evaluate(self, state: np.ndarray) -> float:
+        """
+        Evaluate the fitness of a state vector.
+
+        Parameters
+        ----------
+        state : np.ndarray
+            State array for evaluation. Each integer between 0 and (len(state) - 1), inclusive must appear exactly once in the array.
+
+        Returns
+        -------
+        fitness : float
+            Value of fitness function. Returns np.inf if travel between two consecutive nodes on the tour is not possible.
+        """
+        # Validation checks on the state array
+        if self.is_coords and len(state) != len(self.coords):
+            raise ValueError("state must have the same length as coords.")
+        if not len(state) == len(set(state)):
+            raise ValueError("Each node must appear exactly once in state.")
+        if min(state) < 0:
+            raise ValueError("All elements of state must be non-negative integers.")
+        if max(state) >= len(state):
+            raise ValueError("All elements of state must be less than len(state).")
+
+        # Calculate and return the fitness of the state
+        return float(self.calculate_fitness(state))
 
     def get_prob_type(self) -> str:
         """

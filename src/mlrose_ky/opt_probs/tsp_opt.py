@@ -7,7 +7,7 @@ from typing import Any
 
 import numpy as np
 
-from mlrose_ky.algorithms.crossovers import TSPCrossover
+from mlrose_ky.algorithms.crossovers import TSPCrossOver
 from mlrose_ky.algorithms.mutators import SwapMutator
 from mlrose_ky.fitness import TravellingSales
 from mlrose_ky.opt_probs.discrete_opt import DiscreteOpt
@@ -44,8 +44,8 @@ class TSPOpt(DiscreteOpt):
         length: int = None,
         fitness_fn: Any = None,
         maximize: bool = False,
-        coords: list[tuple[float, float]] = None,
-        distances: list[tuple[int, int, float]] = None,
+        coords: list[tuple] = None,
+        distances: list[tuple] = None,
         source_graph: Any = None,
     ):
         # Ensure that at least one of fitness_fn, coords, or distances is provided
@@ -56,8 +56,8 @@ class TSPOpt(DiscreteOpt):
         if fitness_fn is None:
             fitness_fn = TravellingSales(coords=coords, distances=distances)
 
-        self.distances: list[tuple[int, int, float]] | None = distances
-        self.coords: list[tuple[float, float]] | None = coords
+        self.distances: list[tuple] | None = distances
+        self.coords: list[tuple] | None = coords
 
         # If length is not provided, infer it from coords or distances
         if length is None:
@@ -69,8 +69,8 @@ class TSPOpt(DiscreteOpt):
 
         self.length: int = length
 
-        # Initialize the parent class with the TSPCrossover and SwapMutator
-        super().__init__(length, fitness_fn, maximize, max_val=length, crossover=TSPCrossover(self), mutator=SwapMutator(self))
+        # Initialize the parent class with the TSPCrossOver and SwapMutator
+        super().__init__(length, fitness_fn, maximize, max_val=length, crossover=TSPCrossOver(self), mutator=SwapMutator(self))
 
         # Ensure that the fitness function type is 'tsp'
         if self.fitness_fn.get_prob_type() != "tsp":

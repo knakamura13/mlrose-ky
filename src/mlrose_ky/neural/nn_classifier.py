@@ -8,6 +8,7 @@ from typing import Any, Optional, Callable
 import numpy as np
 
 from mlrose_ky.neural._nn_base import _NNBase
+from mlrose_ky.neural.activation import tanh
 
 
 class NNClassifier(_NNBase):
@@ -19,8 +20,8 @@ class NNClassifier(_NNBase):
     runner : Any
         Object that controls the execution of training experiments.
     algorithm : str, optional
-        The optimization algorithm to use for training.
-    activation : callable, optional
+        The optimization algorithm to use for training (e.g., "random_hill_climb", "simulated_annealing", etc.).
+    activation : Callable, optional, default=mlrose_ky.tanh
         Activation function to use in the neural network layers.
     hidden_layer_sizes : list[int], optional
         List defining the number of hidden layers and nodes in each layer.
@@ -46,7 +47,7 @@ class NNClassifier(_NNBase):
         self,
         runner: Any,
         algorithm: str = None,
-        activation: Optional[Callable] = None,
+        activation: Optional[Callable] = tanh,
         hidden_layer_sizes: list[int] = None,
         max_iters: int = 100,
         max_attempts: int = 10,
@@ -63,7 +64,8 @@ class NNClassifier(_NNBase):
         self.grid_search_parameters = runner.grid_search_parameters
 
         # Neural network properties
-        self.hidden_layer_sizes: list[int] | None = hidden_layer_sizes
+        self.hidden_layer_sizes: list[int] = hidden_layer_sizes if hidden_layer_sizes is not None else []
+
         self.activation: Optional[Callable] = activation
         self.learning_rate_init: float = learning_rate_init
         self.max_iters: int = max_iters
@@ -90,6 +92,7 @@ class NNClassifier(_NNBase):
         self.kwargs: dict[str, Any] = kwargs
         for k, v in kwargs.items():
             if hasattr(self, k):
+                # Ignore kwargs that are already defined as attributes
                 continue
             self.__setattr__(k, v)
 
@@ -168,46 +171,47 @@ class NNClassifier(_NNBase):
         self.fitness_fn = fitness
         self.problem = problem
 
-        # Check for early abort.
+        # If algorithm is None, skip the training process
+        if self.algorithm is None:
+            self.fitted_weights = None
+            self.loss = None
+            self.output_activation = None
+            return self
+
+        # Check for early abort or replay mode.
         if self.runner.has_aborted() or self.runner.replay_mode():
             self.fitted_weights = np.array([np.NaN] * self.node_count)
             self.loss = np.NaN
             self.output_activation = self.fitness_fn.get_output_activation()
             return self
 
-        if self.algorithm is not None:
-            # Handle grid search or regular training
-            params = {k: self.__getattribute__(k) for k in self.kwargs}
-            if init_weights is None:
-                np.random.seed(self.seed)
-                init_weights = np.random.uniform(-1, 1, self.node_count)
+        # Handle grid search or regular training
+        params = {k: self.__getattribute__(k) for k in self.kwargs}
+        if init_weights is None:
+            np.random.seed(self.seed)
+            init_weights = np.random.uniform(-1, 1, self.node_count)
 
-            params["init_state"] = init_weights
-            total_args = {
-                "algorithm": self.algorithm,
-                "activation": self.activation,
-                "bias": self.bias,
-                "early_stopping": self.early_stopping,
-                "clip_max": self.clip_max,
-                "hidden_layer_sizes": self.hidden_layer_sizes,
-                "learning_rate_init": self.learning_rate_init,
-            }
-            max_attempts = self.max_attempts if self.early_stopping else self.max_iters
-            self.fit_started_ = True
+        params["init_state"] = init_weights
+        total_args = {
+            "algorithm": self.algorithm,
+            "activation": self.activation,
+            "bias": self.bias,
+            "early_stopping": self.early_stopping,
+            "clip_max": self.clip_max,
+            "hidden_layer_sizes": self.hidden_layer_sizes,
+            "learning_rate_init": self.learning_rate_init,
+        }
+        max_attempts = self.max_attempts if self.early_stopping else self.max_iters
+        self.fit_started_ = True
 
-            fitted_weights, loss, _ = self.runner.run_one_experiment_(
-                algorithm=self.algorithm,
-                problem=problem,
-                max_iters=self.max_iters,
-                max_attempts=max_attempts,
-                total_args=total_args,
-                **params,
-            )
+        fitted_weights, loss, _ = self.runner.run_one_experiment_(
+            algorithm=self.algorithm, problem=problem, max_iters=self.max_iters, max_attempts=max_attempts, total_args=total_args, **params
+        )
 
-            # Save fitted weights
-            self.fitted_weights = problem.get_state()
-            self.loss = loss
-            self.output_activation = self.fitness_fn.get_output_activation()
+        # Save fitted weights
+        self.fitted_weights = problem.get_state()
+        self.loss = loss
+        self.output_activation = self.fitness_fn.get_output_activation()
 
         return self
 

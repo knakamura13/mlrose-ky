@@ -1,0 +1,5 @@
+engine:
+  enable-web-ui: false
+  load-pytest-plugins: true
+  runtime: pytest
+pinned-tests: [ ]

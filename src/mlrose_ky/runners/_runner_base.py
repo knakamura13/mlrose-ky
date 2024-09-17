@@ -34,67 +34,23 @@ class _RunnerBase(ABC):
 
     Attributes
     ----------
-    _abort_flag : multiprocessing.Value
+    __abort : multiprocessing.Value
         Flag to signal abortion of the experiment.
-    _spawn_count : multiprocessing.Value
+    __spawn_count : multiprocessing.Value
         Tracks the number of spawned processes in parallel execution.
-    _replay_mode : multiprocessing.Value
+    __replay : multiprocessing.Value
         Indicates whether replay mode is active.
-    _original_sigint_handler : Any
+    __original_sigint_handler : Any
         Stores the original signal handler for Ctrl-C.
-    _sigint_params : tuple[int, Any] | None
+    __sigint_params : tuple[int, Any] | None
         Stores the signal and frame parameters when Ctrl-C is triggered.
     """
 
-    _abort_flag: multiprocessing.Value = multiprocessing.Value(ctypes.c_bool)
-    _spawn_count: multiprocessing.Value = multiprocessing.Value(ctypes.c_uint)
-    _replay_mode: multiprocessing.Value = multiprocessing.Value(ctypes.c_bool)
-    _original_sigint_handler: Any = None
-    _sigint_params: tuple[int, Any] | None = None
-
-    @classmethod
-    def get_runner_name(cls) -> str:
-        """Get a short name for the runner class."""
-        return get_short_name(cls)
-
-    def get_dynamic_runner_name(self) -> str:
-        """Get the dynamic name of the runner, if set, otherwise return the default runner name."""
-        dynamic_runner_name = self._dynamic_short_name or self.get_runner_name()
-
-        if not dynamic_runner_name:
-            raise ValueError("dynamic_runner_name is None")
-
-        return dynamic_runner_name
-
-    def set_dynamic_runner_name(self, name: str):
-        """Set a dynamic runner name."""
-        self._dynamic_short_name = name
-
-    @staticmethod
-    def _print_banner(text: str):
-        """Print a formatted banner for logging."""
-        logging.info("*" * len(text))
-        logging.info(text)
-        logging.info("*" * len(text))
-
-    @staticmethod
-    def _sanitize_value(value: Any) -> str:
-        """Sanitize a value for logging, handling different types appropriately."""
-        if isinstance(value, (tuple, list)):
-            sanitized_value = str(value)
-        elif isinstance(value, np.ndarray):
-            sanitized_value = str(list(value))
-        elif callable(value):
-            sanitized_value = get_short_name(value)
-        else:
-            sanitized_value = str(value)  # Handle non-callable types like floats, ints, etc.
-
-        return sanitized_value
-
-    @abstractmethod
-    def run(self):
-        """Abstract method to be implemented by subclasses."""
-        pass
+    __abort: multiprocessing.Value = multiprocessing.Value(ctypes.c_bool)
+    __spawn_count: multiprocessing.Value = multiprocessing.Value(ctypes.c_uint)
+    __replay: multiprocessing.Value = multiprocessing.Value(ctypes.c_bool)
+    __original_sigint_handler: Any = None
+    __sigint_params: tuple[int, Any] | None = None
 
     def __init__(
         self,
@@ -169,40 +125,84 @@ class _RunnerBase(ABC):
 
         self._increment_spawn_count()
 
+    @classmethod
+    def runner_name(cls) -> str:
+        """Get a short name for the runner class."""
+        return get_short_name(cls)
+
+    def dynamic_runner_name(self) -> str:
+        """Get the dynamic name of the runner, if set, otherwise return the default runner name."""
+        dynamic_runner_name = self._dynamic_short_name or self.runner_name()
+
+        if not dynamic_runner_name:
+            raise ValueError("dynamic_runner_name is None")
+
+        return dynamic_runner_name
+
+    def _set_dynamic_runner_name(self, name: str):
+        """Set a dynamic runner name."""
+        self._dynamic_short_name = name
+
+    @staticmethod
+    def _print_banner(text: str):
+        """Print a formatted banner for logging."""
+        logging.info("*" * len(text))
+        logging.info(text)
+        logging.info("*" * len(text))
+
+    @staticmethod
+    def _sanitize_value(value: Any) -> str:
+        """Sanitize a value for logging, handling different types appropriately."""
+        if isinstance(value, (tuple, list)):
+            sanitized_value = str(value)
+        elif isinstance(value, np.ndarray):
+            sanitized_value = str(list(value))
+        elif callable(value):
+            sanitized_value = get_short_name(value)
+        else:
+            sanitized_value = str(value)  # Handle non-callable types like floats, ints, etc.
+
+        return sanitized_value
+
+    @abstractmethod
+    def run(self):
+        """Abstract method to be implemented by subclasses."""
+        pass
+
     def _increment_spawn_count(self):
         """Increment the spawn count for the runner (used in parallel execution)."""
-        with self._spawn_count.get_lock():
-            self._spawn_count.value += 1
+        with self.__spawn_count.get_lock():
+            self.__spawn_count.value += 1
 
     def _decrement_spawn_count(self):
         """Decrement the spawn count for the runner."""
-        with self._spawn_count.get_lock():
-            self._spawn_count.value -= 1
+        with self.__spawn_count.get_lock():
+            self.__spawn_count.value -= 1
 
-    def get_spawn_count(self) -> int:
+    def _get_spawn_count(self) -> int:
         """Return the current spawn count and log it."""
-        self._print_banner(f"*** Spawn Count Remaining: {self._spawn_count.value} ***")
-        return self._spawn_count.value
+        self._print_banner(f"*** Spawn Count Remaining: {self.__spawn_count.value} ***")
+        return self.__spawn_count.value
 
     def abort(self):
         """Set the abort flag to signal that the runner should stop execution."""
         self._print_banner("*** ABORTING ***")
 
-        with self._abort_flag.get_lock():
-            self._abort_flag.value = True
+        with self.__abort.get_lock():
+            self.__abort.value = True
 
     def has_aborted(self) -> bool:
         """Return whether the abort flag has been set."""
-        return self._abort_flag.value
+        return self.__abort.value
 
     def set_replay_mode(self, value: bool = True):
         """Enable or disable replay mode, which reuses previous results."""
-        with self._replay_mode.get_lock():
-            self._replay_mode.value = value
+        with self.__replay.get_lock():
+            self.__replay.value = value
 
     def replay_mode(self) -> bool:
         """Check if replay mode is enabled."""
-        return self._replay_mode.value
+        return self.__replay.value
 
     def _setup(self):
         """Prepare the runner by clearing stats, setting up directories, and handling Ctrl-C interrupts."""
@@ -221,8 +221,8 @@ class _RunnerBase(ABC):
 
         # Set up Ctrl-C handler if necessary
         if self.override_ctrl_c_handler:
-            if self._original_sigint_handler is None:
-                self._original_sigint_handler = signal.getsignal(signal.SIGINT)
+            if self.__original_sigint_handler is None:
+                self.__original_sigint_handler = signal.getsignal(signal.SIGINT)
                 signal.signal(signal.SIGINT, self._ctrl_c_handler)
 
     def _ctrl_c_handler(self, sig: int, frame: Any):
@@ -237,7 +237,7 @@ class _RunnerBase(ABC):
             Current stack frame.
         """
         logging.info("Interrupted - saving progress so far")
-        self._sigint_params = (sig, frame)
+        self.__sigint_params = (sig, frame)
         self.abort()
 
     def _tear_down(self):
@@ -248,19 +248,19 @@ class _RunnerBase(ABC):
         try:
             # Restore the original Ctrl-C handler
             self._decrement_spawn_count()
-            if self._original_sigint_handler is not None:
-                signal.signal(signal.SIGINT, self._original_sigint_handler)
-                if self.has_aborted() and self.get_spawn_count() == 0:
-                    sig, frame = self._sigint_params
-                    self._original_sigint_handler(sig, frame)
+            if self.__original_sigint_handler is not None:
+                signal.signal(signal.SIGINT, self.__original_sigint_handler)
+                if self.has_aborted() and self._get_spawn_count() == 0:
+                    sig, frame = self.__sigint_params
+                    self.__original_sigint_handler(sig, frame)
         except (ValueError, TypeError, AttributeError, Exception) as e:
             logging.error(f"Problem restoring SIGINT handler: {e}")
 
-    def log_current_argument(self, arg_name: str, arg_value: Any):
+    def _log_current_argument(self, arg_name: str, arg_value: Any):
         """Log the current argument passed to the algorithm."""
         self._current_logged_algorithm_args[arg_name] = arg_value
 
-    def run_experiment(self, algorithm: Any, **kwargs: Any) -> tuple[pd.DataFrame | None, pd.DataFrame | None]:
+    def run_experiment_(self, algorithm: Any, **kwargs: Any) -> tuple[pd.DataFrame | None, pd.DataFrame | None]:
         """
         Execute the experiment with the provided algorithm and log the results.
 
@@ -285,7 +285,7 @@ class _RunnerBase(ABC):
 
         value_sets = list(itertools.product(*values))
 
-        logging.info(f"Running {self.get_dynamic_runner_name()}")
+        logging.info(f"Running {self.dynamic_runner_name()}")
         run_start = time.perf_counter()
 
         for value_set in value_sets:
@@ -380,7 +380,7 @@ class _RunnerBase(ABC):
         """Generate the root filename for the pickle file based on experiment metadata."""
         return build_data_filename(
             output_directory=self._output_directory,
-            runner_name=self.get_dynamic_runner_name(),
+            runner_name=self.dynamic_runner_name(),
             experiment_name=self._experiment_name,
             df_name=name,
         )
@@ -490,14 +490,14 @@ class _RunnerBase(ABC):
         kwargs = {k: v for k, v in total_args.items() if k in valid_args}
 
         # Reset the problem instance and run the algorithm
-        self.start_run_timing()
+        self._start_run_timing()
         problem.reset()
         result = algorithm(
             problem=problem,
             max_attempts=max_attempts,
             curve=curve,
             random_state=self.seed,
-            state_fitness_callback=self.save_state,
+            state_fitness_callback=self._save_state,
             callback_user_info=user_info,
             **kwargs,
         )
@@ -507,7 +507,7 @@ class _RunnerBase(ABC):
 
         return result
 
-    def start_run_timing(self):
+    def _start_run_timing(self):
         """Start timing the experiment's execution."""
         self._run_start_time = time.perf_counter()
 
@@ -543,7 +543,7 @@ class _RunnerBase(ABC):
 
         return curve_stat
 
-    def save_state(
+    def _save_state(
         self,
         iteration: int,
         state: Any,
@@ -598,7 +598,7 @@ class _RunnerBase(ABC):
             logging.debug(data_desc)
 
         logging.debug(
-            f"runner_name:[{self.get_dynamic_runner_name()}], experiment_name:[{self._experiment_name}], "
+            f"runner_name:[{self.dynamic_runner_name()}], experiment_name:[{self._experiment_name}], "
             + ("" if attempt is None else f"attempt:[{attempt}], ")
             + f"iteration:[{iteration}], done:[{done}], "
             f"time:[{t:.2f}], fitness:[{fitness:.4f}]"

@@ -16,7 +16,7 @@ def simulated_annealing(
     problem: Any,
     schedule: Any = GeomDecay(),
     max_attempts: int = 10,
-    max_iters: int = np.inf,
+    max_iters: int | float = np.inf,
     init_state: np.ndarray = None,
     curve: bool = False,
     random_state: int = None,

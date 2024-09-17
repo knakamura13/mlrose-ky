@@ -8,7 +8,7 @@ from typing import Any
 import networkx as nx
 import numpy as np
 
-from mlrose_ky.algorithms.crossovers import UniformCrossover
+from mlrose_ky.algorithms.crossovers import UniformCrossOver
 from mlrose_ky.algorithms.mutators import ChangeOneMutator
 from mlrose_ky.fitness import MaxKColor
 from mlrose_ky.opt_probs.discrete_opt import DiscreteOpt
@@ -34,8 +34,8 @@ class MaxKColorOpt(DiscreteOpt):
     max_colors : int, default=None
         Maximum number of colors to use for coloring the graph.
 
-    crossover : UniformCrossover, default=None
-        Crossover operation used for reproduction. If None, defaults to `UniformCrossover`.
+    crossover : UniformCrossOver, default=None
+        Crossover operation used for reproduction. If None, defaults to `UniformCrossOver`.
 
     mutator : ChangeOneMutator, default=None
         Mutation operation used for reproduction. If None, defaults to `ChangeOneMutator`.
@@ -68,7 +68,7 @@ class MaxKColorOpt(DiscreteOpt):
         fitness_fn: Any = None,
         maximize: bool = False,
         max_colors: int = None,
-        crossover: "UniformCrossover" = None,
+        crossover: "UniformCrossOver" = None,
         mutator: "ChangeOneMutator" = None,
         source_graph: nx.Graph = None,
     ):
@@ -126,7 +126,7 @@ class MaxKColorOpt(DiscreteOpt):
         self.max_val: int = max_colors
 
         # Use default crossover and mutator if none are provided
-        crossover = UniformCrossover(self) if crossover is None else crossover
+        crossover = UniformCrossOver(self) if crossover is None else crossover
         mutator = ChangeOneMutator(self) if mutator is None else mutator
         super().__init__(length, fitness_fn, maximize, max_colors, crossover, mutator)
 

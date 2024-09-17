@@ -83,7 +83,7 @@ class TestSKMLPRunner:
         """Test that the runner name is set dynamically based on the algorithm."""
         runner = SKMLPRunner(**runner_kwargs)
         expected_name = "skmlp"
-        assert runner.get_runner_name() == expected_name
+        assert runner.runner_name() == expected_name
 
     def test_grid_search_scorer_method(self, runner):
         """Test that the grid search scorer method is set correctly."""
@@ -102,6 +102,6 @@ class TestSKMLPRunner:
         additional_kwargs = {"custom_arg": "custom_value"}
         runner = SKMLPRunner(**runner_kwargs, **additional_kwargs)
 
-        assert runner.get_runner_name() == "skmlp"
+        assert runner.runner_name() == "skmlp"
         assert runner.classifier.mlp.early_stopping == runner_kwargs["early_stopping"]
         assert runner.classifier.mlp.random_state == SEED

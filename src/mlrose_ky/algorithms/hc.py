@@ -13,7 +13,7 @@ from mlrose_ky.decorators import short_name
 @short_name("hc")
 def hill_climb(
     problem: Any,
-    max_iters: int = np.inf,
+    max_iters: int | float = np.inf,
     restarts: int = 0,
     init_state: np.ndarray = None,
     curve: bool = False,
