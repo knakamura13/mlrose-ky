@@ -1,5 +1,6 @@
 # mlrose-ky: Machine Learning, Randomized Optimization, and SEarch
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/dcb6d0168803406484009504a41ed466)](https://app.codacy.com/gh/knakamura13/mlrose-ky?utm_source=github.com&utm_medium=referral&utm_content=knakamura13/mlrose-ky&utm_campaign=Badge_Grade)
 [![PyPI Version](https://img.shields.io/pypi/v/mlrose-ky)](https://pypi.org/project/mlrose-ky/)
 [![Coverage badge](https://img.shields.io/badge/dynamic/json?color=brightgreen&label=coverage&query=%24.message&url=https://raw.githubusercontent.com/knakamura13/mlrose-ky/refs/heads/python-coverage-comment-action-data/endpoint.json)](https://htmlpreview.github.io/?https://github.com/knakamura13/mlrose-ky/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
