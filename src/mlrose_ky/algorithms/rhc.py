@@ -172,7 +172,7 @@ def random_hill_climb(
             # If next state is better, move to that state and reset attempts counter
             current_fitness = problem.get_fitness()
             if next_fitness > current_fitness:
-                problem.set_state(next_state)
+                problem.set_state(next_state, next_fitness)
                 attempts = 0
             else:
                 attempts += 1
