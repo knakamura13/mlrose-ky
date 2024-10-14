@@ -230,19 +230,21 @@ class _OptProb:
         """Evaluate the fitness of the current population."""
         self.pop_fitness = np.array([self.eval_fitness(indiv) for indiv in self.population])
 
-    def set_state(self, new_state: np.ndarray) -> None:
+    def set_state(self, new_state: np.ndarray, fitness: float) -> None:
         """Set a new state vector and evaluate its fitness.
 
         Parameters
         ----------
         new_state : np.ndarray
             New state vector.
+        fitness : float
+            Fitness value of the new state vector.
         """
         if len(new_state) != self.length:
             raise ValueError(f"new_state length {len(new_state)} must match problem length {self.length}")
 
         self.state = new_state
-        self.fitness = self.eval_fitness(self.state)
+        self.fitness = fitness
 
     def can_stop(self) -> bool:
         """Determine if the optimization process can stop.

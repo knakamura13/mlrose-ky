@@ -173,7 +173,7 @@ def simulated_annealing(
             # Decide whether to accept the new state
             if delta_e > 0 or np.random.uniform() < prob:
                 # Accept the new state
-                problem.set_state(next_state)
+                problem.set_state(next_state, next_fitness)
                 attempts = 0  # Reset attempts since a move was made
             else:
                 # Reject the new state
