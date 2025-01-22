@@ -416,10 +416,10 @@ BibTeX entries:
 		</tr>
 		<tr>
             <td align="center">
-                <a href="https://github.com/dsctt">
-                    <img src="https://avatars.githubusercontent.com/u/45729071?v=4" width="100;" alt="dsctt"/>
+                <a href="https://github.com/dyodx">
+                    <img src="https://avatars.githubusercontent.com/u/45729071?v=4" width="100;" alt="dyodx"/>
                     <br />
-                    <sub><b>Daniel Scott</b></sub>
+                    <sub><b>dyodx</b></sub>
                 </a>
             </td>
             <td align="center">
