@@ -55,6 +55,7 @@ class QueensOpt(DiscreteOpt):
         maximize: bool = False,
         crossover: "UniformCrossOver" = None,
         mutator: "ChangeOneMutator" = None,
+        stop_fitness: int = None,
     ):
         # Ensure that either fitness_fn or length is provided
         if fitness_fn is None and length is None:
@@ -73,9 +74,12 @@ class QueensOpt(DiscreteOpt):
         # If fitness_fn is not provided, create a new Queens fitness function
         if fitness_fn is None:
             fitness_fn = Queens(maximize=maximize)
-
-        # Set the stopping fitness value based on whether we're maximizing or minimizing
-        self.stop_fitness: int = Queens.get_max_size(length) if maximize else 0
+            # Set the stopping fitness value based on whether we're maximizing or minimizing
+            self.stop_fitness: int = Queens.get_max_size(length) if maximize else 0
+        else:
+            if stop_fitness is None:
+                raise ValueError("Expected stop_fitness to be defined for custom fitness_fn")
+            self.stop_fitness = stop_fitness
 
         # Set max_val to length, as it represents the board size
         self.max_val: int = length
