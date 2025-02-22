@@ -39,7 +39,7 @@ class TestQueensOpt:
         """Test that the QueensOpt class is initialized correctly when length is inferred from weights."""
         fitness_fn = FlipFlop()
         fitness_fn.weights = np.ones(5).tolist()
-        queens_opt = QueensOpt(fitness_fn=fitness_fn)
+        queens_opt = QueensOpt(fitness_fn=fitness_fn, stop_fitness=5)
 
         assert queens_opt.length == 5
         assert queens_opt.max_val == 5
@@ -72,6 +72,18 @@ class TestQueensOpt:
 
         queens_opt.set_state(np.array([0, 6, 4, 7, 1, 3, 5, 2]))
         assert queens_opt.can_stop()
+
+    def test_custom_fn_without_stop_fitness(self):
+        with pytest.raises(ValueError, match="Expected stop_fitness to be defined for custom fitness_fn"):
+            _ = QueensOpt(length=8, fitness_fn=mlrose_ky.CustomFitness(lambda x: 0, problem_type="discrete"))
+
+    def test_can_stop_custom_stop_fitness(self):
+        BEST_FITNESS = 5;
+        problem = QueensOpt(length=4,fitness_fn=mlrose_ky.CustomFitness(lambda x: 0), stop_fitness=BEST_FITNESS)
+        problem.fitness = BEST_FITNESS
+        assert problem.can_stop()
+        problem.fitness = BEST_FITNESS - 1
+        assert not problem.can_stop()
 
     def test_random_state_generation(self):
         """Test that random state generation produces valid states."""
