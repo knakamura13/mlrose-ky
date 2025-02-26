@@ -54,7 +54,7 @@ class GeomDecay:
             raise ValueError("Minimum temperature must be greater than 0 and less than initial temperature.")
 
     def __str__(self):
-        return str(self.init_temp)
+        return f"GeomDecay(init_temp={self.init_temp}, decay={self.decay}, min_temp={self.min_temp})"
 
     def __repr__(self):
         return f"{self.__class__.__name__}(init_temp={self.init_temp}, decay={self.decay}, min_temp={self.min_temp})"

@@ -38,7 +38,7 @@ class TestAlgorithmsDecay:
     def test_geom_decay_str_repr(self):
         """Test GeomDecay __str__ and __repr__ methods."""
         schedule = GeomDecay(init_temp=10, decay=0.95, min_temp=1)
-        assert str(schedule) == "10"
+        assert str(schedule) == "GeomDecay(init_temp=10, decay=0.95, min_temp=1)"
         assert repr(schedule) == "GeomDecay(init_temp=10, decay=0.95, min_temp=1)"
 
     def test_geom_decay_eq(self):
