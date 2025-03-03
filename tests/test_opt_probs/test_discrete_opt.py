@@ -267,3 +267,12 @@ class TestDiscreteOpt:
 
         # Ensure that all elements in the sample_order are covered
         assert len(set(problem.sample_order)) == 5  # Check if all elements are unique
+
+    def test_stop_early(self):
+        """Test stop_early method."""
+        stop_fitness = 10
+        problem = DiscreteOpt(5, OneMax(), stop_fitness=stop_fitness)
+        problem.fitness = stop_fitness + 1
+        assert not problem.can_stop()
+        problem.fitness = stop_fitness
+        assert problem.can_stop()
