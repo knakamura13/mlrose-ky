@@ -3,7 +3,7 @@
 # Authors: Genevieve Hayes (modified by Andrew Rollings, Kyle Nakamura)
 # License: BSD 3-clause
 
-from typing import Any, override
+from typing import Any
 
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -403,7 +403,6 @@ class DiscreteOpt(_OptProb):
 
         return new_sample
 
-    @override
     def can_stop(self) -> bool:
         if self._stop_fitness is None:
             return False
