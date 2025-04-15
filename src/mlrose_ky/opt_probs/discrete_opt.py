@@ -40,6 +40,9 @@ class DiscreteOpt(_OptProb):
     mutator : SwapMutator, default=None
         Mutation operation used for reproduction. If None, defaults to `SwapMutator`.
 
+    stop_fitness : float, default=None
+        When set, the algorithm will stop when the fitness reaches this value.
+
     Attributes
     ----------
     keep_sample : np.ndarray
@@ -72,6 +75,7 @@ class DiscreteOpt(_OptProb):
         max_val: int = 2,
         crossover: UniformCrossOver | TSPCrossOver = None,
         mutator: "SwapMutator" = None,
+        stop_fitness: float = None,
     ):
         self._get_mutual_info_impl = self._get_mutual_info_slow
 
@@ -98,6 +102,8 @@ class DiscreteOpt(_OptProb):
 
         self._mut_mask: np.ndarray | None = None
         self._mut_inf: np.ndarray | None = None
+
+        self._stop_fitness: float = stop_fitness
 
     def eval_node_probs(self) -> None:
         """Update probability density estimates."""
@@ -396,3 +402,8 @@ class DiscreteOpt(_OptProb):
                 new_sample[inds, i] = np.random.choice(self.max_val, len(inds), p=self.node_probs[i, j])
 
         return new_sample
+
+    def can_stop(self) -> bool:
+        if self._stop_fitness is None:
+            return False
+        return self.get_fitness() == self._stop_fitness
